@@ -224,7 +224,7 @@
                 class="tooltip absolute left-full top-1/2 transform -translate-y-1/2 ml-2 px-3 py-2 text-xs font-medium text-white bg-igp-blue rounded-lg shadow-sm w-50 text-start w-60"
             >
               Presiona Play o Stop para controlar la 
-              animación de sismos.
+              animación de sismos
             </div>
           </button>
         </div>
