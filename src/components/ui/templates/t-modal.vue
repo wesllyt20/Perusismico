@@ -63,8 +63,8 @@
       </div>
 
       <span class="text-igp-black-1000 col-span-12 text-sm px-3 mt-3">
-        Para visualizar los sismos, primero seleccione la región, el periodo de
-        datos, el rango de magnitud y profundidad de los sismos.
+        Para visualizar los sismos, primero seleccione la región, el periodo en
+        años, el Rango de magnitud y la profundidad de los sismos.
       </span>
 
       <div
@@ -224,7 +224,7 @@
                 class="tooltip absolute left-full top-1/2 transform -translate-y-1/2 ml-2 px-3 py-2 text-xs font-medium text-white bg-igp-blue rounded-lg shadow-sm w-50 text-start w-60"
             >
               Presiona Play o Stop para controlar la 
-              animación de sismos
+              animación de sismos.
             </div>
           </button>
         </div>
@@ -455,7 +455,7 @@ const errPeru = ref("Peru error");
 const dataPeru = ref([
   {
     value: "",
-    name: "Todo el Perú",
+    name: "Perú",
     boundaries: {
       minLatitude: -18.35,
       maxLatitude: -0.03,
@@ -758,7 +758,7 @@ const errContinente = ref("Continente error");
 const dataContinente = ref([
   {
     value: "",
-    name: "Todos Global",
+    name: "Global",
     boundaries: {
       minLatitude: -55.0,
       maxLatitude: 81.0,
