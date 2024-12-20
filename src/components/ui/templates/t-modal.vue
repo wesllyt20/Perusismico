@@ -1,6 +1,6 @@
 <template>
   <div
-    class="flex items-center px-4 sm:px-4 md:px-0 lg:px-0 xl:px-0 2xl:px-0 ml-0 sm:ml-0 md:ml-8 lg:ml-10 xl:ml-14 2xl:ml-20 justify-start z-10 scroll-auto select-none absolute mt-16"
+    class="flex items-center px-4 sm:px-4 md:px-0 lg:px-0 xl:px-0 2xl:px-0 ml-0 sm:ml-0 md:ml-8 lg:ml-10 xl:ml-14 2xl:ml-20 justify-start z-10 scroll-auto select-none absolute mt-16 "
   >
     <!-- Panel de control -->
 
@@ -62,7 +62,7 @@
         </div>
       </div>
 
-      <span class="text-igp-black-1000 col-span-12 text-sm px-3 mt-3">
+      <span class="text-igp-black-1000 col-span-12 text-sm px-4 mt-3">
         Para visualizar los sismos, primero seleccione la región, el periodo en
         años, el Rango de magnitud y la profundidad de los sismos.
       </span>
@@ -137,7 +137,7 @@
         <template v-slot:error> {{ errStartDate }} </template>
       </tCalendar>
 
-      <tCalendar class="col-span-5 mt-2 pl-5" :state="stateEndDate">
+      <tCalendar class="col-span-6 mt-2 pl-12 " :state="stateEndDate">
         <template v-slot:calendar>
           <VueDatePicker
             v-model="endDate"
@@ -151,7 +151,7 @@
         <template v-slot:name> Fecha de fin </template>
         <template v-slot:error> {{ errEndDate }} </template>
       </tCalendar>
-      <span class=" col-span-4 text-xs text-center ml-3 text-igp-dark-300 mb-2 "
+      <span class=" col-span-4 text-xs text-center ml-1 text-igp-dark-400 mb-2 "
           >(*) desde 1960 hasta la fecha
         </span>
 </div>
@@ -218,9 +218,11 @@
             <istop class="w-4 h-4"></istop>
           </button>
 
-          <button class="ml-3 relative" type="button">
+          <button class="ml-3 relative" type="button" @mouseenter="showTooltip" >
             <img :src="qst" alt="question_img" height="20" width="18" />
             <div
+                v-if="tooltipVisible"
+                :class="['tooltip', tooltipVisible ? 'opacity-100 visible' : 'opacity-0 invisible']"
                 class="tooltip absolute left-full top-1/2 transform -translate-y-1/2 ml-2 px-3 py-2 text-xs font-medium text-white bg-igp-blue rounded-lg shadow-sm w-50 text-start w-60"
             >
               Presiona Play o Stop para controlar la 
@@ -229,39 +231,39 @@
           </button>
         </div>
         <div
-          class="grid-cols-11 col-span-12 border rounded-lg py-2 mt-4 mx-4 bg-gray-50"
+          class="grid-cols-12 col-span-11 border rounded-lg py-2 mt-4 mx-4 bg-gray-50 translate-x-6"
         >
         
-          <div class="flex px-6 col-span-12 mt-2 p-0 justify-between">
+          <div class="flex px-6 col-span-12 mt-2 p-1 justify-around">
             <div class="flex flex-col items-center justify-center">
-              <div class="w-14 h-14 flex items-center justify-center">
+              <div class="w-12 h-12 flex items-center justify-center">
                 <div class="w-3 h-3  rounded-full border-2 border-igp-muted bg-transparent"></div>
               </div>
-              <p class="text-xs text-igp-black-1000">M4.0 a M5.0</p>
+              <p class="text-xs text-igp-black-1000 text-center">M4.0 a<br>M5.0</p>
             </div>
             <div class="flex flex-col items-center justify-center">
-              <div class="w-14 h-14 flex items-center justify-center">
+              <div class="w-12 h-12 flex items-center justify-center">
                 <div class="w-4 h-4  rounded-full border-2 border-igp-muted bg-transparent"></div>
               </div>
-              <p class="text-xs text-igp-black-1000">M >5 a M6.0</p>
+              <p class="text-xs text-igp-black-1000 text-center">M>5 a<br>M6.0</p>
             </div>
             <div class="flex flex-col items-center justify-center">
-              <div class="w-14 h-14 flex items-center justify-center">
+              <div class="w-12 h-12 flex items-center justify-center">
                 <div class="w-6 h-6  rounded-full border-2 border-igp-muted bg-transparent"></div>
               </div>
-              <p class="text-xs text-igp-black-1000">M >6.0 a M7.0</p>
+              <p class="text-xs text-igp-black-1000 text-center">M>6.0 a<br>M7.0</p>
             </div>
             <div class="flex flex-col items-center justify-center">
-              <div class="w-14 h-14 flex items-center">
-                <div class="w-9 h-9  rounded-full border-2 border-igp-muted bg-transparent"></div>
+              <div class="w-12 h-12 flex items-center justify-center">
+                <div class="w-8 h-8  rounded-full border-2 border-igp-muted bg-transparent"></div>
               </div>
-              <p class="text-xs text-igp-black-1000">M >7.0 a M8.0</p>
+              <p class="text-xs text-igp-black-1000 text-center">M>7.0 a<br>M8.0</p>
             </div>
             <div class="flex flex-col items-center justify-center">
-              <div class="w-14 h-14 flex items-center justify-center">
-                <div class="w-14 h-14  rounded-full border-2 border-igp-muted bg-transparent"></div>
+              <div class="w-12 h-12 flex items-center justify-center">
+                <div class="w-11 h-11 rounded-full border-2 border-igp-muted bg-transparent"></div>
               </div>
-              <p class="text-xs text-igp-black-1000">M >8.0 a M9.5</p>
+              <p class="text-xs text-igp-black-1000 text-center">M>8.0 a<br>M9.5</p>
             </div>
           </div>
         </div>
@@ -344,7 +346,7 @@
       class="px-4 py-3 font-medium text-sm text-igp-blue flex items-center bg-[#FCFDFF] rounded-2xl w-[330px] border border-b border-igp-blue shadow-[0px_4px_4px_0px_#00000024]"
       @click="cerrarModal"
     >
-      Personalizar parametros sismicos
+      Ver Panel de ajuste sismico
       <img
         :src="share"
         class="ml-auto"
@@ -375,6 +377,7 @@ import iplay from "@/assets/icons/iplay.vue";
 import istop from "@/assets/icons/istop.vue";
 import qst from "@/assets/icons/question.svg";
 import "flowbite";
+
 
 const useGeojson = useGeojsonStore();
 const stateStop = ref("enable");
@@ -447,6 +450,27 @@ function setActiveTab(tab) {
     };
   }
 }
+
+// Variable para controlar la visibilidad del tooltip
+const tooltipVisible = ref(false);
+
+// Variable para almacenar el temporizador
+let hideTimeout;
+
+// Función para mostrar el tooltip
+const showTooltip = () => {
+  // Si ya hay un temporizador activo, lo limpiamos
+  clearTimeout(hideTimeout);
+
+  // Mostramos el tooltip
+  tooltipVisible.value = true;
+
+  // Configuramos el temporizador para ocultar el tooltip después de 10 segundos
+  hideTimeout = setTimeout(() => {
+    tooltipVisible.value = false;
+  }, 5000);
+};
+
 
 // PERU
 const selPeru = ref("");
@@ -1113,7 +1137,7 @@ const toggleStop = () => {
 }
 
 /* Mostrar el tooltip cuando el botón se encuentre en hover */
-button:hover .tooltip {
+.tooltip.opacity-100.visible {
   opacity: 1;
   visibility: visible;
 }

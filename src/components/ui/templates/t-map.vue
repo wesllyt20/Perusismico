@@ -96,7 +96,7 @@ export default {
     const windowWidth = window.innerWidth;
     if (windowWidth <= 600) {
       this.initialZoom = 1;
-      this.initialLatLeng = [10, 0]; // O cualquier otra coordenada que desees para esta condición
+      this.initialLatLeng = [8, 0]; // O cualquier otra coordenada que desees para esta condición
     } else if (windowWidth <= 1920) {
       this.initialZoom = 2;
       this.initialLatLeng = [10, 0];

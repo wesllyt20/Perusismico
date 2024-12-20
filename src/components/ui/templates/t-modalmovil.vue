@@ -13,6 +13,7 @@
         class="h-1 rounded-xl bg-igp-muted cursor-pointer col-span-4 flex mt-3 col-start-5"
         @click="toggleOpen"
       ></div>
+      
       <div class="grid grid-cols-12 col-span-12 mt-3">
         <div class="col-span-6">
           <!-- Botón Global -->
@@ -50,9 +51,9 @@
         </div>
       </div>
 
-      <span class="text-igp-dark-300 col-span-12 text-xs px-3 mt-3">
-        Para visualizar los sismos, primero seleccione la región, el periodo de
-        datos, el rango de magnitud y profundidad de los sismos.
+      <span class="text-igp-black-1000 col-span-12 text-xs px-3 mt-3">
+        Para visualizar los sismos, primero seleccione la región, el periodo en
+        años, el Rango de magnitud y la profundidad de los sismos.
       </span>
 
       <div
@@ -90,7 +91,7 @@
           <template v-slot:error> {{ errPeru }} </template>
         </tSelect>
       </div>
-
+      <div class="grid grid-cols-12 col-span-12 border ml-4 py-1 my-4 rounded-lg">
       <tLabel
         color="blue"
         size="md"
@@ -104,11 +105,8 @@
           width="18"
           class="mr-[6px]"
         />
-        Periodo de años
-        <span class="text-xs text-center flex justify-center items-center ml-1"
-          >(desde 1960 hasta la fecha)
-        </span>
-        :
+        Periodo de años:
+
       </tLabel>
 
       <tCalendar class="col-span-6 mt-2 pl-4" :state="stateStartDate">
@@ -141,7 +139,10 @@
         <template v-slot:name> Fecha de fin </template>
         <template v-slot:error> {{ errEndDate }} </template>
       </tCalendar>
-
+ <span class=" col-span-6 text-xs text-center ml-1 text-igp-dark-400 mb-2 "
+          >(*) desde 1960 hasta la fecha
+        </span>
+      </div>       
       <div class="grid grid-cols-12 col-span-12 border ml-4 py-3 rounded-lg">
         <div class="col-span-12 flex items-center">
           <tLabel
@@ -178,10 +179,10 @@
         <div class="col-span-12 flex items-center justify-center mt-2">
           <button
             type="button"
-            class="border-2 mr-2 rounded-lg px-6 py-2 items-center"
+            class="border-2 mr-2 rounded-full px-6 py-2 items-center"
             :class="
               statePlay === 'enable'
-                ? ' text-igp-blue hover:text-igp-blue-500 border-igp-blue'
+                ? ' text-igp-white hover:text-igp-blue-500 bg-igp-blue'
                 : 'bg-gray-100 text-igp-dark-500 select-none cursor-not-allowed borde-igp-dark-500'
             "
             @click="togglePlay"
@@ -192,10 +193,10 @@
 
           <button
             type="button"
-            class="border-2 mr-2 rounded-lg px-6 py-2 items-center"
+            class="border-2 mr-2 rounded-full px-6 py-2 items-center"
             :class="
               stateStop === 'enable'
-                ? 'hover:bg-igp-white-100 text-igp-red hover:text-igp-red-500 border-igp-red'
+                ? 'hover:bg-igp-white-100  text-igp-white  hover:text-igp-dark-500  bg-[#04B29E] '
                 : 'bg-gray-100 text-igp-dark-500 select-none cursor-not-allowed borde-igp-dark-500'
             "
             @click="toggleStop"
@@ -203,56 +204,57 @@
           >
             <istop class="w-4 h-4"></istop>
           </button>
-          <button class="ml-3 relative" type="button">
+          <button class="ml-3 relative" type="button" @mouseenter="showTooltip">
             <img :src="qst" alt="question_img" height="20" width="18" />
             <div
+            v-if="tooltipVisible"
+                :class="['tooltip', tooltipVisible ? 'opacity-100 visible' : 'opacity-0 invisible']"
                 class="tooltip absolute left-full top-1/2 transform -translate-y-1/2 ml-2 px-3 py-2 text-xs font-medium text-white bg-igp-blue rounded-lg shadow-sm w-50 text-start w-60"
             >
-              Función que permite reproducir y
-              parar la animación de los simos en el 
-              mapa.
+            Presiona Play o Stop para controlar la 
+            animación de sismos.
             </div>
           </button>
         </div>
         <div
           class="grid-cols-11 col-span-12 border rounded-lg py-2 mt-4 mx-4 bg-gray-50"
         >
-          <tLabel
-            size="md"
-            weight="400"
-            class="col-span-12 flex pl-4"
-            color="black"
-          >
-            Escala visual del mapa
-          </tLabel>
-          <div class="flex px-6 col-span-12 mt-2 p-0 justify-between">
+
+        <div class="flex px-2 col-span-12 mt-2 p-0 justify-around">
             <div class="flex flex-col items-center justify-center">
-              <div class="w-10 h-10 flex items-center">
-                <div class="w-2 h-2 rounded-full bg-igp-muted"></div>
+              <div class="w-12 h-12 flex items-center justify-center">
+                <div class="w-3 h-3  rounded-full border-2 border-igp-muted bg-transparent"></div>
               </div>
-              <p class="text-xs text-igp-black-1000">M4.0 a M5.0</p>
+              <p class="text-xs text-igp-black-1000 text-center">M4.0 a<br>M5.0</p>
             </div>
             <div class="flex flex-col items-center justify-center">
-              <div class="w-10 h-10 flex items-center">
-                <div class="w-3 h-3 rounded-full bg-igp-muted"></div>
+              <div class="w-12 h-12 flex items-center justify-center">
+                <div class="w-4 h-4  rounded-full border-2 border-igp-muted bg-transparent"></div>
               </div>
-              <p class="text-xs text-igp-black-1000">M >5 a M6.0</p>
+              <p class="text-xs text-igp-black-1000 text-center">M>5 a<br>M6.0</p>
             </div>
             <div class="flex flex-col items-center justify-center">
-              <div class="w-10 h-10 flex items-center">
-                <div class="w-6 h-6 rounded-full bg-igp-muted"></div>
+              <div class="w-12 h-12 flex items-center justify-center">
+                <div class="w-6 h-6  rounded-full border-2 border-igp-muted bg-transparent"></div>
               </div>
-              <p class="text-xs text-igp-black-1000">M >6.0 a M7.0</p>
+              <p class="text-xs text-igp-black-1000 text-center">M>6.0 a<br>M7.0</p>
             </div>
             <div class="flex flex-col items-center justify-center">
-              <div class="w-10 h-10 flex items-center">
-                <div class="w-9 h-9 rounded-full bg-igp-muted"></div>
+              <div class="w-12 h-12 flex items-center justify-center">
+                <div class="w-8 h-8  rounded-full border-2 border-igp-muted bg-transparent"></div>
               </div>
-              <p class="text-xs text-igp-black-1000">M >7.0 a M9.5</p>
+              <p class="text-xs text-igp-black-1000 text-center">M>7.0 a<br>M8.0</p>
+            </div>
+            <div class="flex flex-col items-center justify-center">
+              <div class="w-12 h-12 flex items-center justify-center">
+                <div class="w-11 h-11 rounded-full border-2 border-igp-muted bg-transparent"></div>
+              </div>
+              <p class="text-xs text-igp-black-1000 text-center">M>8.0 a<br>M9.5</p>
             </div>
           </div>
         </div>
       </div>
+
 
       <div
         class="grip grid-cols-12 col-span-12 border rounded-lg py-4 my-4 ml-4"
@@ -439,30 +441,27 @@ const redCircleStyle = {
   display: "inline-block",
   width: "12px",
   height: "12px",
-  backgroundColor: "#ff0000", // Rojo
   borderRadius: "50%",
   marginRight: "5px",
-  border: "1px solid #ff0000", // Borde negro delgado
+  border: "2px solid #ff0000", // Borde negro delgado
 };
 
 const greenCircleStyle = {
   display: "inline-block",
   width: "12px",
-  height: "12px",
-  backgroundColor: "#39ff14", // Verde
+  height: "12px",  
   borderRadius: "50%",
   marginRight: "5px",
-  border: "1px solid #39ff14", // Borde negro delgado
+  border: "2px solid #0AB427", // Borde negro delgado
 };
 
 const blueCircleStyle = {
   display: "inline-block",
   width: "12px",
   height: "12px",
-  backgroundColor: "#007aff", // Azul
   borderRadius: "50%",
   marginRight: "5px",
-  border: "1px solid #007aff", // Borde negro delgado
+  border: "2px solid #002FEF", // Borde negro delgado
 };
 
 function setActiveTab(tab) {
@@ -495,7 +494,25 @@ function setActiveTab(tab) {
     };
   }
 }
+// Variable para controlar la visibilidad del tooltip
+const tooltipVisible = ref(false);
 
+// Variable para almacenar el temporizador
+let hideTimeout;
+
+// Función para mostrar el tooltip
+const showTooltip = () => {
+  // Si ya hay un temporizador activo, lo limpiamos
+  clearTimeout(hideTimeout);
+
+  // Mostramos el tooltip
+  tooltipVisible.value = true;
+
+  // Configuramos el temporizador para ocultar el tooltip después de 10 segundos
+  hideTimeout = setTimeout(() => {
+    tooltipVisible.value = false;
+  }, 5000);
+};
 // PERU
 const selPeru = ref("");
 const statePeru = ref("disable");
@@ -503,7 +520,7 @@ const errPeru = ref("Peru error");
 const dataPeru = ref([
   {
     value: "",
-    name: "Todo el Perú",
+    name: "Perú",
     boundaries: {
       minLatitude: -18.35,
       maxLatitude: -0.03,
@@ -806,7 +823,7 @@ const errContinente = ref("Continente error");
 const dataContinente = ref([
   {
     value: "",
-    name: "Todos Global",
+    name: "Global",
     boundaries: {
       minLatitude: -55.0,
       maxLatitude: 81.0,
