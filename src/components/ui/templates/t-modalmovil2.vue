@@ -52,7 +52,7 @@
 
       <span class="text-igp-black-1000 col-span-12 text-xs px-3 mt-3">
         Para visualizar los sismos, primero seleccione la región, el periodo en años, el
-        Rango de magnitud y la profundidad de los sismos.
+        rango de magnitud y la profundidad de los sismos.
       </span>
 
       <div
@@ -90,7 +90,7 @@
           <template v-slot:error> {{ errPeru }} </template>
         </tSelect>
       </div>
-      <div class="grid grid-cols-12 col-span-12 border ml-4 py-1 my-4 rounded-lg">
+      <div class="grid grid-cols-12 col-span-12 border ml-4 py-1 my-4 rounded-lg" translate="no">
       <tLabel
         color="blue"
         size="md"
@@ -114,7 +114,7 @@
           <VueDatePicker
             v-model="startDate"
             format="MMM/yyyy"
-            locale="es"
+            :locale="spanishLocale"
             :autoApply="true"
             :disabled="disStartDate"
             month-picker
@@ -130,7 +130,7 @@
           <VueDatePicker
             v-model="endDate"
             format="MMM/yyyy"
-            locale="es"
+            :locale="spanishLocale"
             :autoApply="true"
             :disabled="disEndDate"
             month-picker
@@ -211,7 +211,7 @@
             <div
             v-if="tooltipVisible"
                 :class="['tooltip', tooltipVisible ? 'opacity-100 visible' : 'opacity-0 invisible']"
-                class="tooltip absolute left-full top-1/2 transform -translate-y-1/2 ml-2 px-3 py-2 text-xs font-medium text-white bg-igp-blue rounded-lg shadow-sm w-50 text-start w-60"
+                class="tooltip absolute left-full top-1/2 transform -translate-y-1/2 ml-2 px-1 py-1 text-[8px] font-medium text-white bg-igp-blue rounded-lg shadow-sm w-50 text-start w-20"
             >
             Presiona Play o Stop para controlar la 
             animación de sismos.
@@ -1055,11 +1055,12 @@ const togglePlay = () => {
         endDate: convertToDate(endDate.value),
       };
     }
-  }
+  }else{
   useGeojson.rangoFechas = {
     startDate: convertToDate(startDate.value),
     endDate: convertToDate(endDate.value),
   };
+}
   useGeojson.estadoPl = "enable";
   statePeru.value = "disable";
   stateStartDate.value = "disable";

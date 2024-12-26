@@ -9,8 +9,8 @@
 import axios from "axios";
 import * as L from "leaflet/dist/leaflet-src.js";
 import Papa from "papaparse";
-import { DateTime } from "luxon";
-import * as XLSX from "xlsx";
+/*import { DateTime } from "luxon";*/
+/*import * as XLSX from "xlsx";*/
 //import "leaflet.pattern";
 import "leaflet/dist/leaflet.css";
 import { useGeojsonStore } from "@/stores/geojson.js";
@@ -21,8 +21,8 @@ export default {
       map: null,
       useGeojson: useGeojsonStore(),
       initialCenter: [10, 0], // Coordenadas iniciales
-      /*initialZoom: 1, // Zoom inicial*/
-      initialZoom: null,
+      initialZoom: 1, // Zoom inicial*/
+      /*initialZoom: null,*/
       initialLatLeng: null,
       setData: null,
       csvLayer: null,
@@ -95,15 +95,17 @@ export default {
       );
     const windowWidth = window.innerWidth;
     if (windowWidth <= 600) {
-      this.initialZoom = 1;
-      this.initialLatLeng = [8, 0]; // O cualquier otra coordenada que desees para esta condición
+      this.initialZoom = 0.45;
+      this.initialLatLeng = [10, 0]; // O cualquier otra coordenada que desees para esta condición
     } else if (windowWidth <= 1920) {
       this.initialZoom = 2;
       this.initialLatLeng = [10, 0];
     } else {
-      this.initialZoom = 3;
+      this.initialZoom = 1;
       this.initialLatLeng = [37, 0];
     }
+
+    
     // Define límites (bounds) para evitar la repetición del mapa
     const southWest = L.latLng(-75, -270);
     const northEast = L.latLng(90, 210);
@@ -191,7 +193,7 @@ export default {
       });
 
     // Cargar el archivo CSV
-    axios.get("/datas/data_diciembre.csv").then((response) => {
+    axios.get("/datas/data_diciembre_con_historico.csv").then((response) => {
     //axios.get("/datas/data_dicie.csv").then((response) => {
       Papa.parse(response.data, {
         header: true,
@@ -632,9 +634,8 @@ export default {
 
 <style>
 #map {
-  width: 100%;
-  width: 100%;
-  z-index: 0;
+  width: 100%;      /* Asegúrate de que el mapa ocupe todo el ancho */
+  z-index: 0;       /* Asegúrate de que no esté siendo cubierto por otros elementos */
 }
 
 .pulse {

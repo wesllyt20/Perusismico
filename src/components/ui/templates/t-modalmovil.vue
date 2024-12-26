@@ -1,17 +1,27 @@
 <template>
-  <div
-    class="flex items-center px-4 sm:px-4 md:px-0 lg:px-4 xl:px-0 2xl:px-0 ml-0 sm:ml-0 md:ml-8 lg:ml-10 xl:ml-14 2xl:ml-20 justify-start z-10 scroll-auto select-none relative"
-  >
+  <div class="flex justify-start z-10 scroll-auto select-none">
+    <!-- px-4 sm:px-4 md:px-0 lg:px-4 xl:px-0 2xl:px-0 ml-0 sm:ml-0 md:ml-8 lg:ml-10 xl:ml-14 2xl:ml-20 c -->
+    <button
+      class="absolute z-50 bottom-5 left-10 bg-igp-blue rounded-full px-1 py-1 h-10 w-10 shadow-[0px_0px_50px_0px_#00000025] animate-bounce"
+      @click="toggleMove"
+    >
+      <img :src="currentArrow" alt="Arrow Icon" />
+    </button>
     <!-- Panel de control -->
 
     <div
-      class="fixed px-4 mt-3 grid grid-cols-12 bg-[#FCFDFF] rounded-2xl border border-b border-igp-blue shadow-[0px_4px_4px_0px_#00000024] w-[400px] sm:w-[400px] md:w-[400px] lg:w-[490px] xl:w-[490px] 2xl:w-[490px]"
-      ref="draggableDiv"
-      :class="{ 'transition-transform duration-300': isAnimating }"
+    id="contenedorModal"
+      class="px-4 sm:px-4 md:px-4 lg:px-0 xl:px-0 2xl:px-0 mx-4 sm:mx-4 md:mx-4 lg:mx-0 xl:mx-0 2xl:mx-0 fixed mt-3 mb-10 grid grid-cols-12 bg-[#FCFDFF] rounded-2xl border border-b border-igp-blue shadow-[0px_4px_4px_0px_#00000024]"
+      ref="myDiv"
+      :style="{
+        transform: isMoved
+          ? `translateY(calc(100vh - ${setAltura}px))`
+          : 'translateY(0)',
+      }"
     >
       <div
         class="h-1 rounded-xl bg-igp-muted cursor-pointer col-span-4 flex mt-3 col-start-5"
-        @click="toggleOpen"
+        @click="toggleMove"
       ></div>
       
       <div class="grid grid-cols-12 col-span-12 mt-3">
@@ -53,7 +63,7 @@
 
       <span class="text-igp-black-1000 col-span-12 text-xs px-3 mt-3">
         Para visualizar los sismos, primero seleccione la región, el periodo en
-        años, el Rango de magnitud y la profundidad de los sismos.
+        años, el rango de magnitud y la profundidad de los sismos.
       </span>
 
       <div
@@ -91,7 +101,7 @@
           <template v-slot:error> {{ errPeru }} </template>
         </tSelect>
       </div>
-      <div class="grid grid-cols-12 col-span-12 border ml-4 py-1 my-4 rounded-lg">
+      <div class="grid grid-cols-12 col-span-12 border ml-4 py-1 my-4 rounded-lg" translate="no">
       <tLabel
         color="blue"
         size="md"
@@ -114,7 +124,7 @@
           <VueDatePicker
             v-model="startDate"
             format="MMM/yyyy"
-            locale="es"
+            :locale="spanishLocale"
             :autoApply="true"
             :disabled="disStartDate"
             month-picker
@@ -130,7 +140,7 @@
           <VueDatePicker
             v-model="endDate"
             format="MMM/yyyy"
-            locale="es"
+            :locale="spanishLocale"
             :autoApply="true"
             :disabled="disEndDate"
             month-picker
@@ -139,7 +149,7 @@
         <template v-slot:name> Fecha de fin </template>
         <template v-slot:error> {{ errEndDate }} </template>
       </tCalendar>
- <span class=" col-span-6 text-xs text-center ml-1 text-igp-dark-400 mb-2 "
+ <span class=" col-span-8 text-xs text-center ml-1 text-igp-dark-400 mb-2 "
           >(*) desde 1960 hasta la fecha
         </span>
       </div>       
@@ -182,7 +192,7 @@
             class="border-2 mr-2 rounded-full px-6 py-2 items-center"
             :class="
               statePlay === 'enable'
-                ? ' text-igp-white hover:text-igp-blue-500 bg-igp-blue'
+                ? ' text-igp-white border-igp-white bg-igp-blue hover:bg-igp-white hover:text-igp-blue hover:border-igp-blue'
                 : 'bg-gray-100 text-igp-dark-500 select-none cursor-not-allowed borde-igp-dark-500'
             "
             @click="togglePlay"
@@ -193,10 +203,10 @@
 
           <button
             type="button"
-            class="border-2 mr-2 rounded-full px-6 py-2 items-center"
+            class="border-2 mr-2 rounded-full px-6 py-2 items-center outline-none"
             :class="
               stateStop === 'enable'
-                ? 'hover:bg-igp-white-100  text-igp-white  hover:text-igp-dark-500  bg-[#04B29E] '
+                ?'hover:bg-igp-white hover:border-[#04B29E] text-igp-white hover:text-[#04B29E] border-[#04B29E] bg-[#04B29E] '
                 : 'bg-gray-100 text-igp-dark-500 select-none cursor-not-allowed borde-igp-dark-500'
             "
             @click="toggleStop"
@@ -209,7 +219,7 @@
             <div
             v-if="tooltipVisible"
                 :class="['tooltip', tooltipVisible ? 'opacity-100 visible' : 'opacity-0 invisible']"
-                class="tooltip absolute left-full top-1/2 transform -translate-y-1/2 ml-2 px-3 py-2 text-xs font-medium text-white bg-igp-blue rounded-lg shadow-sm w-50 text-start w-60"
+                 class="tooltip absolute left-full top-1/2 transform -translate-y-1/2 ml-2 px-1 py-1 text-[8px] font-medium text-white bg-igp-blue rounded-lg shadow-sm w-50 text-start w-20"
             >
             Presiona Play o Stop para controlar la 
             animación de sismos.
@@ -331,7 +341,7 @@
 </template>
   
   <script setup>
-import { ref, watch, onMounted, onBeforeUnmount } from "vue";
+import { ref, watch, computed } from "vue";
 import tLabel from "@/components/ui/atoms/t-label.vue";
 import tSelect from "@/components/ui/atoms/t-select.vue";
 import profundidad from "@/assets/icons/profundidad.svg";
@@ -339,6 +349,8 @@ import magnitud from "@/assets/icons/magnitud.svg";
 import calendario from "@/assets/icons/calendario.svg";
 import iconworld from "@/assets/icons/world.vue";
 import iconperu from "@/assets/icons/peru.vue";
+import arrow from "@/assets/icons/arrow.svg";
+import downarrow from "@/assets/icons/downarrow.svg";
 import VueDatePicker from "@vuepic/vue-datepicker";
 import tCalendar from "@/components/ui/atoms/t-calendar.vue";
 import { Slider } from "ant-design-vue";
@@ -349,84 +361,14 @@ import qst from "@/assets/icons/question.svg";
 import "flowbite";
 
 //////////////////////////////////////
-import Hammer from "hammerjs";
-const draggableDiv = ref(null);
-let initialY = 0;
-let currentY = 0;
-let yOffset = 0;
-let isDragging = false;
-let isOpen = false; // Estado para trackear si el div está abierto o cerrado
-const isAnimating = ref(false); // Estado para manejar la animación
+const spanishLocale = {
+ 
+ monthsShort: [
+   'Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun', 
+   'Jul', 'Ago', 'Sep', 'Oct', 'Nov', 'Dic'
+ ],
+}
 
-const toggleOpen = () => {
-  const maxTopOffset = 0; // Posición superior completamente visible
-  const maxBottomOffset =
-    window.innerHeight - draggableDiv.value.offsetHeight / 1; // Posición inferior oculta a la mitad
-
-  if (isOpen) {
-    // Ocultar el div hasta la mitad
-    currentY = maxBottomOffset;
-  } else {
-    // Mostrar el div completamente
-    currentY = maxTopOffset;
-  }
-
-  // Activar la animación y aplicar la transformación
-  isAnimating.value = true;
-  draggableDiv.value.style.transform = `translateY(${currentY}px)`;
-
-  // Desactivar la animación después de que termine la transición
-  setTimeout(() => {
-    isAnimating.value = false;
-    yOffset = currentY; // Actualizar yOffset después de la animación
-  }, 300); // Duración de la transición en ms
-
-  // Actualizar el estado
-  isOpen = !isOpen;
-};
-const handleGesture = (event) => {
-  const divHeight = draggableDiv.value.offsetHeight;
-  const maxBottomOffset = window.innerHeight - divHeight / 3; // El div puede ocultarse hasta la mitad
-
-  switch (event.type) {
-    case "panstart":
-      isAnimating.value = false; // Desactivar la animación durante el arrastre
-      isDragging = true;
-      initialY = event.center.y;
-      break;
-    case "panmove":
-      if (isDragging) {
-        currentY = event.center.y - initialY + yOffset;
-        // Permitir movimiento ilimitado hacia arriba y limitar hacia abajo
-        currentY = Math.min(maxBottomOffset, currentY);
-        draggableDiv.value.style.transform = `translateY(${currentY}px)`;
-      }
-      break;
-    case "panend":
-      yOffset = currentY;
-      isDragging = false;
-      break;
-  }
-};
-onMounted(() => {
-  const divHeight = draggableDiv.value.offsetHeight;
-  const initialHiddenPosition = window.innerHeight - divHeight / 2;
-  currentY = initialHiddenPosition;
-  yOffset = currentY;
-  draggableDiv.value.style.transform = `translateY(${currentY}px)`;
-
-  const hammer = new Hammer(draggableDiv.value);
-  hammer.get("pan").set({ direction: Hammer.DIRECTION_VERTICAL });
-
-  hammer.on("panstart panmove panend", handleGesture);
-});
-
-onBeforeUnmount(() => {
-  if (draggableDiv.value) {
-    const hammer = new Hammer(draggableDiv.value);
-    hammer.off("panstart panmove panend", handleGesture);
-  }
-});
 //////////////////////////////////////
 const useGeojson = useGeojsonStore();
 const stateStop = ref("enable");
@@ -1051,11 +993,12 @@ const togglePlay = () => {
         endDate: convertToDate(endDate.value),
       };
     }
-  }
+  }else{
   useGeojson.rangoFechas = {
     startDate: convertToDate(startDate.value),
     endDate: convertToDate(endDate.value),
   };
+}
   useGeojson.estadoPl = "enable";
   statePeru.value = "disable";
   stateStartDate.value = "disable";
@@ -1089,6 +1032,18 @@ const toggleStop = () => {
     disEndDate.value = false;
   }
 };
+const isMoved = ref(false);
+const setAltura = ref(null);
+const isDown = ref(false);
+
+const currentArrow = computed(() => (isDown.value ? arrow : downarrow));
+
+const toggleMove = () => {
+  setAltura.value = 430;
+  isDown.value = !isDown.value;
+  isMoved.value = !isMoved.value; // Alternar estado
+};
+
 </script>
   
   <style>
@@ -1170,5 +1125,9 @@ const toggleStop = () => {
 
 .ant-slider-mark-text.ant-slider-mark-text-active {
   font-size: 12px;
+}
+
+#contenedorModal {
+  transition: transform 0.3s ease-in-out; /* Animación suave */
 }
 </style>

@@ -32,6 +32,7 @@
       </router-link>
       <router-link
         :to="{ name: 'geovisor' }"
+        translate="no"
         class="text-md sm:text-md md:text-md lg:text-md xl:text-lg 2xl:text-lg hidden h-full items-center justify-center ml-8 outline-none font-light sm:hidden md:hidden lg:flex xl:flex 2xl:flex"
         :class="{
           ' bg-igp-blue bg-opacity-10 text-igp-blue px-3 border-igp-blue cursor-default':
@@ -40,7 +41,7 @@
             $route.name !== 'geovisor',
         }"
       >
-        <iconworld class="h-5 mr-3"></iconworld>
+      <iconworld class="h-5 mr-3" translate="no"></iconworld>
         Visor PerúSis
       </router-link>
       <button
@@ -119,7 +120,6 @@
       </div>
     </div>
   </div>
-  <div class="text-lg roun"></div>
 </template>
 <script setup>
 import { ref, onMounted, onUnmounted } from "vue";
@@ -139,7 +139,7 @@ function handleClickOutside(event) {
     showContent.value = false;
   }
 }
-function handleWheel(event) {
+function handleWheel() {
   showContent.value = false;
 }
 

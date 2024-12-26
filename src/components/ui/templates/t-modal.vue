@@ -1,3 +1,4 @@
+
 <template>
   <div
     class="flex items-center px-4 sm:px-4 md:px-0 lg:px-0 xl:px-0 2xl:px-0 ml-0 sm:ml-0 md:ml-8 lg:ml-10 xl:ml-14 2xl:ml-20 justify-start z-10 scroll-auto select-none absolute mt-16 "
@@ -64,7 +65,7 @@
 
       <span class="text-igp-black-1000 col-span-12 text-sm px-4 mt-3">
         Para visualizar los sismos, primero seleccione la región, el periodo en
-        años, el Rango de magnitud y la profundidad de los sismos.
+        años, el rango de magnitud y la profundidad de los sismos.
       </span>
 
       <div
@@ -103,7 +104,7 @@
         </tSelect>
       </div>
       
-      <div class="grid grid-cols-12 col-span-12 border ml-4 py-1 my-4 rounded-lg">
+      <div class="grid grid-cols-12 col-span-12 border ml-4 py-1 my-4 rounded-lg" translate="no">
     
       <tLabel
         color="blue"
@@ -126,7 +127,7 @@
           <VueDatePicker
             v-model="startDate"
             format="MMM/yyyy"
-            locale="es"
+            :locale="spanishLocale"
             :autoApply="true"
             :disabled="disStartDate"
             month-picker
@@ -142,7 +143,7 @@
           <VueDatePicker
             v-model="endDate"
             format="MMM/yyyy"
-            locale="es"
+            :locale="spanishLocale"
             :autoApply="true"
             :disabled="disEndDate"
             month-picker
@@ -189,13 +190,13 @@
             />
           </div>
         </div>
-        <div class="col-span-12 flex items-center justify-center">
+        <div class="col-span-12 flex items-center justify-center outline-none">
           <button
             type="button"
             class="border-2 mr-2 rounded-full px-6 py-2 items-center"
             :class="
               statePlay === 'enable'
-                ? ' text-igp-white hover:text-igp-blue-500 bg-igp-blue'
+                ?' text-igp-white border-igp-white bg-igp-blue hover:bg-igp-white hover:text-igp-blue hover:border-igp-blue'
                 : 'bg-gray-100 text-igp-dark-500 select-none cursor-not-allowed borde-igp-dark-500'
             "
             @click="togglePlay"
@@ -206,10 +207,10 @@
 
           <button
             type="button"
-            class="border-2 mr-2 rounded-full px-6 py-2 items-center"
+            class="border-2 mr-2 rounded-full px-6 py-2 items-center outline-none"
             :class="
               stateStop === 'enable'
-                ? 'hover:bg-igp-white-100  text-igp-white  hover:text-igp-dark-500  bg-[#04B29E] '
+                 ? 'hover:bg-igp-white hover:border-[#04B29E] text-igp-white hover:text-[#04B29E] border-[#04B29E] bg-[#04B29E] '
                 : 'bg-gray-100 text-igp-dark-500 select-none cursor-not-allowed borde-igp-dark-500'
             "
             @click="toggleStop"
@@ -346,7 +347,7 @@
       class="px-4 py-3 font-medium text-sm text-igp-blue flex items-center bg-[#FCFDFF] rounded-2xl w-[330px] border border-b border-igp-blue shadow-[0px_4px_4px_0px_#00000024]"
       @click="cerrarModal"
     >
-      Ver Panel de ajuste sismico
+      Ver Panel de ajuste sísmico
       <img
         :src="share"
         class="ml-auto"
@@ -378,7 +379,13 @@ import istop from "@/assets/icons/istop.vue";
 import qst from "@/assets/icons/question.svg";
 import "flowbite";
 
-
+const spanishLocale = {
+ 
+  monthsShort: [
+    'Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun', 
+    'Jul', 'Ago', 'Sep', 'Oct', 'Nov', 'Dic'
+  ],
+}
 const useGeojson = useGeojsonStore();
 const stateStop = ref("enable");
 const statePlay = ref("disable");
@@ -1010,11 +1017,12 @@ const togglePlay = () => {
         endDate: convertToDate(endDate.value),
       };
     }
-  }
+  }else{
   useGeojson.rangoFechas = {
     startDate: convertToDate(startDate.value),
     endDate: convertToDate(endDate.value),
   };
+}
   useGeojson.estadoPl = "enable";
   statePeru.value = "disable";
   stateStartDate.value = "disable";

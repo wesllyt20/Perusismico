@@ -1,5 +1,7 @@
 {
-  "name": "appsisvul",
+  "locale": "en",
+  "fallbackLocale": "en",
+  "name": "c",
   "version": "0.0.0",
   "private": true,
   "type": "module",
@@ -13,7 +15,7 @@
     "@material-ui/core": "^4.12.4",
     "@nestjs/mapped-types": "*",
     "@vue/runtime-core": "^3.5.12",
-    "@vuepic/vue-datepicker": "^8.2.0",
+    "@vuepic/vue-datepicker": "^10.0.0",
     "animate.css": "^4.1.1",
     "ant-design-vue": "^4.2.5",
     "antd": "^5.21.4",
@@ -46,5 +48,9 @@
     "postcss": "^8.4.35",
     "tailwindcss": "^3.4.1",
     "vite": "^5.0.11"
-  }
+  },
+  "description": "This template should help get you started developing with Vue 3 in Vite.",
+  "main": "postcss.config.js",
+  "author": "",
+  "license": "ISC"
 }
