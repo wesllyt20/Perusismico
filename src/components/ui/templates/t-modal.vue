@@ -152,7 +152,7 @@
         <template v-slot:name> Fecha de fin </template>
         <template v-slot:error> {{ errEndDate }} </template>
       </tCalendar>
-      <span class=" col-span-4 text-xs text-center ml-1 text-igp-dark-400 mb-2 "
+      <span class=" col-span-6 text-xs text-center ml-1 text-igp-dark-400 mb-2 "
           >(*) desde 1960 hasta la fecha
         </span>
 </div>
@@ -638,10 +638,10 @@ const dataPeru = ref([
     value: "lima",
     name: "Lima",
     boundaries: {
-      minLatitude: -12.9,
-      maxLatitude: -10.6,
-      minLongitude: -77.8,
-      maxLongitude: -76.3,
+  minLatitude: -13.3,  // Extiende el sur de Lima
+  maxLatitude: -10.4,  // Extiende el norte de Lima
+  minLongitude: -79.0, // Extiende el oeste hacia el mar
+  maxLongitude: -75.7, // Extiende el este hacia la sierra
     },
   },
   {
