@@ -97,7 +97,7 @@
           isRequired="reqPeru"
           :selectedItems="dataPeru"
         >
-          <template v-slot:name> Seleccionar historial</template>
+          <template v-slot:name> Seleccionar región o departamento</template>
           <template v-slot:error> {{ errPeru }} </template>
         </tSelect>
       </div>
@@ -341,7 +341,7 @@
 </template>
   
   <script setup>
-import { ref, watch, computed } from "vue";
+import { ref, watch, computed,onMounted } from "vue";
 import tLabel from "@/components/ui/atoms/t-label.vue";
 import tSelect from "@/components/ui/atoms/t-select.vue";
 import profundidad from "@/assets/icons/profundidad.svg";
@@ -437,24 +437,32 @@ function setActiveTab(tab) {
   }
 }
 // Variable para controlar la visibilidad del tooltip
-const tooltipVisible = ref(false);
+const tooltipVisible = ref(true);
 
 // Variable para almacenar el temporizador
-let hideTimeout;
+let hideTimeout
 
-// Función para mostrar el tooltip
+// Configurar el temporizador para cerrar el tooltip automáticamente después de 5 segundos al montar el componente
+onMounted(() => {
+  hideTimeout = setTimeout(() => {
+    tooltipVisible.value = false
+  }, 5000) // 5000 milisegundos = 5 segundos
+})
+
+// Función para mostrar el tooltip al pasar el mouse
 const showTooltip = () => {
   // Si ya hay un temporizador activo, lo limpiamos
-  clearTimeout(hideTimeout);
+  clearTimeout(hideTimeout)
 
   // Mostramos el tooltip
-  tooltipVisible.value = true;
+  tooltipVisible.value = true
 
-  // Configuramos el temporizador para ocultar el tooltip después de 10 segundos
+  // Configuramos el temporizador para ocultar el tooltip después de 5 segundos
   hideTimeout = setTimeout(() => {
-    tooltipVisible.value = false;
-  }, 5000);
+    tooltipVisible.value = false
+  }, 5000)
 };
+
 // PERU
 const selPeru = ref("");
 const statePeru = ref("disable");
