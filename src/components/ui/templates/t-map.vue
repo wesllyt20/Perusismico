@@ -408,7 +408,7 @@ export default {
           if (feature.properties.depth > 300) {
             color = "#002FEF"; // Profundos (> 300 km) BLUE
           } else if (
-            feature.properties.depth >= 60 &&
+            feature.properties.depth > 60 &&
             feature.properties.depth <= 300
           ) {
             color = "#0AB427"; // Intermedios (61 km - 300 km) GREEN
