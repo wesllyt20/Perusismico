@@ -537,10 +537,10 @@ const dataPeru = ref([
     value: "arequipa",
     name: "Arequipa",
     boundaries: {
-      minLatitude: -17.9,
-      maxLatitude: -14.5,
-      minLongitude: -75,
-      maxLongitude: -70.8,
+      minLatitude: -17.5, // Reducido hacia el norte para limitar el sur
+    maxLatitude: -14.5, // Mantiene la extensión hacia el norte
+    minLongitude: -75, // Mantiene el límite hacia el oeste
+    maxLongitude: -70.8, // Mantiene el límite hacia el este
     },
   },
   {
@@ -557,20 +557,20 @@ boundaries: {
     value: "cajamarca",
 name: "Cajamarca",
 boundaries: {
-  minLatitude: -7.7, // Sur de Cajamarca
-  maxLatitude: -5.0, // Ajustado más al norte
-  minLongitude: -79.5, // Oeste
-  maxLongitude: -77.8, // Este
+  minLatitude: -7.7, // Mantiene la extensión hacia el sur
+    maxLatitude: -4.5, // Ampliado más hacia el norte
+    minLongitude: -79.5, // Mantiene el límite hacia el oeste
+    maxLongitude: -77.8, // Mantiene el límite hacia el este
 },
   },
   {
     value: "callao",
     name: "Callao",
     boundaries: {
-      minLatitude: -12.1,
-      maxLatitude: -11.9,
-      minLongitude: -77.3,
-      maxLongitude: -77.1,
+      minLatitude: -12.3, // Ampliado más hacia el sur
+    maxLatitude: -11.8, // Ampliado más hacia el norte
+    minLongitude: -77.5, // Ampliado más hacia el oeste
+    maxLongitude: -77.0, // Ampliado más hacia el este
     },
   },
   {
