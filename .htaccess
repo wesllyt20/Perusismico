@@ -1,8 +1,8 @@
 <IfModule mod_rewrite.c>
     RewriteEngine On
-    RewriteBase /perusismico/
-    RewriteRule ^/perusismico/index\.html$ - [L]
+    RewriteBase /peru-sismico/
+    RewriteRule ^/peru-sismico/index\.html$ - [L]
     RewriteCond %{REQUEST_FILENAME} !-f
     RewriteCond %{REQUEST_FILENAME} !-d
-    RewriteRule . /perusismico/index.html [L]
+    RewriteRule . /peru-sismico/index.html [L]
   </IfModule>

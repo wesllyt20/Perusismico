@@ -2,7 +2,7 @@
   <div class="flex justify-start z-10 scroll-auto select-none">
     <!-- px-4 sm:px-4 md:px-0 lg:px-4 xl:px-0 2xl:px-0 ml-0 sm:ml-0 md:ml-8 lg:ml-10 xl:ml-14 2xl:ml-20 c -->
     <button
-      class="absolute z-50 bottom-5 left-10 bg-igp-blue rounded-full px-1 py-1 h-10 w-10 shadow-[0px_0px_50px_0px_#00000025] animate-bounce"
+      class="fixed z-50 bottom-5 left-10 bg-igp-blue rounded-full px-1 py-1 h-10 w-10 shadow-[0px_0px_50px_0px_#00000025] animate-bounce"
       @click="toggleMove"
     >
       <img :src="currentArrow" alt="Arrow Icon" />
@@ -11,7 +11,7 @@
 
     <div
     id="contenedorModal"
-      class="px-4 sm:px-4 md:px-4 lg:px-0 xl:px-0 2xl:px-0 mx-4 sm:mx-4 md:mx-4 lg:mx-0 xl:mx-0 2xl:mx-0 fixed mt-3 mb-10 grid grid-cols-12 bg-[#FCFDFF] rounded-2xl border border-b border-igp-blue shadow-[0px_4px_4px_0px_#00000024]"
+      class="relative px-4 sm:px-4 md:px-4 lg:px-0 xl:px-0 2xl:px-0 mx-4 sm:mx-4 md:mx-4 lg:mx-0 xl:mx-0 2xl:mx-0 mt-3 mb-10 grid grid-cols-12 bg-[#FCFDFF] rounded-2xl border border-b border-igp-blue shadow-[0px_4px_4px_0px_#00000024]"
       ref="myDiv"
       :style="{
         transform: isMoved
@@ -512,10 +512,10 @@ const dataPeru = ref([
     value: "arequipa",
     name: "Arequipa",
     boundaries: {
-      minLatitude: -17.9,
-      maxLatitude: -14.5,
-      minLongitude: -75,
-      maxLongitude: -70.8,
+      minLatitude: -17.5, // Reducido hacia el norte para limitar el sur
+    maxLatitude: -14.5, // Mantiene la extensión hacia el norte
+    minLongitude: -75, // Mantiene el límite hacia el oeste
+    maxLongitude: -70.8, // Mantiene el límite hacia el este
     },
   },
   {
@@ -532,20 +532,20 @@ boundaries: {
     value: "cajamarca",
 name: "Cajamarca",
 boundaries: {
-  minLatitude: -7.7, // Sur de Cajamarca
-  maxLatitude: -5.0, // Ajustado más al norte
-  minLongitude: -79.5, // Oeste
-  maxLongitude: -77.8, // Este
+  minLatitude: -7.7, // Mantiene la extensión hacia el sur
+    maxLatitude: -4.5, // Ampliado más hacia el norte
+    minLongitude: -79.5, // Mantiene el límite hacia el oeste
+    maxLongitude: -77.8, // Mantiene el límite hacia el este
 },
   },
   {
     value: "callao",
     name: "Callao",
     boundaries: {
-      minLatitude: -12.1,
-      maxLatitude: -11.9,
-      minLongitude: -77.3,
-      maxLongitude: -77.1,
+      minLatitude: -12.3, // Ampliado más hacia el sur
+    maxLatitude: -11.8, // Ampliado más hacia el norte
+    minLongitude: -77.5, // Ampliado más hacia el oeste
+    maxLongitude: -77.0, // Ampliado más hacia el este
     },
   },
   {
@@ -739,6 +739,7 @@ boundaries: {
     },
   },
 ]);
+
 function getValPeru() {
   if (selPeru.value === "actual" || selPeru.value === "historica") {
     stateStartDate.value = "disable";
@@ -1047,7 +1048,7 @@ const isDown = ref(false);
 const currentArrow = computed(() => (isDown.value ? arrow : downarrow));
 
 const toggleMove = () => {
-  setAltura.value = 430;
+  setAltura.value = 250;
   isDown.value = !isDown.value;
   isMoved.value = !isMoved.value; // Alternar estado
 };

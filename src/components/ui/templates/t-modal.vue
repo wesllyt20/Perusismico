@@ -567,7 +567,7 @@ boundaries: {
     value: "callao",
     name: "Callao",
     boundaries: {
-      minLatitude: -12.3, // Ampliado más hacia el sur
+    minLatitude: -12.3, // Ampliado más hacia el sur
     maxLatitude: -11.8, // Ampliado más hacia el norte
     minLongitude: -77.5, // Ampliado más hacia el oeste
     maxLongitude: -77.0, // Ampliado más hacia el este
