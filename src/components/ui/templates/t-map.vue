@@ -152,7 +152,7 @@ export default {
 
     // Cargar el archivo GeoJSON usando axios
     axios
-      .get("/placas.json")
+      .get("/peru-sismico/placas.json")
 
       .then((response) => {
         // Crear clones del GeoJSON para simular repetición
@@ -193,7 +193,7 @@ export default {
       });
 
     // Cargar el archivo CSV
-    axios.get("/datas/data_diciembre_con_historico.csv").then((response) => {
+    axios.get("/peru-sismico/datas/data_diciembre_con_historico.csv").then((response) => {
     //axios.get("/datas/data_dicie.csv").then((response) => {
       Papa.parse(response.data, {
         header: true,

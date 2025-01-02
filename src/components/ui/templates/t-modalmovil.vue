@@ -239,7 +239,7 @@
             </div>
             <div class="flex flex-col items-center justify-center">
               <div class="w-12 h-12 flex items-center justify-center">
-                <div class="w-4 h-4  rounded-full border-2 border-igp-muted bg-transparent"></div>
+                <div class="w-5 h-5  rounded-full border-2 border-igp-muted bg-transparent"></div>
               </div>
               <p class="text-xs text-igp-black-1000 text-center">M>5 a<br>M6.0</p>
             </div>

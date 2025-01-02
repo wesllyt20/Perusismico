@@ -152,7 +152,7 @@
         <template v-slot:name> Fecha de fin </template>
         <template v-slot:error> {{ errEndDate }} </template>
       </tCalendar>
-      <span class=" col-span-4 text-xs text-center ml-1 text-igp-dark-400 mb-2 "
+      <span class=" col-span-5 text-xs text-center ml-1 text-igp-dark-400 mb-2 "
           >(*) desde 1960 hasta la fecha
         </span>
 </div>
@@ -244,7 +244,7 @@
             </div>
             <div class="flex flex-col items-center justify-center">
               <div class="w-12 h-12 flex items-center justify-center">
-                <div class="w-4 h-4  rounded-full border-2 border-igp-muted bg-transparent"></div>
+                <div class="w-5 h-5  rounded-full border-2 border-igp-muted bg-transparent"></div>
               </div>
               <p class="text-xs text-igp-black-1000 text-center">M>5 a<br>M6.0</p>
             </div>
