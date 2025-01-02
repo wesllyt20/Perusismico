@@ -1048,7 +1048,7 @@ const isDown = ref(false);
 const currentArrow = computed(() => (isDown.value ? arrow : downarrow));
 
 const toggleMove = () => {
-  setAltura.value = 250;
+  setAltura.value = 430;
   isDown.value = !isDown.value;
   isMoved.value = !isMoved.value; // Alternar estado
 };
