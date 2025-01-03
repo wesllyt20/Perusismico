@@ -155,7 +155,7 @@
           <template v-slot:error> {{ errEndDate }} </template>
         </tCalendar>
         <span class="col-span-5 text-xs text-center ml-1 text-igp-dark-400 mb-2"
-          >(*) desde 1960 hasta la fecha
+          >(*) desde 1471 hasta la fecha
         </span>
       </div>
 

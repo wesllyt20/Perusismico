@@ -122,13 +122,13 @@
       <tCalendar class="col-span-6 mt-2 pl-4" :state="stateStartDate">
         <template v-slot:calendar>
           <VueDatePicker
-            v-model="startDate"
-            format="MMM/yyyy"
-            :locale="spanishLocale"
-            :autoApply="true"
-            :disabled="disStartDate"
-            month-picker
-            style="color: blue !important"
+          v-model="startDate"
+              :format="capitalizeMonth"
+              :format-locale="es"
+              :autoApply="true"
+              :disabled="disStartDate"
+              month-picker
+              style="color: blue !important"
           ></VueDatePicker>
         </template>
         <template v-slot:name> Fecha de inicio </template>
@@ -138,19 +138,19 @@
       <tCalendar class="col-span-6 mt-2 pl-4" :state="stateEndDate">
         <template v-slot:calendar>
           <VueDatePicker
-            v-model="endDate"
-            format="MMM/yyyy"
-            :locale="spanishLocale"
-            :autoApply="true"
-            :disabled="disEndDate"
-            month-picker
+          v-model="endDate"
+              :format="capitalizeMonth"
+              :format-locale="es"
+              :autoApply="true"
+              :disabled="disEndDate"
+              month-picker
           ></VueDatePicker>
         </template>
         <template v-slot:name> Fecha de fin </template>
         <template v-slot:error> {{ errEndDate }} </template>
       </tCalendar>
  <span class=" col-span-8 text-xs text-center ml-1 text-igp-dark-400 mb-2 "
-          >(*) desde 1960 hasta la fecha
+          >(*) desde 1471 hasta la fecha
         </span>
       </div>       
       <div class="grid grid-cols-12 col-span-12 border ml-4 py-3 rounded-lg">
@@ -353,6 +353,8 @@ import arrow from "@/assets/icons/arrow.svg";
 import downarrow from "@/assets/icons/downarrow.svg";
 import VueDatePicker from "@vuepic/vue-datepicker";
 import tCalendar from "@/components/ui/atoms/t-calendar.vue";
+import { format } from "date-fns";
+import { es } from "date-fns/locale";
 import { Slider } from "ant-design-vue";
 import { useGeojsonStore } from "@/stores/geojson";
 import iplay from "@/assets/icons/iplay.vue";
@@ -361,12 +363,10 @@ import qst from "@/assets/icons/question.svg";
 import "flowbite";
 
 //////////////////////////////////////
-const spanishLocale = {
- 
- monthsShort: [
-   'Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun', 
-   'Jul', 'Ago', 'Sep', 'Oct', 'Nov', 'Dic'
- ],
+function capitalizeMonth(date) {
+  if (!date) return "";
+  const formattedDate = format(date, "MMM/yyyy", { locale: es });
+  return formattedDate.charAt(0).toUpperCase() + formattedDate.slice(1);
 }
 
 //////////////////////////////////////

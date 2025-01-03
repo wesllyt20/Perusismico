@@ -2,6 +2,27 @@
   <div>
     <div class="overflow-hidden fixed inset-0 bg-cover" id="map"></div>
     <!-- v-if="makerPopup" -->
+      <!-- Insertamos el SVG directamente sobre el mapa -->
+    <svg 
+      id="overlay-svg" 
+      viewBox="0 0 1200 800" 
+      xmlns="http://www.w3.org/2000/svg"
+      style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 10;"
+    >
+      <!-- Aquí va el código SVG del mapa sombreado -->
+      <path 
+        class="leaflet-interactive" 
+        stroke="#3388ff" 
+        stroke-opacity="1" 
+        stroke-width="3" 
+        stroke-linecap="round" 
+        stroke-linejoin="round" 
+        fill="#3388ff" 
+        fill-opacity="0.2" 
+        fill-rule="evenodd" 
+        d="M1118 422L1108 422L1106 424L1105 429L1101 430L1097 434L1095 442L1092 445L1093 448L1091 450L1090 449L1079 454L1075 458L1076 461L1072 465L1073 468L1077 470L1077 472L1074 473L1077 476L1078 473L1080 475L1079 480L1081 480L1085 486L1085 494L1087 494L1086 495L1089 498L1089 500L1092 502L1091 507L1092 506L1092 510L1095 515L1094 518L1098 522L1100 528L1107 537L1106 538L1108 540L1109 538L1113 538L1111 534L1113 532L1113 526L1120 528L1120 530L1116 532L1114 538L1116 536L1120 536L1118 538L1122 540L1121 548L1124 545L1130 545L1130 542L1135 537L1139 537L1140 532L1145 527L1147 527L1148 524L1152 524L1151 517L1153 517L1156 514L1156 510L1152 500L1150 498L1148 500L1145 495L1150 490L1150 486L1154 478L1155 477L1155 479L1158 482L1160 480L1160 476L1157 471L1150 469L1146 465L1144 465L1141 460L1140 461L1140 457L1136 453L1136 449L1134 449L1135 446L1131 442L1129 442L1126 433L1123 430L1121 430L1122 427L1120 427L1118 422z">
+      </path>
+    </svg>
   </div>
 </template>
 
@@ -16,6 +37,7 @@ import "leaflet/dist/leaflet.css";
 import { useGeojsonStore } from "@/stores/geojson.js";
 
 export default {
+  
   data() {
     return {
       map: null,
@@ -195,6 +217,7 @@ export default {
     axios
       .get("/peru-sismico/datas/data.csv")
       .then((response1) => {
+        
         axios.get("/peru-sismico/datas/historicos.csv").then((response2) => {
           // Procesar el primer CSV
           Papa.parse(response1.data, {
@@ -233,6 +256,7 @@ export default {
               });
             },
           });
+          
         });
       })
       .catch((error) => {
