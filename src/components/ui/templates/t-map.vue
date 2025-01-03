@@ -105,7 +105,6 @@ export default {
       this.initialLatLeng = [37, 0];
     }
 
-    
     // Define límites (bounds) para evitar la repetición del mapa
     const southWest = L.latLng(-75, -270);
     const northEast = L.latLng(90, 210);
@@ -193,18 +192,52 @@ export default {
       });
 
     // Cargar el archivo CSV
-    axios.get("/peru-sismico/datas/data_diciembre_con_historico.csv").then((response) => {
-    //axios.get("/datas/data_dicie.csv").then((response) => {
-      Papa.parse(response.data, {
-        header: true,
-        dynamicTyping: true,
-        complete: (result) => {
-          const geoJSONData = this.convertCSVToGeoJSON(result.data);
-          this.setData = result.data;
-          this.addGeoJSONToMap(geoJSONData);
-        },
+    axios
+      .get("/peru-sismico/datas/data.csv")
+      .then((response1) => {
+        axios.get("/peru-sismico/datas/historicos.csv").then((response2) => {
+          // Procesar el primer CSV
+          Papa.parse(response1.data, {
+            header: true,
+            dynamicTyping: true,
+            complete: (result1) => {
+              const dataDiciembre = result1.data;
+
+              // Procesar el segundo CSV
+              Papa.parse(response2.data, {
+                header: true,
+                dynamicTyping: true,
+                complete: (result2) => {
+                  const dataEnero = result2.data.map((row) => {
+                    // Unir fecha y hora, y agregar campos faltantes
+                    return {
+                      time: `${row.fecha}T${row.hora}Z`,
+                      latitude: row.latitude,
+                      longitude: row.longitude,
+                      depth: row.depth,
+                      mag: row.mag,
+                      place: "-", // Asignar "-" si no hay lugar
+                      magType: "-", // Asignar "-" si no hay tipo de magnitud
+                    };
+                  });
+                  // Combinar los datos
+                  const combinedData = [...dataDiciembre, ...dataEnero];
+
+                  // Convertir a GeoJSON
+                  const geoJSONData = this.convertCSVToGeoJSON(combinedData);
+
+                  // Actualizar datos y mapa
+                  this.setData = combinedData;
+                  this.addGeoJSONToMap(geoJSONData);
+                },
+              });
+            },
+          });
+        });
+      })
+      .catch((error) => {
+        console.error("Error al cargar los datos:", error);
       });
-    });
 
     /*    axios.get("/datas/data_diciembre.csv").then((response) => {
       Papa.parse(response.data, {
@@ -346,7 +379,6 @@ export default {
           eventDate <= this.useGeojson.rangoFechas.endDate
         );
       });
-      console.log("FILTRO POR COORDENADAS:", filteredByDate);
       // Filtrar por profunidad
       const filteredByDepth = filteredByDate.filter((row) => {
         const depth = row.depth;
@@ -443,7 +475,6 @@ export default {
             /* CIRCULO HUECO  */
             fillOpacity: 0,
             color: color,
-            
           });
         },
 
@@ -634,8 +665,8 @@ export default {
 
 <style>
 #map {
-  width: 100%;      /* Asegúrate de que el mapa ocupe todo el ancho */
-  z-index: 0;       /* Asegúrate de que no esté siendo cubierto por otros elementos */
+  width: 100%; /* Asegúrate de que el mapa ocupe todo el ancho */
+  z-index: 0; /* Asegúrate de que no esté siendo cubierto por otros elementos */
 }
 
 .pulse {

@@ -1,7 +1,7 @@
 
 <template>
   <div
-    class="flex items-center px-4 sm:px-4 md:px-0 lg:px-0 xl:px-0 2xl:px-0 ml-0 sm:ml-0 md:ml-8 lg:ml-10 xl:ml-14 2xl:ml-20 justify-start z-10 scroll-auto select-none absolute mt-16 "
+    class="flex items-center px-4 sm:px-4 md:px-0 lg:px-0 xl:px-0 2xl:px-0 ml-0 sm:ml-0 md:ml-8 lg:ml-10 xl:ml-14 2xl:ml-20 justify-start z-10 scroll-auto select-none absolute mt-16"
   >
     <!-- Panel de control -->
 
@@ -70,7 +70,7 @@
 
       <div
         v-if="activeTab === 'global'"
-        class="grid grid-cols-1 md:grid-cols-12 col-span-12 mt-2"  
+        class="grid grid-cols-1 md:grid-cols-12 col-span-12 mt-2"
       >
         <tSelect
           class="col-span-12 pl-3 mt-2"
@@ -103,78 +103,80 @@
           <template v-slot:error> {{ errPeru }} </template>
         </tSelect>
       </div>
-      
-      <div class="grid grid-cols-12 col-span-12 border ml-4 py-1 my-4 rounded-lg" translate="no">
-    
-      <tLabel
-        color="blue"
-        size="md"
-        weight="400"
-        class="col-span-12 flex mt-2 ml-4"
+
+      <div
+        class="grid grid-cols-12 col-span-12 border ml-4 py-1 my-4 rounded-lg"
+        translate="no"
       >
-        <img
-          :src="calendario"
-          alt="img_calen"
-          height="18"
-          width="18"
-          class="mr-[6px]"
-        />
-        Periodo de años:
-      </tLabel>
+        <tLabel
+          color="blue"
+          size="md"
+          weight="400"
+          class="col-span-12 flex mt-2 ml-4"
+        >
+          <img
+            :src="calendario"
+            alt="img_calen"
+            height="18"
+            width="18"
+            class="mr-[6px]"
+          />
+          Periodo de años:
+        </tLabel>
 
-      <tCalendar class="col-span-5 mt-2 pl-5 mb-0" :state="stateStartDate">
-        <template v-slot:calendar>
-          <VueDatePicker
-            v-model="startDate"
-            format="MMM/yyyy"
-            :locale="spanishLocale"
-            :autoApply="true"
-            :disabled="disStartDate"
-            month-picker
-            style="color: blue !important"
-          ></VueDatePicker>
-        </template>
-        <template v-slot:name> Fecha de inicio </template>
-        <template v-slot:error> {{ errStartDate }} </template>
-      </tCalendar>
+        <tCalendar class="col-span-5 mt-2 pl-5 mb-0" :state="stateStartDate">
+          <template v-slot:calendar>
+            <VueDatePicker
+              v-model="startDate"
+              :format="capitalizeMonth"
+              :format-locale="es"
+              :autoApply="true"
+              :disabled="disStartDate"
+              month-picker
+              style="color: blue !important"
+            ></VueDatePicker>
+          </template>
+          <template v-slot:name> Fecha de inicio </template>
+          <template v-slot:error> {{ errStartDate }} </template>
+        </tCalendar>
 
-      <tCalendar class="col-span-6 mt-2 pl-12 " :state="stateEndDate">
-        <template v-slot:calendar>
-          <VueDatePicker
-            v-model="endDate"
-            format="MMM/yyyy"
-            :locale="spanishLocale"
-            :autoApply="true"
-            :disabled="disEndDate"
-            month-picker
-          ></VueDatePicker>
-        </template>
-        <template v-slot:name> Fecha de fin </template>
-        <template v-slot:error> {{ errEndDate }} </template>
-      </tCalendar>
-      <span class=" col-span-5 text-xs text-center ml-1 text-igp-dark-400 mb-2 "
+        <tCalendar class="col-span-6 mt-2 pl-12" :state="stateEndDate">
+          <template v-slot:calendar>
+            <VueDatePicker
+              v-model="endDate"
+              :format="capitalizeMonth"
+              :format-locale="es"
+              :autoApply="true"
+              :disabled="disEndDate"
+              month-picker
+            ></VueDatePicker>
+          </template>
+          <template v-slot:name> Fecha de fin </template>
+          <template v-slot:error> {{ errEndDate }} </template>
+        </tCalendar>
+        <span class="col-span-5 text-xs text-center ml-1 text-igp-dark-400 mb-2"
           >(*) desde 1960 hasta la fecha
         </span>
-</div>
+      </div>
 
-        <div class="grid grid-cols-12 col-span-12 border ml-4 py-3 rounded-lg">
-          <div class="col-span-12 flex items-center">
-            <tLabel
-              color="blue"
-              size="md"
-              weight="400"
-              class="flex items-center ml-4"
-            >
-              <img
-                :src="magnitud"
-                alt="img_mag"
-                height="16"
-                width="16"
-                class="mr-2"
-              />
-              Rango de magnitud:
-            </tLabel>
-          </div>
+      <div class="grid grid-cols-12 col-span-12 border ml-4 py-3 rounded-lg">
+        <div class="col-span-12 flex items-center">
+          <tLabel
+            color="blue"
+            size="md"
+            weight="400"
+            class="flex items-center ml-4"
+          >
+            <img
+              :src="magnitud"
+              alt="img_mag"
+              height="16"
+              width="16"
+              class="mr-2"
+            />
+            Rango de magnitud:
+          </tLabel>
+        </div>
         <!-- SELECCION DE CAPAS CHECK -->
         <div class="col-span-12 pl-3 mt-2">
           <div class="slider">
@@ -196,7 +198,7 @@
             class="border-2 mr-2 rounded-full px-6 py-2 items-center"
             :class="
               statePlay === 'enable'
-                ?' text-igp-white border-igp-white bg-igp-blue hover:bg-igp-white hover:text-igp-blue hover:border-igp-blue'
+                ? ' text-igp-white border-igp-white bg-igp-blue hover:bg-igp-white hover:text-igp-blue hover:border-igp-blue'
                 : 'bg-gray-100 text-igp-dark-500 select-none cursor-not-allowed borde-igp-dark-500'
             "
             @click="togglePlay"
@@ -210,7 +212,7 @@
             class="border-2 mr-2 rounded-full px-6 py-2 items-center outline-none"
             :class="
               stateStop === 'enable'
-                 ? 'hover:bg-igp-white hover:border-[#04B29E] text-igp-white hover:text-[#04B29E] border-[#04B29E] bg-[#04B29E] '
+                ? 'hover:bg-igp-white hover:border-[#04B29E] text-igp-white hover:text-[#04B29E] border-[#04B29E] bg-[#04B29E] '
                 : 'bg-gray-100 text-igp-dark-500 select-none cursor-not-allowed borde-igp-dark-500'
             "
             @click="toggleStop"
@@ -219,52 +221,73 @@
             <istop class="w-4 h-4"></istop>
           </button>
 
-          <button class="ml-3 relative" type="button" @mouseenter="showTooltip" >
+          <button class="ml-3 relative" type="button" @mouseenter="showTooltip">
             <img :src="qst" alt="question_img" height="20" width="18" />
             <div
-                v-if="tooltipVisible"
-                :class="['tooltip', tooltipVisible ? 'opacity-100 visible' : 'opacity-0 invisible']"
-                class="tooltip absolute left-full top-1/2 transform -translate-y-1/2 ml-2 px-3 py-2 text-xs font-medium text-white bg-igp-blue rounded-lg shadow-sm w-50 text-start w-60"
+              v-if="tooltipVisible"
+              :class="[
+                'tooltip',
+                tooltipVisible ? 'opacity-100 visible' : 'opacity-0 invisible',
+              ]"
+              class="tooltip absolute left-full top-1/2 transform -translate-y-1/2 ml-2 px-3 py-2 text-xs font-medium text-white bg-igp-blue rounded-lg shadow-sm w-50 text-start w-60"
             >
-              Presiona Play o Stop para controlar la 
-              animación de sismos.
+              Presiona Play o Stop para controlar la animación de sismos.
             </div>
           </button>
         </div>
         <div
           class="grid-cols-12 col-span-11 border rounded-lg py-2 mt-4 mx-4 bg-gray-50 translate-x-6"
         >
-        
           <div class="flex px-6 col-span-12 mt-2 p-1 justify-around">
             <div class="flex flex-col items-center justify-center">
               <div class="w-12 h-12 flex items-center justify-center">
-                <div class="w-3 h-3  rounded-full border-2 border-igp-muted bg-transparent"></div>
+                <div
+                  class="w-3 h-3 rounded-full border-2 border-igp-muted bg-transparent"
+                ></div>
               </div>
-              <p class="text-xs text-igp-black-1000 text-center">M4.0 a<br>M5.0</p>
+              <p class="text-xs text-igp-black-1000 text-center">
+                M4.0 a<br />M5.0
+              </p>
             </div>
             <div class="flex flex-col items-center justify-center">
               <div class="w-12 h-12 flex items-center justify-center">
-                <div class="w-5 h-5  rounded-full border-2 border-igp-muted bg-transparent"></div>
+                <div
+                  class="w-5 h-5 rounded-full border-2 border-igp-muted bg-transparent"
+                ></div>
               </div>
-              <p class="text-xs text-igp-black-1000 text-center">M>5 a<br>M6.0</p>
+              <p class="text-xs text-igp-black-1000 text-center">
+                M>5 a<br />M6.0
+              </p>
             </div>
             <div class="flex flex-col items-center justify-center">
               <div class="w-12 h-12 flex items-center justify-center">
-                <div class="w-6 h-6  rounded-full border-2 border-igp-muted bg-transparent"></div>
+                <div
+                  class="w-6 h-6 rounded-full border-2 border-igp-muted bg-transparent"
+                ></div>
               </div>
-              <p class="text-xs text-igp-black-1000 text-center">M>6.0 a<br>M7.0</p>
+              <p class="text-xs text-igp-black-1000 text-center">
+                M>6.0 a<br />M7.0
+              </p>
             </div>
             <div class="flex flex-col items-center justify-center">
               <div class="w-12 h-12 flex items-center justify-center">
-                <div class="w-8 h-8  rounded-full border-2 border-igp-muted bg-transparent"></div>
+                <div
+                  class="w-8 h-8 rounded-full border-2 border-igp-muted bg-transparent"
+                ></div>
               </div>
-              <p class="text-xs text-igp-black-1000 text-center">M>7.0 a<br>M8.0</p>
+              <p class="text-xs text-igp-black-1000 text-center">
+                M>7.0 a<br />M8.0
+              </p>
             </div>
             <div class="flex flex-col items-center justify-center">
               <div class="w-12 h-12 flex items-center justify-center">
-                <div class="w-11 h-11 rounded-full border-2 border-igp-muted bg-transparent"></div>
+                <div
+                  class="w-11 h-11 rounded-full border-2 border-igp-muted bg-transparent"
+                ></div>
               </div>
-              <p class="text-xs text-igp-black-1000 text-center">M>8.0 a<br>M9.5</p>
+              <p class="text-xs text-igp-black-1000 text-center">
+                M>8.0 a<br />M9.5
+              </p>
             </div>
           </div>
         </div>
@@ -371,6 +394,8 @@ import calendario from "@/assets/icons/calendario.svg";
 import iconworld from "@/assets/icons/world.vue";
 import iconperu from "@/assets/icons/peru.vue";
 import VueDatePicker from "@vuepic/vue-datepicker";
+import { format } from "date-fns";
+import { es } from "date-fns/locale";
 import tCalendar from "@/components/ui/atoms/t-calendar.vue";
 import { Slider } from "ant-design-vue";
 import { useGeojsonStore } from "@/stores/geojson";
@@ -379,13 +404,10 @@ import istop from "@/assets/icons/istop.vue";
 import qst from "@/assets/icons/question.svg";
 import "flowbite";
 
-
-const spanishLocale = {
- 
-  monthsShort: [
-    'Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun', 
-    'Jul', 'Ago', 'Sep', 'Oct', 'Nov', 'Dic'
-  ],
+function capitalizeMonth(date) {
+  if (!date) return "";
+  const formattedDate = format(date, "MMM/yyyy", { locale: es });
+  return formattedDate.charAt(0).toUpperCase() + formattedDate.slice(1);
 }
 
 const useGeojson = useGeojsonStore();
@@ -414,7 +436,7 @@ const redCircleStyle = {
 const greenCircleStyle = {
   display: "inline-block",
   width: "12px",
-  height: "12px",  
+  height: "12px",
   borderRadius: "50%",
   marginRight: "5px",
   border: "2px solid #0AB427", // Borde negro delgado
@@ -464,29 +486,28 @@ function setActiveTab(tab) {
 const tooltipVisible = ref(true);
 
 // Variable para almacenar el temporizador
-let hideTimeout
+let hideTimeout;
 
 // Configurar el temporizador para cerrar el tooltip automáticamente después de 5 segundos al montar el componente
 onMounted(() => {
   hideTimeout = setTimeout(() => {
-    tooltipVisible.value = false
-  }, 7000) // 5000 milisegundos = 5 segundos
-})
+    tooltipVisible.value = false;
+  }, 7000); // 5000 milisegundos = 5 segundos
+});
 
 // Función para mostrar el tooltip al pasar el mouse
 const showTooltip = () => {
   // Si ya hay un temporizador activo, lo limpiamos
-  clearTimeout(hideTimeout)
+  clearTimeout(hideTimeout);
 
   // Mostramos el tooltip
-  tooltipVisible.value = true
+  tooltipVisible.value = true;
 
   // Configuramos el temporizador para ocultar el tooltip después de 5 segundos
   hideTimeout = setTimeout(() => {
-    tooltipVisible.value = false
-  }, 5000)
+    tooltipVisible.value = false;
+  }, 5000);
 };
-
 
 // PERU
 const selPeru = ref("");
@@ -508,9 +529,9 @@ const dataPeru = ref([
     name: "Amazonas",
     boundaries: {
       minLatitude: -7.5, // Mantiene la extensión al sur
-  maxLatitude: -3.5, // Mantiene la extensión al norte
-  minLongitude: -78.9, // Ampliado hacia el oeste para incluir más de Cajamarca
-  maxLongitude: -77.3, // Mantiene el límite al este
+      maxLatitude: -3.5, // Mantiene la extensión al norte
+      minLongitude: -78.9, // Ampliado hacia el oeste para incluir más de Cajamarca
+      maxLongitude: -77.3, // Mantiene el límite al este
     },
   },
   {
@@ -528,9 +549,9 @@ const dataPeru = ref([
     name: "Apurímac",
     boundaries: {
       minLatitude: -14.8, // Reducido hacia el norte para limitar el sur
-  maxLatitude: -13.0, // Mantiene la extensión al norte
-  minLongitude: -73.9, // Mantiene el límite al oeste
-  maxLongitude: -72.0, // Mantiene el límite al este
+      maxLatitude: -13.0, // Mantiene la extensión al norte
+      minLongitude: -73.9, // Mantiene el límite al oeste
+      maxLongitude: -72.0, // Mantiene el límite al este
     },
   },
   {
@@ -538,39 +559,39 @@ const dataPeru = ref([
     name: "Arequipa",
     boundaries: {
       minLatitude: -17.5, // Reducido hacia el norte para limitar el sur
-    maxLatitude: -14.5, // Mantiene la extensión hacia el norte
-    minLongitude: -75, // Mantiene el límite hacia el oeste
-    maxLongitude: -70.8, // Mantiene el límite hacia el este
+      maxLatitude: -14.5, // Mantiene la extensión hacia el norte
+      minLongitude: -75, // Mantiene el límite hacia el oeste
+      maxLongitude: -70.8, // Mantiene el límite hacia el este
     },
   },
   {
     value: "ayacucho",
-name: "Ayacucho",
-boundaries: {
-  minLatitude: -15.5, // Mantiene la extensión al sur
-  maxLatitude: -12.2, // Ampliado hacia el norte
-  minLongitude: -75.0, // Mantiene el límite al oeste
-  maxLongitude: -73.0, // Mantiene el límite al este
-},
+    name: "Ayacucho",
+    boundaries: {
+      minLatitude: -15.5, // Mantiene la extensión al sur
+      maxLatitude: -12.2, // Ampliado hacia el norte
+      minLongitude: -75.0, // Mantiene el límite al oeste
+      maxLongitude: -73.0, // Mantiene el límite al este
+    },
   },
   {
     value: "cajamarca",
-name: "Cajamarca",
-boundaries: {
-  minLatitude: -7.7, // Mantiene la extensión hacia el sur
-    maxLatitude: -4.5, // Ampliado más hacia el norte
-    minLongitude: -79.5, // Mantiene el límite hacia el oeste
-    maxLongitude: -77.8, // Mantiene el límite hacia el este
-},
+    name: "Cajamarca",
+    boundaries: {
+      minLatitude: -7.7, // Mantiene la extensión hacia el sur
+      maxLatitude: -4.5, // Ampliado más hacia el norte
+      minLongitude: -79.5, // Mantiene el límite hacia el oeste
+      maxLongitude: -77.8, // Mantiene el límite hacia el este
+    },
   },
   {
     value: "callao",
     name: "Callao",
     boundaries: {
-    minLatitude: -12.3, // Ampliado más hacia el sur
-    maxLatitude: -11.8, // Ampliado más hacia el norte
-    minLongitude: -77.5, // Ampliado más hacia el oeste
-    maxLongitude: -77.0, // Ampliado más hacia el este
+      minLatitude: -12.3, // Ampliado más hacia el sur
+      maxLatitude: -11.8, // Ampliado más hacia el norte
+      minLongitude: -77.5, // Ampliado más hacia el oeste
+      maxLongitude: -77.0, // Ampliado más hacia el este
     },
   },
   {
@@ -588,9 +609,9 @@ boundaries: {
     name: "Huancavelica",
     boundaries: {
       minLatitude: -14.1, // Ajustado hacia el norte para reducir el sur
-    maxLatitude: -11.9, // Ajustado hacia el sur para reducir el norte
-    minLongitude: -75.8, // Mantiene el límite al oeste
-    maxLongitude: -74.2, // Mantiene el límite al este
+      maxLatitude: -11.9, // Ajustado hacia el sur para reducir el norte
+      minLongitude: -75.8, // Mantiene el límite al oeste
+      maxLongitude: -74.2, // Mantiene el límite al este
     },
   },
   {
@@ -598,9 +619,9 @@ boundaries: {
     name: "Huánuco",
     boundaries: {
       minLatitude: -10.3, // Mantiene la extensión al sur
-    maxLatitude: -8.3,  // Mantiene la extensión al norte
-    minLongitude: -77.3, // Ampliado hacia el oeste para incluir más cerca del mar
-    maxLongitude: -74.5, // Mantiene el límite al este
+      maxLatitude: -8.3, // Mantiene la extensión al norte
+      minLongitude: -77.3, // Ampliado hacia el oeste para incluir más cerca del mar
+      maxLongitude: -74.5, // Mantiene el límite al este
     },
   },
   {
@@ -608,9 +629,9 @@ boundaries: {
     name: "Ica",
     boundaries: {
       minLatitude: -15.7, // Ampliado hacia el sur
-    maxLatitude: -13.0, // Ampliado hacia el norte
-    minLongitude: -76.7, // Mantiene el límite al oeste
-    maxLongitude: -74.7, // Mantiene el límite al este
+      maxLatitude: -13.0, // Ampliado hacia el norte
+      minLongitude: -76.7, // Mantiene el límite al oeste
+      maxLongitude: -74.7, // Mantiene el límite al este
     },
   },
   {
@@ -628,9 +649,9 @@ boundaries: {
     name: "La Libertad",
     boundaries: {
       minLatitude: -9.0, // Mantiene la extensión al sur
-    maxLatitude: -7.0, // Mantiene la extensión al norte
-    minLongitude: -81.1, // Mantiene el límite al oeste
-    maxLongitude: -76.8, // Ampliado hacia el este
+      maxLatitude: -7.0, // Mantiene la extensión al norte
+      minLongitude: -81.1, // Mantiene el límite al oeste
+      maxLongitude: -76.8, // Ampliado hacia el este
     },
   },
   {
@@ -647,10 +668,10 @@ boundaries: {
     value: "lima",
     name: "Lima",
     boundaries: {
-  minLatitude: -13.3,  // Extiende el sur de Lima
-  maxLatitude: -10.4,  // Extiende el norte de Lima
-  minLongitude: -79.0, // Extiende el oeste hacia el mar
-  maxLongitude: -75.7, // Extiende el este hacia la sierra
+      minLatitude: -13.3, // Extiende el sur de Lima
+      maxLatitude: -10.4, // Extiende el norte de Lima
+      minLongitude: -79.0, // Extiende el oeste hacia el mar
+      maxLongitude: -75.7, // Extiende el este hacia la sierra
     },
   },
   {
@@ -658,9 +679,9 @@ boundaries: {
     name: "Loreto",
     boundaries: {
       minLatitude: -8.5, // Ampliado más hacia el sur
-    maxLatitude: -1.5,  // Ampliado más hacia el norte
-    minLongitude: -78.0, // Ampliado más hacia el oeste
-    maxLongitude: -68.5, // Ampliado más hacia el este
+      maxLatitude: -1.5, // Ampliado más hacia el norte
+      minLongitude: -78.0, // Ampliado más hacia el oeste
+      maxLongitude: -68.5, // Ampliado más hacia el este
     },
   },
   {
@@ -668,9 +689,9 @@ boundaries: {
     name: "Madre de Dios",
     boundaries: {
       minLatitude: -13.5, // Mantiene la extensión al sur
-    maxLatitude: -10.2,  // Reducido hacia el sur para limitar el norte
-    minLongitude: -72.5, // Mantiene el límite al oeste
-    maxLongitude: -65.5, // Mantiene el límite al este
+      maxLatitude: -10.2, // Reducido hacia el sur para limitar el norte
+      minLongitude: -72.5, // Mantiene el límite al oeste
+      maxLongitude: -65.5, // Mantiene el límite al este
     },
   },
   {
@@ -678,9 +699,9 @@ boundaries: {
     name: "Moquegua",
     boundaries: {
       minLatitude: -17.9, // Ampliado más hacia el sur
-    maxLatitude: -16.0, // Ampliado más hacia el norte
-    minLongitude: -72.0, // Ampliado más hacia el oeste
-    maxLongitude: -70.0, // Ampliado más hacia el este
+      maxLatitude: -16.0, // Ampliado más hacia el norte
+      minLongitude: -72.0, // Ampliado más hacia el oeste
+      maxLongitude: -70.0, // Ampliado más hacia el este
     },
   },
   {
@@ -688,9 +709,9 @@ boundaries: {
     name: "Pasco",
     boundaries: {
       minLatitude: -11.1, // Mantiene la extensión hacia el sur
-    maxLatitude: -9.6,  // Mantiene la extensión hacia el norte
-    minLongitude: -76.8, // Mantiene el límite al oeste
-    maxLongitude: -74.3, // Ampliado hacia el este
+      maxLatitude: -9.6, // Mantiene la extensión hacia el norte
+      minLongitude: -76.8, // Mantiene el límite al oeste
+      maxLongitude: -74.3, // Ampliado hacia el este
     },
   },
   {
@@ -698,9 +719,9 @@ boundaries: {
     name: "Piura",
     boundaries: {
       minLatitude: -6.4, // Ampliado hacia el sur
-    maxLatitude: -4.1, // Mantiene el límite hacia el norte
-    minLongitude: -81.7, // Mantiene el límite al oeste
-    maxLongitude: -79.0, // Mantiene el límite al este
+      maxLatitude: -4.1, // Mantiene el límite hacia el norte
+      minLongitude: -81.7, // Mantiene el límite al oeste
+      maxLongitude: -79.0, // Mantiene el límite al este
     },
   },
   {
@@ -708,9 +729,9 @@ boundaries: {
     name: "Puno",
     boundaries: {
       minLatitude: -17.3, // Reducido hacia el norte para limitar el sur
-    maxLatitude: -12.6, // Mantiene la extensión hacia el norte
-    minLongitude: -71.2, // Mantiene el límite hacia el oeste
-    maxLongitude: -68.5, // Mantiene el límite hacia el este
+      maxLatitude: -12.6, // Mantiene la extensión hacia el norte
+      minLongitude: -71.2, // Mantiene el límite hacia el oeste
+      maxLongitude: -68.5, // Mantiene el límite hacia el este
     },
   },
   {
@@ -728,9 +749,9 @@ boundaries: {
     name: "Tacna",
     boundaries: {
       minLatitude: -18.3, // Mantiene la extensión hacia el sur
-    maxLatitude: -16.6, // Mantiene la extensión hacia el norte
-    minLongitude: -71.5, // Mantiene el límite hacia el oeste
-    maxLongitude: -69.4, // Reducido hacia el oeste para limitar el este
+      maxLatitude: -16.6, // Mantiene la extensión hacia el norte
+      minLongitude: -71.5, // Mantiene el límite hacia el oeste
+      maxLongitude: -69.4, // Reducido hacia el oeste para limitar el este
     },
   },
   {
@@ -738,29 +759,29 @@ boundaries: {
     name: "Tumbes",
     boundaries: {
       minLatitude: -4.3, // Reducido hacia el norte para limitar el sur
-    maxLatitude: -3.3, // Mantiene la extensión hacia el norte
-    minLongitude: -81.9, // Mantiene el límite hacia el oeste
-    maxLongitude: -80.0, // Mantiene el límite hacia el este
-  },
+      maxLatitude: -3.3, // Mantiene la extensión hacia el norte
+      minLongitude: -81.9, // Mantiene el límite hacia el oeste
+      maxLongitude: -80.0, // Mantiene el límite hacia el este
+    },
   },
   {
     value: "ucayali",
-  name: "Ucayali",
-  boundaries: {
-    minLatitude: -11.5, // Ampliado más hacia el sur
-    maxLatitude: -7.1, // Mantiene la extensión hacia el norte
-    minLongitude: -76.0, // Mantiene el límite hacia el oeste
-    maxLongitude: -70.5, // Ampliado más hacia el este
-  },
+    name: "Ucayali",
+    boundaries: {
+      minLatitude: -11.5, // Ampliado más hacia el sur
+      maxLatitude: -7.1, // Mantiene la extensión hacia el norte
+      minLongitude: -76.0, // Mantiene el límite hacia el oeste
+      maxLongitude: -70.5, // Ampliado más hacia el este
+    },
   },
   {
     value: "historica",
     name: "Sísmica historica 1471 - 1959",
     boundaries: {
-  minLatitude: -18.85, // Reduje un poco más el valor de la latitud mínima
-  maxLatitude: 0.17,   // Aumenté un poco la latitud máxima
-  minLongitude: -81.83, // Aumenté un poco más la longitud mínima
-  maxLongitude: -68.15, // Aumenté más la longitud máxima
+      minLatitude: -18.85, // Reduje un poco más el valor de la latitud mínima
+      maxLatitude: 0.17, // Aumenté un poco la latitud máxima
+      minLongitude: -81.83, // Aumenté un poco más la longitud mínima
+      maxLongitude: -68.15, // Aumenté más la longitud máxima
     },
   },
 ]);
@@ -1026,12 +1047,12 @@ const togglePlay = () => {
         endDate: convertToDate(endDate.value),
       };
     }
-  }else{
-  useGeojson.rangoFechas = {
-    startDate: convertToDate(startDate.value),
-    endDate: convertToDate(endDate.value),
-  };
-}
+  } else {
+    useGeojson.rangoFechas = {
+      startDate: convertToDate(startDate.value),
+      endDate: convertToDate(endDate.value),
+    };
+  }
   useGeojson.estadoPl = "enable";
   statePeru.value = "disable";
   stateStartDate.value = "disable";
