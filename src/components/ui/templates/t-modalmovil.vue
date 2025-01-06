@@ -446,7 +446,7 @@ let hideTimeout
 onMounted(() => {
   hideTimeout = setTimeout(() => {
     tooltipVisible.value = false
-  }, 7000) // 5000 milisegundos = 5 segundos
+  }, 4000) // 5000 milisegundos = 5 segundos
 })
 
 // Función para mostrar el tooltip al pasar el mouse
@@ -485,7 +485,7 @@ const dataPeru = ref([
     name: "Amazonas",
     boundaries: {
       minLatitude: -7.5, // Mantiene la extensión al sur
-      maxLatitude: -3.5, // Mantiene la extensión al norte
+      maxLatitude: -2.7, // Mantiene la extensión al norte
       minLongitude: -78.9, // Ampliado hacia el oeste para incluir más de Cajamarca
       maxLongitude: -77.3, // Mantiene el límite al este
     },
@@ -495,9 +495,9 @@ const dataPeru = ref([
     send: "ANCASH",
     name: "Áncash",
     boundaries: {
-      minLatitude: -10.6,
+      minLatitude: -10.9,
       maxLatitude: -8.1,
-      minLongitude: -78.5,
+      minLongitude: -79.9,
       maxLongitude: -76.5,
     },
   },
@@ -605,10 +605,10 @@ const dataPeru = ref([
     send: "JUNIN",
     name: "Junín",
     boundaries: {
-      minLatitude: -12.5,
+      minLatitude: -12.8,
       maxLatitude: -10.7,
       minLongitude: -76.5,
-      maxLongitude: -74.0,
+      maxLongitude: -73.3,
     },
   },
   {
@@ -628,7 +628,7 @@ const dataPeru = ref([
     name: "Lambayeque",
     boundaries: {
       minLatitude: -7.3,
-      maxLatitude: -5.7,
+      maxLatitude: -5.4,
       minLongitude: -80.7,
       maxLongitude: -79.1,
     },
@@ -638,10 +638,10 @@ const dataPeru = ref([
     send: "LIMA",
     name: "Lima",
     boundaries: {
-      minLatitude: -13.3, // Extiende el sur de Lima
-      maxLatitude: -10.4, // Extiende el norte de Lima
+      minLatitude: -13.7, // Extiende el sur de Lima
+      maxLatitude: -10.0, // Extiende el norte de Lima
       minLongitude: -79.0, // Extiende el oeste hacia el mar
-      maxLongitude: -75.7, // Extiende el este hacia la sierra
+      maxLongitude: -75.6, // Extiende el este hacia la sierra
     },
   },
   {
@@ -649,8 +649,8 @@ const dataPeru = ref([
     send: "LORETO",
     name: "Loreto",
     boundaries: {
-      minLatitude: -8.5, // Ampliado más hacia el sur
-      maxLatitude: -1.5, // Ampliado más hacia el norte
+      minLatitude: -9.0, // Ampliado más hacia el sur
+      maxLatitude: -0.0, // Ampliado más hacia el norte
       minLongitude: -78.0, // Ampliado más hacia el oeste
       maxLongitude: -68.5, // Ampliado más hacia el este
     },
@@ -726,7 +726,7 @@ const dataPeru = ref([
     send: "TACNA",
     name: "Tacna",
     boundaries: {
-      minLatitude: -18.3, // Mantiene la extensión hacia el sur
+      minLatitude: -18.5, // Mantiene la extensión hacia el sur
       maxLatitude: -16.6, // Mantiene la extensión hacia el norte
       minLongitude: -71.5, // Mantiene el límite hacia el oeste
       maxLongitude: -69.4, // Reducido hacia el oeste para limitar el este
