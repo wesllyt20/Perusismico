@@ -33,8 +33,11 @@ export const useGeojsonStore = defineStore('geojson', () => {
 
     const setZoom = ref(false);
 
+    const departamento = ref("global")
+
+
     return {
         estadoPl,
-        continente, rangoFechas, rangoMagnitud, profundidad, setZoom
+        continente, rangoFechas, rangoMagnitud, profundidad, setZoom, departamento
     };
 });

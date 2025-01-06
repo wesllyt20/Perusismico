@@ -2,26 +2,34 @@
   <div>
     <div class="overflow-hidden fixed inset-0 bg-cover" id="map"></div>
     <!-- v-if="makerPopup" -->
-      <!-- Insertamos el SVG directamente sobre el mapa -->
-    <svg 
-      id="overlay-svg" 
-      viewBox="0 0 1200 800" 
+    <!-- Insertamos el SVG directamente sobre el mapa -->
+    <svg
+      id="overlay-svg"
+      viewBox="0 0 1200 800"
       xmlns="http://www.w3.org/2000/svg"
-      style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 10;"
+      style="
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        pointer-events: none;
+        z-index: 10;
+      "
     >
       <!-- Aquí va el código SVG del mapa sombreado -->
-      <path 
-        class="leaflet-interactive" 
-        stroke="#3388ff" 
-        stroke-opacity="1" 
-        stroke-width="3" 
-        stroke-linecap="round" 
-        stroke-linejoin="round" 
-        fill="#3388ff" 
-        fill-opacity="0.2" 
-        fill-rule="evenodd" 
-        d="M1118 422L1108 422L1106 424L1105 429L1101 430L1097 434L1095 442L1092 445L1093 448L1091 450L1090 449L1079 454L1075 458L1076 461L1072 465L1073 468L1077 470L1077 472L1074 473L1077 476L1078 473L1080 475L1079 480L1081 480L1085 486L1085 494L1087 494L1086 495L1089 498L1089 500L1092 502L1091 507L1092 506L1092 510L1095 515L1094 518L1098 522L1100 528L1107 537L1106 538L1108 540L1109 538L1113 538L1111 534L1113 532L1113 526L1120 528L1120 530L1116 532L1114 538L1116 536L1120 536L1118 538L1122 540L1121 548L1124 545L1130 545L1130 542L1135 537L1139 537L1140 532L1145 527L1147 527L1148 524L1152 524L1151 517L1153 517L1156 514L1156 510L1152 500L1150 498L1148 500L1145 495L1150 490L1150 486L1154 478L1155 477L1155 479L1158 482L1160 480L1160 476L1157 471L1150 469L1146 465L1144 465L1141 460L1140 461L1140 457L1136 453L1136 449L1134 449L1135 446L1131 442L1129 442L1126 433L1123 430L1121 430L1122 427L1120 427L1118 422z">
-      </path>
+      <path
+        class="leaflet-interactive"
+        stroke="#3388ff"
+        stroke-opacity="1"
+        stroke-width="3"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        fill="#3388ff"
+        fill-opacity="0.2"
+        fill-rule="evenodd"
+        d="M1118 422L1108 422L1106 424L1105 429L1101 430L1097 434L1095 442L1092 445L1093 448L1091 450L1090 449L1079 454L1075 458L1076 461L1072 465L1073 468L1077 470L1077 472L1074 473L1077 476L1078 473L1080 475L1079 480L1081 480L1085 486L1085 494L1087 494L1086 495L1089 498L1089 500L1092 502L1091 507L1092 506L1092 510L1095 515L1094 518L1098 522L1100 528L1107 537L1106 538L1108 540L1109 538L1113 538L1111 534L1113 532L1113 526L1120 528L1120 530L1116 532L1114 538L1116 536L1120 536L1118 538L1122 540L1121 548L1124 545L1130 545L1130 542L1135 537L1139 537L1140 532L1145 527L1147 527L1148 524L1152 524L1151 517L1153 517L1156 514L1156 510L1152 500L1150 498L1148 500L1145 495L1150 490L1150 486L1154 478L1155 477L1155 479L1158 482L1160 480L1160 476L1157 471L1150 469L1146 465L1144 465L1141 460L1140 461L1140 457L1136 453L1136 449L1134 449L1135 446L1131 442L1129 442L1126 433L1123 430L1121 430L1122 427L1120 427L1118 422z"
+      ></path>
     </svg>
   </div>
 </template>
@@ -37,7 +45,6 @@ import "leaflet/dist/leaflet.css";
 import { useGeojsonStore } from "@/stores/geojson.js";
 
 export default {
-  
   data() {
     return {
       map: null,
@@ -52,6 +59,7 @@ export default {
       sumarProf: 0,
       intervalId: null,
       isGeoJSONProcessing: false,
+      geoJSONLayerCapaDepartamento: null,
     };
   },
   mounted() {
@@ -217,7 +225,6 @@ export default {
     axios
       .get("/peru-sismico/datas/data.csv")
       .then((response1) => {
-        
         axios.get("/peru-sismico/datas/historicos.csv").then((response2) => {
           // Procesar el primer CSV
           Papa.parse(response1.data, {
@@ -256,72 +263,11 @@ export default {
               });
             },
           });
-          
         });
       })
       .catch((error) => {
         console.error("Error al cargar los datos:", error);
       });
-
-    /*    axios.get("/datas/data_diciembre.csv").then((response) => {
-      Papa.parse(response.data, {
-        header: true,
-        dynamicTyping: true,
-        complete: (result) => {
-          const transformedData = result.data.map((row) => {
-            if (row.date && row.hour) {
-              // Crear la columna "time" a partir de "date" y "hour"
-              const datetime = DateTime.fromFormat(
-                '${row.date} ${row.hour}',
-                "dd/MM/yyyy HH:mm:ss"
-              );
-              row.time = datetime.toISO(); // Crear la propiedad "time" con formato ISO
-            }
-            // Eliminar columnas originales si existen
-            delete row.date;
-            delete row.hour;
-            return row;
-          });
-
-          console.log(transformedData);
-
-          const geoJSONData = this.convertCSVToGeoJSON(transformedData);
-          this.setData = transformedData;
-          this.addGeoJSONToMap(geoJSONData);
-        },
-      });
-    });
-
-        axios
-      .get("/datas/data_diciembre.xlsx", { responseType: "arraybuffer" })
-      .then((response) => {
-        const workbook = XLSX.read(response.data, { type: "array" });
-        const firstSheetName = workbook.SheetNames[0];
-        const sheetData = XLSX.utils.sheet_to_json(
-          workbook.Sheets[firstSheetName]
-        );
-        console.log(sheetData);
-        // Convertir `date` y `hour` a un formato ISO 8601 para la columna `time`
-        const formattedData = sheetData.map((row) => {
-          const { date, hour, ...rest } = row;
-          const formattedTime = DateTime.fromFormat(
-            `${date} ${hour}`,
-            "dd/MM/yyyy HH:mm:ss"
-          ).toISO();
-
-          console.log(formattedData);
-          return {
-            ...rest,
-            time: formattedTime,
-          };
-        });
-
-        const geoJSONData = convertCSVToGeoJSON(formattedData); // Usa tu función existente
-        this.setData = formattedData;
-        this.addGeoJSONToMap(geoJSONData); // Usa tu lógica existente
-      });
-
- */
   },
 
   watch: {
@@ -336,6 +282,12 @@ export default {
       } else {
         // Cuando setZoom es false, regresa al zoom previo
         this.zoomOut();
+      }
+    },
+    "useGeojson.departamento": function (newVal) {
+      this.clearDepartamentos();
+      if (newVal !== "global") {
+        this.fetchDataCapaDepartamentosCenter(newVal);
       }
     },
   },
@@ -563,106 +515,75 @@ export default {
       this.intervalId = setInterval(addPointsInChunks, segundos * 1000);
     },
 
-    /*  addGeoJSONToMap(geoJSON) {
-      // Eliminar la capa CSV anterior si existe
-      if (this.csvLayer) {
-        this.map.removeLayer(this.csvLayer);
+    fetchDataCapaDepartamentosCenter(val) {
+      let getApiGeoJson = null;
+      if (val === "peru") {
+        getApiGeoJson = "/peru-sismico/datas/departamentos.geojson";
+      } else {
+        getApiGeoJson = `https://ide.igp.gob.pe/arcgis/rest/services/mapabase/MapaBase/MapServer/10/query?where=DEPARTAMEN+%3D+%27${val}%27&text=&objectIds=&time=&timeRelation=esriTimeRelationOverlaps&geometry=&geometryType=esriGeometryEnvelope&inSR=&spatialRel=esriSpatialRelIntersects&distance=&units=esriSRUnit_Foot&relationParam=&outFields=&returnGeometry=true&returnTrueCurves=false&maxAllowableOffset=&geometryPrecision=&outSR=&havingClause=&returnIdsOnly=false&returnCountOnly=false&orderByFields=&groupByFieldsForStatistics=&outStatistics=&returnZ=false&returnM=false&gdbVersion=&historicMoment=&returnDistinctValues=false&resultOffset=&resultRecordCount=&returnExtentOnly=false&sqlFormat=none&datumTransformation=&parameterValues=&rangeValues=&quantizationParameters=&featureEncoding=esriDefault&f=geojson`;
       }
+      //  https://ide.igp.gob.pe/arcgis/rest/services/mapabase/MapaBase/MapServer/10/query?where=DEPARTAMEN+%3D+%27TUMBES%27+OR++DEPARTAMEN+%3D+%27LIMA%27++OR++DEPARTAMEN+%3D+%27UCAYALI%27+OR++DEPARTAMEN+%3D+%27TACNA%27+OR++DEPARTAMEN+%3D+%27PUNO%27++OR++DEPARTAMEN+%3D+%27PASCO%27++OR++DEPARTAMEN+%3D+%27LORETO%27++OR++DEPARTAMEN+%3D+%27LORETO%27++OR++DEPARTAMEN+%3D+%27LAMBAYEQUE%27++OR++DEPARTAMEN+%3D+%27JUNIN%27++OR++DEPARTAMEN+%3D+%27ICA%27++OR++DEPARTAMEN+%3D+%27HUANCAVELICA%27++OR++DEPARTAMEN+%3D+%27CUSCO%27++OR++DEPARTAMEN+%3D+%27CUSCO%27++OR++DEPARTAMEN+%3D+%27MADRE DE DIOS%27++OR++DEPARTAMEN+%3D+%27CAJAMARCA%27++OR++DEPARTAMEN+%3D+%27AYACUCHO%27++OR++DEPARTAMEN+%3D+%27AREQUIPA%27++OR++DEPARTAMEN+%3D+%27APURIMAC%27++OR++DEPARTAMEN+%3D+%27ANCASH%27++OR++DEPARTAMEN+%3D+%27PIURA%27++OR++DEPARTAMEN+%3D+%27AMAZONAS%27++OR++DEPARTAMEN+%3D+%27LA LIBERTAD%27++OR++DEPARTAMEN+%3D+%27MOQUEGUA%27++OR++DEPARTAMEN+%3D+%27SAN MARTIN%27++OR++DEPARTAMEN+%3D+%27HUANUCO%27&text=&objectIds=&time=&timeRelation=esriTimeRelationOverlaps&geometry=&geometryType=esriGeometryEnvelope&inSR=&spatialRel=esriSpatialRelIntersects&distance=&units=esriSRUnit_Foot&relationParam=&outFields=*&returnGeometry=true&returnTrueCurves=false&maxAllowableOffset=&geometryPrecision=&outSR=&havingClause=&returnIdsOnly=false&returnCountOnly=false&orderByFields=&groupByFieldsForStatistics=&outStatistics=&returnZ=false&returnM=false&gdbVersion=&historicMoment=&returnDistinctValues=false&resultOffset=&resultRecordCount=&returnExtentOnly=false&sqlFormat=none&datumTransformation=&parameterValues=&rangeValues=&quantizationParameters=&featureEncoding=esriDefault&f=geojson
+      axios
+        .get(getApiGeoJson)
 
-      // Crear un grupo de capas vacío para los puntos
-      this.csvLayer = L.layerGroup().addTo(this.map);
-
-      // Dividir los puntos en bloques de 10
-      const features = geoJSON.features;
-      const chunkSize = 1; // CANTIDAD DE PUNTOS APARECER
-      let currentIndex = 0;
-
-      const addChunk = () => {
-        const chunk = features.slice(currentIndex, currentIndex + chunkSize);
-
-        chunk.forEach((feature) => {
-          const latlng = [
-            feature.geometry.coordinates[1],
-            feature.geometry.coordinates[0],
-          ];
-
-          // Definir el color basado en la profundidad
-          let color = "#ff0000"; // Color por defecto RED
-          if (feature.properties.depth > 300) {
-            color = "#007aff"; // Profundos (> 300 km) BLUE
-          } else if (
-            feature.properties.depth >= 61 &&
-            feature.properties.depth <= 300
-          ) {
-            color = "#39ff14"; // Intermedios (61 km - 300 km) GREEN
-          } else if (feature.properties.depth <= 60) {
-            color = "#ff0000"; // Superficiales (< 60 km) RED
-          }
-
-          // Definir el radio basado en la magnitud
-          let radius = 1; // Radio por defecto
-          const magnitude = feature.properties.mag;
-          if (magnitude >= 4 && magnitude <= 5) {
-            radius = 3.5;
-          } else if (magnitude > 5 && magnitude <= 6) {
-            radius = 4.5;
-          } else if (magnitude > 6 && magnitude <= 7) {
-            radius = 5.5;
-          } else if (magnitude > 7 && magnitude <= 9.5) {
-            radius = 13;
-          }
-
-          // Crear el marcador
-          var marker = L.circleMarker(latlng, {
-            radius: radius + this.sumarProf,
-            fillColor: color,
-            className: "pulse",
-            color: "#000",
-            weight: 0.5, // Borde
-            opacity: 1,
-            fillOpacity: 0.9,
+        .then((response) => {
+          this.geoJSONLayerCapaDepartamento = L.geoJSON(response.data, {
+            style: function () {
+              return {
+                color: "#0000AF", // Color de los bordes
+                weight: 1, // Grosor de los bordes
+                fillOpacity: 0, // Sin color de fondo (transparente)
+              };
+            },
           });
-          // Agregar un popup
-          marker.bindPopup(
-            `Lugar: ${feature.properties.place}<br>Magnitud: ${
-              feature.properties.mag
-            }<br>Profundidad: ${
-              feature.properties.depth
-            } km<br>Fecha: ${new Date(
-              feature.properties.time
-            ).toLocaleString()}`
-          );
+          //this.map.fitBounds(this.geoJSONLayerCapaDepartamento.getBounds());
+        })
+        /*
 
-          // Agregar el marcador al grupo
-          this.csvLayer.addLayer(marker);
+        .then((response) => {
+          this.geoJSONLayerCapaDepartamento = L.geoJSON(response.data, {
+            style: function () {
+              return {
+                color: "black", // Color de los bordes
+                weight: 1, // Grosor de los bordes
+                fillOpacity: 0, // Sin color de fondo (transparente)
+              };
+            },
+            onEachFeature: (feature, layer) => {
+              // Obtener el centro del polígono
+              const center = layer.getBounds().getCenter();
+
+              // Agregar un marcador con texto en el centro del polígono
+              L.marker(center, {
+                icon: L.divIcon({
+                  className: "custom-label",
+                  html: `<span class="texticon absolute font-bold text-igp-white top-[-17px] ml-[-14px] w-14 ">
+                      ${feature.properties.departamen}
+                    </span>`,
+                  iconSize: [100, 40], // Ajustar según el texto
+                  iconAnchor: [50, 20], // Centrar el texto en el marcador
+                }),
+                interactive: false, // Hacer que el marcador no sea interactivo
+              }).addTo(this.map);
+            },
+          });
+        })
+
+*/
+
+        .then(() => {
+          this.geoJSONLayerCapaDepartamento.addTo(this.map);
+        })
+        .catch((error) => {
+          console.error("Error al obtener el GeoJSON:", error);
         });
-
-        // Actualizar el índice y verificar si quedan más puntos
-        currentIndex += chunkSize;
-        if (currentIndex < features.length) {
-          setTimeout(addChunk, 100); // CAMBIAR TIEMPO DE APARECION DE PUNTOS
-        }
-      };
-
-      // Iniciar la animación
-      addChunk();
-
-      // Ajustar el mapa a los límites definidos
-      const bounds = L.latLngBounds([
-        [
-          this.useGeojson.continente.minLatitude,
-          this.useGeojson.continente.minLongitude,
-        ],
-        [
-          this.useGeojson.continente.maxLatitude,
-          this.useGeojson.continente.maxLongitude,
-        ],
-      ]);
-
-      if (features.length > 0) {
-        this.map.fitBounds(bounds);
+    },
+    clearDepartamentos() {
+      if (this.geoJSONLayerCapaDepartamento) {
+        this.map.removeLayer(this.geoJSONLayerCapaDepartamento);
+        this.geoJSONLayerCapaDepartamento = null;
       }
-    }, */
+    },
   },
   beforeUnmount() {
     // Detener cualquier intervalo en ejecución al desmontar
@@ -714,5 +635,24 @@ export default {
   100% {
     opacity: 1;
   }
+}
+.texticon {
+  font-size: 11px !important;
+  font-weight: 500;
+
+  text-shadow: rgb(0, 0, 0) 3px 0px 0px, rgb(0, 0, 0) 2.83487px 0.981584px 0px,
+    rgb(0, 0, 0) 2.35766px 1.85511px 0px, rgb(0, 0, 0) 1.62091px 2.52441px 0px,
+    rgb(0, 0, 0) 0.705713px 2.91581px 0px,
+    rgb(0, 0, 0) -0.287171px 2.98622px 0px,
+    rgb(0, 0, 0) -1.24844px 2.72789px 0px, rgb(0, 0, 0) -2.07227px 2.16926px 0px,
+    rgb(0, 0, 0) -2.66798px 1.37182px 0px, rgb(0, 0, 0) -2.96998px 0.42336px 0px,
+    rgb(0, 0, 0) -2.94502px -0.571704px 0px,
+    rgb(0, 0, 0) -2.59586px -1.50383px 0px,
+    rgb(0, 0, 0) -1.96093px -2.27041px 0px,
+    rgb(0, 0, 0) -1.11013px -2.78704px 0px,
+    rgb(0, 0, 0) -0.137119px -2.99686px 0px,
+    rgb(0, 0, 0) 0.850987px -2.87677px 0px,
+    rgb(0, 0, 0) 1.74541px -2.43999px 0px, rgb(0, 0, 0) 2.44769px -1.73459px 0px,
+    rgb(0, 0, 0) 2.88051px -0.838247px 0px;
 }
 </style>

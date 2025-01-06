@@ -408,7 +408,7 @@ const blueCircleStyle = {
 
 function setActiveTab(tab) {
   activeTab.value = tab; // quitar si en caso no quiere que cuando se cambie a peru, se ponga play solo
-
+  useGeojson.departamento = tab;
   togglePlay();
   if (tab === "peru") {
     stateStartDate.value = "disable";
@@ -470,6 +470,7 @@ const errPeru = ref("Peru error");
 const dataPeru = ref([
   {
     value: "",
+    send: "peru",
     name: "Perú",
     boundaries: {
       minLatitude: -18.35,
@@ -480,16 +481,18 @@ const dataPeru = ref([
   },
   {
     value: "amazonas",
+    send: "AMAZONAS",
     name: "Amazonas",
     boundaries: {
       minLatitude: -7.5, // Mantiene la extensión al sur
-  maxLatitude: -3.5, // Mantiene la extensión al norte
-  minLongitude: -78.9, // Ampliado hacia el oeste para incluir más de Cajamarca
-  maxLongitude: -77.3, // Mantiene el límite al este
+      maxLatitude: -3.5, // Mantiene la extensión al norte
+      minLongitude: -78.9, // Ampliado hacia el oeste para incluir más de Cajamarca
+      maxLongitude: -77.3, // Mantiene el límite al este
     },
   },
   {
     value: "ancash",
+    send: "ANCASH",
     name: "Áncash",
     boundaries: {
       minLatitude: -10.6,
@@ -500,56 +503,62 @@ const dataPeru = ref([
   },
   {
     value: "apurimac",
+    send: "APURIMAC",
     name: "Apurímac",
     boundaries: {
       minLatitude: -14.8, // Reducido hacia el norte para limitar el sur
-  maxLatitude: -13.0, // Mantiene la extensión al norte
-  minLongitude: -73.9, // Mantiene el límite al oeste
-  maxLongitude: -72.0, // Mantiene el límite al este
+      maxLatitude: -13.0, // Mantiene la extensión al norte
+      minLongitude: -73.9, // Mantiene el límite al oeste
+      maxLongitude: -72.0, // Mantiene el límite al este
     },
   },
   {
     value: "arequipa",
+    send: "AREQUIPA",
     name: "Arequipa",
     boundaries: {
       minLatitude: -17.5, // Reducido hacia el norte para limitar el sur
-    maxLatitude: -14.5, // Mantiene la extensión hacia el norte
-    minLongitude: -75, // Mantiene el límite hacia el oeste
-    maxLongitude: -70.8, // Mantiene el límite hacia el este
+      maxLatitude: -14.5, // Mantiene la extensión hacia el norte
+      minLongitude: -75, // Mantiene el límite hacia el oeste
+      maxLongitude: -70.8, // Mantiene el límite hacia el este
     },
   },
   {
     value: "ayacucho",
-name: "Ayacucho",
-boundaries: {
-  minLatitude: -15.5, // Mantiene la extensión al sur
-  maxLatitude: -12.2, // Ampliado hacia el norte
-  minLongitude: -75.0, // Mantiene el límite al oeste
-  maxLongitude: -73.0, // Mantiene el límite al este
-},
-  },
-  {
-    value: "cajamarca",
-name: "Cajamarca",
-boundaries: {
-  minLatitude: -7.7, // Mantiene la extensión hacia el sur
-    maxLatitude: -4.5, // Ampliado más hacia el norte
-    minLongitude: -79.5, // Mantiene el límite hacia el oeste
-    maxLongitude: -77.8, // Mantiene el límite hacia el este
-},
-  },
-  {
-    value: "callao",
-    name: "Callao",
+    send: "AYACUCHO",
+    name: "Ayacucho",
     boundaries: {
-      minLatitude: -12.3, // Ampliado más hacia el sur
-    maxLatitude: -11.8, // Ampliado más hacia el norte
-    minLongitude: -77.5, // Ampliado más hacia el oeste
-    maxLongitude: -77.0, // Ampliado más hacia el este
+      minLatitude: -15.5, // Mantiene la extensión al sur
+      maxLatitude: -12.2, // Ampliado hacia el norte
+      minLongitude: -75.0, // Mantiene el límite al oeste
+      maxLongitude: -73.0, // Mantiene el límite al este
     },
   },
   {
+    value: "cajamarca",
+    send: "CAJAMARCA",
+    name: "Cajamarca",
+    boundaries: {
+      minLatitude: -7.7, // Mantiene la extensión hacia el sur
+      maxLatitude: -4.5, // Ampliado más hacia el norte
+      minLongitude: -79.5, // Mantiene el límite hacia el oeste
+      maxLongitude: -77.8, // Mantiene el límite hacia el este
+    },
+  },
+ /*  {
+    value: "callao",
+    send: "LIMA",
+    name: "Callao",
+    boundaries: {
+      minLatitude: -12.3, // Ampliado más hacia el sur
+      maxLatitude: -11.8, // Ampliado más hacia el norte
+      minLongitude: -77.5, // Ampliado más hacia el oeste
+      maxLongitude: -77.0, // Ampliado más hacia el este
+    },
+  }, */
+  {
     value: "cusco",
+    send: "CUSCO",
     name: "Cusco",
     boundaries: {
       minLatitude: -15.5, // Extendido más al sur
@@ -560,36 +569,40 @@ boundaries: {
   },
   {
     value: "huancavelica",
+    send: "HUANCAVELICA",
     name: "Huancavelica",
     boundaries: {
       minLatitude: -14.1, // Ajustado hacia el norte para reducir el sur
-    maxLatitude: -11.9, // Ajustado hacia el sur para reducir el norte
-    minLongitude: -75.8, // Mantiene el límite al oeste
-    maxLongitude: -74.2, // Mantiene el límite al este
+      maxLatitude: -11.9, // Ajustado hacia el sur para reducir el norte
+      minLongitude: -75.8, // Mantiene el límite al oeste
+      maxLongitude: -74.2, // Mantiene el límite al este
     },
   },
   {
     value: "huanuco",
+    send: "HUANUCO",
     name: "Huánuco",
     boundaries: {
       minLatitude: -10.3, // Mantiene la extensión al sur
-    maxLatitude: -8.3,  // Mantiene la extensión al norte
-    minLongitude: -77.3, // Ampliado hacia el oeste para incluir más cerca del mar
-    maxLongitude: -74.5, // Mantiene el límite al este
+      maxLatitude: -8.3, // Mantiene la extensión al norte
+      minLongitude: -77.3, // Ampliado hacia el oeste para incluir más cerca del mar
+      maxLongitude: -74.5, // Mantiene el límite al este
     },
   },
   {
     value: "ica",
+    send: "ICA",
     name: "Ica",
     boundaries: {
       minLatitude: -15.7, // Ampliado hacia el sur
-    maxLatitude: -13.0, // Ampliado hacia el norte
-    minLongitude: -76.7, // Mantiene el límite al oeste
-    maxLongitude: -74.7, // Mantiene el límite al este
+      maxLatitude: -13.0, // Ampliado hacia el norte
+      minLongitude: -76.7, // Mantiene el límite al oeste
+      maxLongitude: -74.7, // Mantiene el límite al este
     },
   },
   {
     value: "junin",
+    send: "JUNIN",
     name: "Junín",
     boundaries: {
       minLatitude: -12.5,
@@ -600,16 +613,18 @@ boundaries: {
   },
   {
     value: "la_libertad",
+    send: "LA LIBERTAD",
     name: "La Libertad",
     boundaries: {
       minLatitude: -9.0, // Mantiene la extensión al sur
-    maxLatitude: -7.0, // Mantiene la extensión al norte
-    minLongitude: -81.1, // Mantiene el límite al oeste
-    maxLongitude: -76.8, // Ampliado hacia el este
+      maxLatitude: -7.0, // Mantiene la extensión al norte
+      minLongitude: -81.1, // Mantiene el límite al oeste
+      maxLongitude: -76.8, // Ampliado hacia el este
     },
   },
   {
     value: "lambayeque",
+    send: "LAMBAYEQUE",
     name: "Lambayeque",
     boundaries: {
       minLatitude: -7.3,
@@ -620,76 +635,84 @@ boundaries: {
   },
   {
     value: "lima",
+    send: "LIMA",
     name: "Lima",
     boundaries: {
-  minLatitude: -13.3,  // Extiende el sur de Lima
-  maxLatitude: -10.4,  // Extiende el norte de Lima
-  minLongitude: -79.0, // Extiende el oeste hacia el mar
-  maxLongitude: -75.7, // Extiende el este hacia la sierra
+      minLatitude: -13.3, // Extiende el sur de Lima
+      maxLatitude: -10.4, // Extiende el norte de Lima
+      minLongitude: -79.0, // Extiende el oeste hacia el mar
+      maxLongitude: -75.7, // Extiende el este hacia la sierra
     },
   },
   {
     value: "loreto",
+    send: "LORETO",
     name: "Loreto",
     boundaries: {
       minLatitude: -8.5, // Ampliado más hacia el sur
-    maxLatitude: -1.5,  // Ampliado más hacia el norte
-    minLongitude: -78.0, // Ampliado más hacia el oeste
-    maxLongitude: -68.5, // Ampliado más hacia el este
+      maxLatitude: -1.5, // Ampliado más hacia el norte
+      minLongitude: -78.0, // Ampliado más hacia el oeste
+      maxLongitude: -68.5, // Ampliado más hacia el este
     },
   },
   {
     value: "madre_de_dios",
+    send: "MADRE DE DIOS",
     name: "Madre de Dios",
     boundaries: {
       minLatitude: -13.5, // Mantiene la extensión al sur
-    maxLatitude: -10.2,  // Reducido hacia el sur para limitar el norte
-    minLongitude: -72.5, // Mantiene el límite al oeste
-    maxLongitude: -65.5, // Mantiene el límite al este
+      maxLatitude: -10.2, // Reducido hacia el sur para limitar el norte
+      minLongitude: -72.5, // Mantiene el límite al oeste
+      maxLongitude: -65.5, // Mantiene el límite al este
     },
   },
   {
     value: "moquegua",
+    send: "MOQUEGUA",
     name: "Moquegua",
     boundaries: {
       minLatitude: -17.9, // Ampliado más hacia el sur
-    maxLatitude: -16.0, // Ampliado más hacia el norte
-    minLongitude: -72.0, // Ampliado más hacia el oeste
-    maxLongitude: -70.0, // Ampliado más hacia el este
+      maxLatitude: -16.0, // Ampliado más hacia el norte
+      minLongitude: -72.0, // Ampliado más hacia el oeste
+      maxLongitude: -70.0, // Ampliado más hacia el este
     },
   },
   {
     value: "pasco",
+    send: "PASCO",
     name: "Pasco",
     boundaries: {
       minLatitude: -11.1, // Mantiene la extensión hacia el sur
-    maxLatitude: -9.6,  // Mantiene la extensión hacia el norte
-    minLongitude: -76.8, // Mantiene el límite al oeste
-    maxLongitude: -74.3, // Ampliado hacia el este
+      maxLatitude: -9.6, // Mantiene la extensión hacia el norte
+      minLongitude: -76.8, // Mantiene el límite al oeste
+      maxLongitude: -74.3, // Ampliado hacia el este
     },
   },
   {
     value: "piura",
+    send: "PIURA",
     name: "Piura",
     boundaries: {
       minLatitude: -6.4, // Ampliado hacia el sur
-    maxLatitude: -4.1, // Mantiene el límite hacia el norte
-    minLongitude: -81.7, // Mantiene el límite al oeste
-    maxLongitude: -79.0, // Mantiene el límite al este
+      maxLatitude: -4.1, // Mantiene el límite hacia el norte
+      minLongitude: -81.7, // Mantiene el límite al oeste
+      maxLongitude: -79.0, // Mantiene el límite al este
     },
   },
   {
     value: "puno",
+    send: "PUNO",
     name: "Puno",
     boundaries: {
       minLatitude: -17.3, // Reducido hacia el norte para limitar el sur
-    maxLatitude: -12.6, // Mantiene la extensión hacia el norte
-    minLongitude: -71.2, // Mantiene el límite hacia el oeste
-    maxLongitude: -68.5, // Mantiene el límite hacia el este
+      maxLatitude: -12.6, // Mantiene la extensión hacia el norte
+      minLongitude: -71.2, // Mantiene el límite hacia el oeste
+      maxLongitude: -68.5, // Mantiene el límite hacia el este
     },
   },
   {
     value: "san_martin",
+    send: "SAN MARTIN",
     name: "San Martín",
     boundaries: {
       minLatitude: -8.8,
@@ -700,46 +723,49 @@ boundaries: {
   },
   {
     value: "tacna",
+    send: "TACNA",
     name: "Tacna",
     boundaries: {
       minLatitude: -18.3, // Mantiene la extensión hacia el sur
-    maxLatitude: -16.6, // Mantiene la extensión hacia el norte
-    minLongitude: -71.5, // Mantiene el límite hacia el oeste
-    maxLongitude: -69.4, // Reducido hacia el oeste para limitar el este
+      maxLatitude: -16.6, // Mantiene la extensión hacia el norte
+      minLongitude: -71.5, // Mantiene el límite hacia el oeste
+      maxLongitude: -69.4, // Reducido hacia el oeste para limitar el este
     },
   },
   {
     value: "tumbes",
+    send: "TUMBES",
     name: "Tumbes",
     boundaries: {
       minLatitude: -4.3, // Reducido hacia el norte para limitar el sur
-    maxLatitude: -3.3, // Mantiene la extensión hacia el norte
-    minLongitude: -81.9, // Mantiene el límite hacia el oeste
-    maxLongitude: -80.0, // Mantiene el límite hacia el este
-  },
+      maxLatitude: -3.3, // Mantiene la extensión hacia el norte
+      minLongitude: -81.9, // Mantiene el límite hacia el oeste
+      maxLongitude: -80.0, // Mantiene el límite hacia el este
+    },
   },
   {
     value: "ucayali",
-  name: "Ucayali",
-  boundaries: {
-    minLatitude: -11.5, // Ampliado más hacia el sur
-    maxLatitude: -7.1, // Mantiene la extensión hacia el norte
-    minLongitude: -76.0, // Mantiene el límite hacia el oeste
-    maxLongitude: -70.5, // Ampliado más hacia el este
-  },
+    send: "UCAYALI",
+    name: "Ucayali",
+    boundaries: {
+      minLatitude: -11.5, // Ampliado más hacia el sur
+      maxLatitude: -7.1, // Mantiene la extensión hacia el norte
+      minLongitude: -76.0, // Mantiene el límite hacia el oeste
+      maxLongitude: -70.5, // Ampliado más hacia el este
+    },
   },
   {
     value: "historica",
+    send: "peru",
     name: "Sísmica historica 1471 - 1959",
     boundaries: {
-  minLatitude: -18.85, // Reduje un poco más el valor de la latitud mínima
-  maxLatitude: 0.17,   // Aumenté un poco la latitud máxima
-  minLongitude: -81.83, // Aumenté un poco más la longitud mínima
-  maxLongitude: -68.15, // Aumenté más la longitud máxima
+      minLatitude: -18.85, // Reduje un poco más el valor de la latitud mínima
+      maxLatitude: 0.17, // Aumenté un poco la latitud máxima
+      minLongitude: -81.83, // Aumenté un poco más la longitud mínima
+      maxLongitude: -68.15, // Aumenté más la longitud máxima
     },
   },
 ]);
-
 function getValPeru() {
   if (selPeru.value === "actual" || selPeru.value === "historica") {
     stateStartDate.value = "disable";
@@ -760,7 +786,7 @@ watch(selPeru, (newValue) => {
   );
 
   getValPeru();
-
+  useGeojson.departamento = depSeleccionado.send;
   if (depSeleccionado) {
     const boundaries = depSeleccionado.boundaries;
     useGeojson.continente = boundaries;

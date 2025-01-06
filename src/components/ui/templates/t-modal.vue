@@ -1,4 +1,3 @@
-
 <template>
   <div
     class="flex items-center px-4 sm:px-4 md:px-0 lg:px-0 xl:px-0 2xl:px-0 ml-0 sm:ml-0 md:ml-8 lg:ml-10 xl:ml-14 2xl:ml-20 justify-start z-10 scroll-auto select-none absolute mt-16"
@@ -453,6 +452,7 @@ const blueCircleStyle = {
 
 function setActiveTab(tab) {
   activeTab.value = tab; // quitar si en caso no quiere que cuando se cambie a peru, se ponga play solo
+  useGeojson.departamento = tab;
 
   togglePlay();
   if (tab === "peru") {
@@ -516,6 +516,7 @@ const errPeru = ref("Peru error");
 const dataPeru = ref([
   {
     value: "",
+    send: "peru",
     name: "Perú",
     boundaries: {
       minLatitude: -18.35,
@@ -526,6 +527,7 @@ const dataPeru = ref([
   },
   {
     value: "amazonas",
+    send: "AMAZONAS",
     name: "Amazonas",
     boundaries: {
       minLatitude: -7.5, // Mantiene la extensión al sur
@@ -536,6 +538,7 @@ const dataPeru = ref([
   },
   {
     value: "ancash",
+    send: "ANCASH",
     name: "Áncash",
     boundaries: {
       minLatitude: -10.6,
@@ -546,6 +549,7 @@ const dataPeru = ref([
   },
   {
     value: "apurimac",
+    send: "APURIMAC",
     name: "Apurímac",
     boundaries: {
       minLatitude: -14.8, // Reducido hacia el norte para limitar el sur
@@ -556,6 +560,7 @@ const dataPeru = ref([
   },
   {
     value: "arequipa",
+    send: "AREQUIPA",
     name: "Arequipa",
     boundaries: {
       minLatitude: -17.5, // Reducido hacia el norte para limitar el sur
@@ -566,6 +571,7 @@ const dataPeru = ref([
   },
   {
     value: "ayacucho",
+    send: "AYACUCHO",
     name: "Ayacucho",
     boundaries: {
       minLatitude: -15.5, // Mantiene la extensión al sur
@@ -576,6 +582,7 @@ const dataPeru = ref([
   },
   {
     value: "cajamarca",
+    send: "CAJAMARCA",
     name: "Cajamarca",
     boundaries: {
       minLatitude: -7.7, // Mantiene la extensión hacia el sur
@@ -584,8 +591,9 @@ const dataPeru = ref([
       maxLongitude: -77.8, // Mantiene el límite hacia el este
     },
   },
-  {
+ /*  {
     value: "callao",
+    send: "LIMA",
     name: "Callao",
     boundaries: {
       minLatitude: -12.3, // Ampliado más hacia el sur
@@ -593,9 +601,10 @@ const dataPeru = ref([
       minLongitude: -77.5, // Ampliado más hacia el oeste
       maxLongitude: -77.0, // Ampliado más hacia el este
     },
-  },
+  }, */
   {
     value: "cusco",
+    send: "CUSCO",
     name: "Cusco",
     boundaries: {
       minLatitude: -15.5, // Extendido más al sur
@@ -606,6 +615,7 @@ const dataPeru = ref([
   },
   {
     value: "huancavelica",
+    send: "HUANCAVELICA",
     name: "Huancavelica",
     boundaries: {
       minLatitude: -14.1, // Ajustado hacia el norte para reducir el sur
@@ -616,6 +626,7 @@ const dataPeru = ref([
   },
   {
     value: "huanuco",
+    send: "HUANUCO",
     name: "Huánuco",
     boundaries: {
       minLatitude: -10.3, // Mantiene la extensión al sur
@@ -626,6 +637,7 @@ const dataPeru = ref([
   },
   {
     value: "ica",
+    send: "ICA",
     name: "Ica",
     boundaries: {
       minLatitude: -15.7, // Ampliado hacia el sur
@@ -636,6 +648,7 @@ const dataPeru = ref([
   },
   {
     value: "junin",
+    send: "JUNIN",
     name: "Junín",
     boundaries: {
       minLatitude: -12.5,
@@ -646,6 +659,7 @@ const dataPeru = ref([
   },
   {
     value: "la_libertad",
+    send: "LA LIBERTAD",
     name: "La Libertad",
     boundaries: {
       minLatitude: -9.0, // Mantiene la extensión al sur
@@ -656,6 +670,7 @@ const dataPeru = ref([
   },
   {
     value: "lambayeque",
+    send: "LAMBAYEQUE",
     name: "Lambayeque",
     boundaries: {
       minLatitude: -7.3,
@@ -666,6 +681,7 @@ const dataPeru = ref([
   },
   {
     value: "lima",
+    send: "LIMA",
     name: "Lima",
     boundaries: {
       minLatitude: -13.3, // Extiende el sur de Lima
@@ -676,6 +692,7 @@ const dataPeru = ref([
   },
   {
     value: "loreto",
+    send: "LORETO",
     name: "Loreto",
     boundaries: {
       minLatitude: -8.5, // Ampliado más hacia el sur
@@ -686,6 +703,7 @@ const dataPeru = ref([
   },
   {
     value: "madre_de_dios",
+    send: "MADRE DE DIOS",
     name: "Madre de Dios",
     boundaries: {
       minLatitude: -13.5, // Mantiene la extensión al sur
@@ -696,6 +714,7 @@ const dataPeru = ref([
   },
   {
     value: "moquegua",
+    send: "MOQUEGUA",
     name: "Moquegua",
     boundaries: {
       minLatitude: -17.9, // Ampliado más hacia el sur
@@ -706,6 +725,7 @@ const dataPeru = ref([
   },
   {
     value: "pasco",
+    send: "PASCO",
     name: "Pasco",
     boundaries: {
       minLatitude: -11.1, // Mantiene la extensión hacia el sur
@@ -716,6 +736,7 @@ const dataPeru = ref([
   },
   {
     value: "piura",
+    send: "PIURA",
     name: "Piura",
     boundaries: {
       minLatitude: -6.4, // Ampliado hacia el sur
@@ -726,6 +747,7 @@ const dataPeru = ref([
   },
   {
     value: "puno",
+    send: "PUNO",
     name: "Puno",
     boundaries: {
       minLatitude: -17.3, // Reducido hacia el norte para limitar el sur
@@ -736,6 +758,7 @@ const dataPeru = ref([
   },
   {
     value: "san_martin",
+    send: "SAN MARTIN",
     name: "San Martín",
     boundaries: {
       minLatitude: -8.8,
@@ -746,6 +769,7 @@ const dataPeru = ref([
   },
   {
     value: "tacna",
+    send: "TACNA",
     name: "Tacna",
     boundaries: {
       minLatitude: -18.3, // Mantiene la extensión hacia el sur
@@ -756,6 +780,7 @@ const dataPeru = ref([
   },
   {
     value: "tumbes",
+    send: "TUMBES",
     name: "Tumbes",
     boundaries: {
       minLatitude: -4.3, // Reducido hacia el norte para limitar el sur
@@ -766,6 +791,7 @@ const dataPeru = ref([
   },
   {
     value: "ucayali",
+    send: "UCAYALI",
     name: "Ucayali",
     boundaries: {
       minLatitude: -11.5, // Ampliado más hacia el sur
@@ -776,6 +802,7 @@ const dataPeru = ref([
   },
   {
     value: "historica",
+    send: "peru",
     name: "Sísmica historica 1471 - 1959",
     boundaries: {
       minLatitude: -18.85, // Reduje un poco más el valor de la latitud mínima
@@ -805,6 +832,8 @@ watch(selPeru, (newValue) => {
   );
 
   getValPeru();
+
+  useGeojson.departamento = depSeleccionado.send;
 
   if (depSeleccionado) {
     const boundaries = depSeleccionado.boundaries;
