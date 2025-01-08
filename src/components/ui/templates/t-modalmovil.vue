@@ -848,7 +848,7 @@ const dataContinente = ref([
     value: "asia",
     name: "Asia",
     boundaries: {
-      minLatitude: 1.0,
+      minLatitude: -11.0,
       maxLatitude: 81.0,
       minLongitude: 26.0,
       maxLongitude: 169.0,

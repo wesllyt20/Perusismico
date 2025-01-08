@@ -886,17 +886,17 @@ const dataContinente = ref([
     value: "centroamerica",
     name: "América Central",
     boundaries: {
-      minLatitude: 7.0,
-      maxLatitude: 20.0,
-      minLongitude: -92.0,
-      maxLongitude: -77.0,
+      minLatitude: 5.0,
+      maxLatitude: 25.0,
+      minLongitude: -95.0,
+      maxLongitude: -60.0,
     },
   },
   {
     value: "asia",
     name: "Asia",
     boundaries: {
-      minLatitude: 1.0,
+      minLatitude: -11.0,
       maxLatitude: 81.0,
       minLongitude: 26.0,
       maxLongitude: 169.0,
