@@ -610,11 +610,18 @@ export default {
 
 <style>
 #map {
-  width: 100%; /* Asegúrate de que el mapa ocupe todo el ancho */
-  z-index: 0; /* Asegúrate de que no esté siendo cubierto por otros elementos */
-
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100vh; /* Por defecto, el mapa ocupa toda la altura */
 }
 
+@media (max-width: 600px) {
+  #map {
+    height: 60vh; /* En pantallas pequeñas, ocupa solo la mitad de la altura */
+  }
+}
 .pulse {
   animation: pulsate 1s ease-out;
   opacity: 1;
