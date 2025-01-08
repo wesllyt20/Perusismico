@@ -128,6 +128,8 @@
               :autoApply="true"
               :disabled="disStartDate"
               month-picker
+              :min-date="new Date(1960, 0, 1)"
+              :year-range="[1960, new Date().getFullYear()]"
               style="color: blue !important"
           ></VueDatePicker>
         </template>
@@ -144,13 +146,15 @@
               :autoApply="true"
               :disabled="disEndDate"
               month-picker
+              :min-date="new Date(1960, 0, 1)"
+              :year-range="[1960, new Date().getFullYear()]"
           ></VueDatePicker>
         </template>
         <template v-slot:name> Fecha de fin </template>
         <template v-slot:error> {{ errEndDate }} </template>
       </tCalendar>
- <span class=" col-span-8 text-xs text-center ml-1 text-igp-dark-400 mb-2 "
-          >(*) desde 1471 hasta la fecha
+      <span id="span" class=" col-span-8 text-xs text-center ml-1 text-igp-dark-400 mb-2 "
+          >(*) desde 1960 hasta la fecha
         </span>
       </div>       
       <div class="grid grid-cols-12 col-span-12 border ml-4 py-3 rounded-lg">
@@ -446,7 +450,7 @@ let hideTimeout
 onMounted(() => {
   hideTimeout = setTimeout(() => {
     tooltipVisible.value = false
-  }, 4000) // 5000 milisegundos = 5 segundos
+  }, 2000) // 5000 milisegundos = 5 segundos
 })
 
 // Función para mostrar el tooltip al pasar el mouse
@@ -460,7 +464,7 @@ const showTooltip = () => {
   // Configuramos el temporizador para ocultar el tooltip después de 5 segundos
   hideTimeout = setTimeout(() => {
     tooltipVisible.value = false
-  }, 5000)
+  }, 3000)
 };
 
 // PERU
@@ -528,10 +532,10 @@ const dataPeru = ref([
     send: "AYACUCHO",
     name: "Ayacucho",
     boundaries: {
-      minLatitude: -15.5, // Mantiene la extensión al sur
-      maxLatitude: -12.2, // Ampliado hacia el norte
-      minLongitude: -75.0, // Mantiene el límite al oeste
-      maxLongitude: -73.0, // Mantiene el límite al este
+      minLatitude: -15.7, // Mantiene la extensión al sur
+      maxLatitude: -12.0, // Ampliado hacia el norte
+      minLongitude: -75.2, // Mantiene el límite al oeste
+      maxLongitude: -72.5, // Mantiene el límite al este
     },
   },
   {
@@ -772,11 +776,13 @@ function getValPeru() {
     disStartDate.value = true;
     stateEndDate.value = "disable";
     disEndDate.value = true;
+    document.getElementById("span").style.display = "none";
   } else {
     stateStartDate.value = "enable";
     disStartDate.value = false;
     stateEndDate.value = "enable";
     disEndDate.value = false;
+    document.getElementById("span").style.display = "inline";
   }
 }
 
@@ -822,8 +828,8 @@ const dataContinente = ref([
     value: "noramerica",
     name: "América del Norte",
     boundaries: {
-      minLatitude: 23.0,
-      maxLatitude: 50.0,
+      minLatitude: 15.0,
+      maxLatitude: 72.0,
       minLongitude: -168.0,
       maxLongitude: -53.0,
     },

@@ -518,12 +518,12 @@ export default {
     fetchDataCapaDepartamentosCenter(val) {
       let getApiGeoJson = null;
       if (val === "peru") {
-        //getApiGeoJson = "/peru-sismico/datas/departamentos.geojson";
-        getApiGeoJson = "/peru-sismico/datas/peru.geojson";
+       // getApiGeoJson = "/peru-sismico/datas/departamentos.geojson";
+       getApiGeoJson = "/peru-sismico/datas/peru.geojson";
       } else {
         getApiGeoJson = `https://ide.igp.gob.pe/arcgis/rest/services/mapabase/MapaBase/MapServer/10/query?where=DEPARTAMEN+%3D+%27${val}%27&text=&objectIds=&time=&timeRelation=esriTimeRelationOverlaps&geometry=&geometryType=esriGeometryEnvelope&inSR=&spatialRel=esriSpatialRelIntersects&distance=&units=esriSRUnit_Foot&relationParam=&outFields=&returnGeometry=true&returnTrueCurves=false&maxAllowableOffset=&geometryPrecision=&outSR=&havingClause=&returnIdsOnly=false&returnCountOnly=false&orderByFields=&groupByFieldsForStatistics=&outStatistics=&returnZ=false&returnM=false&gdbVersion=&historicMoment=&returnDistinctValues=false&resultOffset=&resultRecordCount=&returnExtentOnly=false&sqlFormat=none&datumTransformation=&parameterValues=&rangeValues=&quantizationParameters=&featureEncoding=esriDefault&f=geojson`;
       }
-      //  https://ide.igp.gob.pe/arcgis/rest/services/mapabase/MapaBase/MapServer/10/query?where=DEPARTAMEN+%3D+%27TUMBES%27+OR++DEPARTAMEN+%3D+%27LIMA%27++OR++DEPARTAMEN+%3D+%27UCAYALI%27+OR++DEPARTAMEN+%3D+%27TACNA%27+OR++DEPARTAMEN+%3D+%27PUNO%27++OR++DEPARTAMEN+%3D+%27PASCO%27++OR++DEPARTAMEN+%3D+%27LORETO%27++OR++DEPARTAMEN+%3D+%27LORETO%27++OR++DEPARTAMEN+%3D+%27LAMBAYEQUE%27++OR++DEPARTAMEN+%3D+%27JUNIN%27++OR++DEPARTAMEN+%3D+%27ICA%27++OR++DEPARTAMEN+%3D+%27HUANCAVELICA%27++OR++DEPARTAMEN+%3D+%27CUSCO%27++OR++DEPARTAMEN+%3D+%27CUSCO%27++OR++DEPARTAMEN+%3D+%27MADRE DE DIOS%27++OR++DEPARTAMEN+%3D+%27CAJAMARCA%27++OR++DEPARTAMEN+%3D+%27AYACUCHO%27++OR++DEPARTAMEN+%3D+%27AREQUIPA%27++OR++DEPARTAMEN+%3D+%27APURIMAC%27++OR++DEPARTAMEN+%3D+%27ANCASH%27++OR++DEPARTAMEN+%3D+%27PIURA%27++OR++DEPARTAMEN+%3D+%27AMAZONAS%27++OR++DEPARTAMEN+%3D+%27LA LIBERTAD%27++OR++DEPARTAMEN+%3D+%27MOQUEGUA%27++OR++DEPARTAMEN+%3D+%27SAN MARTIN%27++OR++DEPARTAMEN+%3D+%27HUANUCO%27&text=&objectIds=&time=&timeRelation=esriTimeRelationOverlaps&geometry=&geometryType=esriGeometryEnvelope&inSR=&spatialRel=esriSpatialRelIntersects&distance=&units=esriSRUnit_Foot&relationParam=&outFields=*&returnGeometry=true&returnTrueCurves=false&maxAllowableOffset=&geometryPrecision=&outSR=&havingClause=&returnIdsOnly=false&returnCountOnly=false&orderByFields=&groupByFieldsForStatistics=&outStatistics=&returnZ=false&returnM=false&gdbVersion=&historicMoment=&returnDistinctValues=false&resultOffset=&resultRecordCount=&returnExtentOnly=false&sqlFormat=none&datumTransformation=&parameterValues=&rangeValues=&quantizationParameters=&featureEncoding=esriDefault&f=geojson
+      // https://ide.igp.gob.pe/arcgis/rest/services/mapabase/MapaBase/MapServer/10/query?where=DEPARTAMEN+%3D+%27TUMBES%27+OR++DEPARTAMEN+%3D+%27LIMA%27++OR++DEPARTAMEN+%3D+%27UCAYALI%27+OR++DEPARTAMEN+%3D+%27TACNA%27+OR++DEPARTAMEN+%3D+%27PUNO%27++OR++DEPARTAMEN+%3D+%27PASCO%27++OR++DEPARTAMEN+%3D+%27LORETO%27++OR++DEPARTAMEN+%3D+%27LORETO%27++OR++DEPARTAMEN+%3D+%27LAMBAYEQUE%27++OR++DEPARTAMEN+%3D+%27JUNIN%27++OR++DEPARTAMEN+%3D+%27ICA%27++OR++DEPARTAMEN+%3D+%27HUANCAVELICA%27++OR++DEPARTAMEN+%3D+%27CUSCO%27++OR++DEPARTAMEN+%3D+%27CUSCO%27++OR++DEPARTAMEN+%3D+%27MADRE DE DIOS%27++OR++DEPARTAMEN+%3D+%27CAJAMARCA%27++OR++DEPARTAMEN+%3D+%27AYACUCHO%27++OR++DEPARTAMEN+%3D+%27AREQUIPA%27++OR++DEPARTAMEN+%3D+%27APURIMAC%27++OR++DEPARTAMEN+%3D+%27ANCASH%27++OR++DEPARTAMEN+%3D+%27PIURA%27++OR++DEPARTAMEN+%3D+%27AMAZONAS%27++OR++DEPARTAMEN+%3D+%27LA LIBERTAD%27++OR++DEPARTAMEN+%3D+%27MOQUEGUA%27++OR++DEPARTAMEN+%3D+%27SAN MARTIN%27++OR++DEPARTAMEN+%3D+%27HUANUCO%27&text=&objectIds=&time=&timeRelation=esriTimeRelationOverlaps&geometry=&geometryType=esriGeometryEnvelope&inSR=&spatialRel=esriSpatialRelIntersects&distance=&units=esriSRUnit_Foot&relationParam=&outFields=*&returnGeometry=true&returnTrueCurves=false&maxAllowableOffset=&geometryPrecision=&outSR=&havingClause=&returnIdsOnly=false&returnCountOnly=false&orderByFields=&groupByFieldsForStatistics=&outStatistics=&returnZ=false&returnM=false&gdbVersion=&historicMoment=&returnDistinctValues=false&resultOffset=&resultRecordCount=&returnExtentOnly=false&sqlFormat=none&datumTransformation=&parameterValues=&rangeValues=&quantizationParameters=&featureEncoding=esriDefault&f=geojson
       axios
         .get(getApiGeoJson)
 
@@ -537,7 +537,7 @@ export default {
               };
             },
           });
-          //this.map.fitBounds(this.geoJSONLayerCapaDepartamento.getBounds());
+         // this.map.fitBounds(this.geoJSONLayerCapaDepartamento.getBounds());
         })
         /*
 
@@ -571,7 +571,6 @@ export default {
         })
 
 */
-
         .then(() => {
           this.geoJSONLayerCapaDepartamento.addTo(this.map);
         })
@@ -613,6 +612,7 @@ export default {
 #map {
   width: 100%; /* Asegúrate de que el mapa ocupe todo el ancho */
   z-index: 0; /* Asegúrate de que no esté siendo cubierto por otros elementos */
+
 }
 
 .pulse {

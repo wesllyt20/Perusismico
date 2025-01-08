@@ -131,6 +131,8 @@
               :format-locale="es"
               :autoApply="true"
               :disabled="disStartDate"
+              :min-date="new Date(1960, 0, 1)"
+              :year-range="[1960, new Date().getFullYear()]"
               month-picker
               style="color: blue !important"
             ></VueDatePicker>
@@ -148,13 +150,15 @@
               :autoApply="true"
               :disabled="disEndDate"
               month-picker
+              :min-date="new Date(1960, 0, 1)"
+              :year-range="[1960, new Date().getFullYear()]"
             ></VueDatePicker>
           </template>
           <template v-slot:name> Fecha de fin </template>
           <template v-slot:error> {{ errEndDate }} </template>
         </tCalendar>
-        <span class="col-span-5 text-xs text-center ml-1 text-igp-dark-400 mb-2"
-          >(*) desde 1471 hasta la fecha
+        <span id="span" class="col-span-5 text-xs text-center ml-1 text-igp-dark-400 mb-2"
+          >(*) desde 1960 hasta la fecha
         </span>
       </div>
 
@@ -492,7 +496,7 @@ let hideTimeout;
 onMounted(() => {
   hideTimeout = setTimeout(() => {
     tooltipVisible.value = false;
-  }, 4000); // 4000 milisegundos = 5 segundos
+  }, 2000); // 4000 milisegundos = 5 segundos
 });
 
 // Función para mostrar el tooltip al pasar el mouse
@@ -506,7 +510,7 @@ const showTooltip = () => {
   // Configuramos el temporizador para ocultar el tooltip después de 5 segundos
   hideTimeout = setTimeout(() => {
     tooltipVisible.value = false;
-  }, 5000);
+  }, 3000);
 };
 
 // PERU
@@ -574,10 +578,10 @@ const dataPeru = ref([
     send: "AYACUCHO",
     name: "Ayacucho",
     boundaries: {
-      minLatitude: -15.5, // Mantiene la extensión al sur
-      maxLatitude: -12.2, // Ampliado hacia el norte
-      minLongitude: -75.0, // Mantiene el límite al oeste
-      maxLongitude: -73.0, // Mantiene el límite al este
+      minLatitude: -15.7, // Mantiene la extensión al sur
+      maxLatitude: -12.0, // Ampliado hacia el norte
+      minLongitude: -75.2, // Mantiene el límite al oeste
+      maxLongitude: -72.5, // Mantiene el límite al este
     },
   },
   {
@@ -707,7 +711,7 @@ const dataPeru = ref([
     name: "Madre de Dios",
     boundaries: {
       minLatitude: -13.5, // Mantiene la extensión al sur
-      maxLatitude: -10.2, // Reducido hacia el sur para limitar el norte
+      maxLatitude: -9.8, // Reducido hacia el sur para limitar el norte
       minLongitude: -72.5, // Mantiene el límite al oeste
       maxLongitude: -65.5, // Mantiene el límite al este
     },
@@ -818,11 +822,13 @@ function getValPeru() {
     disStartDate.value = true;
     stateEndDate.value = "disable";
     disEndDate.value = true;
+    document.getElementById("span").style.display = "none";
   } else {
     stateStartDate.value = "enable";
     disStartDate.value = false;
     stateEndDate.value = "enable";
     disEndDate.value = false;
+    document.getElementById("span").style.display = "inline";
   }
 }
 
@@ -870,8 +876,8 @@ const dataContinente = ref([
     value: "noramerica",
     name: "América del Norte",
     boundaries: {
-      minLatitude: 23.0,
-      maxLatitude: 50.0,
+      minLatitude: 15.0,
+      maxLatitude: 72.0,
       minLongitude: -168.0,
       maxLongitude: -53.0,
     },
