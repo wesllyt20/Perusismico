@@ -610,10 +610,10 @@ export default {
 
 <style>
 #map {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
+  position: absolute;/* Posiciona el mapa de forma absoluta respecto a su contenedor más cercano con posición relativa (por defecto, el body) */
+  top: 0;/* Coloca el mapa en la parte superior del contenedor o ventana */
+  left: 0;/* Coloca el mapa en la parte izquierda del contenedor o ventana */
+  width: 100%;/* El mapa ocupará el 100% del ancho disponible de su contenedor */
   height: 100vh; /* Por defecto, el mapa ocupa toda la altura */
 }
 

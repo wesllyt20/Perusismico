@@ -157,6 +157,7 @@
           <template v-slot:name> Fecha de fin </template>
           <template v-slot:error> {{ errEndDate }} </template>
         </tCalendar>
+         <!--Se asigno id -->
         <span id="span" class="col-span-5 text-xs text-center ml-1 text-igp-dark-400 mb-2"
           >(*) desde 1960 hasta la fecha
         </span>
@@ -816,18 +817,22 @@ const dataPeru = ref([
     },
   },
 ]);
+
 function getValPeru() {
+
   if (selPeru.value === "actual" || selPeru.value === "historica") {
     stateStartDate.value = "disable";
     disStartDate.value = true;
     stateEndDate.value = "disable";
     disEndDate.value = true;
+     // Oculta el elemento con el id "span" 
     document.getElementById("span").style.display = "none";
   } else {
     stateStartDate.value = "enable";
     disStartDate.value = false;
     stateEndDate.value = "enable";
     disEndDate.value = false;
+   // Muestra el elemento con el id "span" 
     document.getElementById("span").style.display = "inline";
   }
 }
@@ -934,6 +939,8 @@ const dataContinente = ref([
   },
 ]);
 
+const continente = () => {
+  
 watch(selContinente, (newValue) => {
   const continenteSeleccionado = dataContinente.value.find(
     (continente) => continente.value === newValue
@@ -942,8 +949,16 @@ watch(selContinente, (newValue) => {
   if (continenteSeleccionado) {
     const boundaries = continenteSeleccionado.boundaries;
     useGeojson.continente = boundaries;
+   
+      // Verifica si la pestaña activa es "global"
+      if (activeTab.value === "global") {
+        document.getElementById("span").style.display = "inline";
+      } 
   }
 });
+};
+// Llama a la función continente
+continente();
 
 //MAGNITUD
 const magnitudeRange = ref([4, 9.5]);
@@ -1086,8 +1101,11 @@ const togglePlay = () => {
     useGeojson.rangoFechas = {
       startDate: convertToDate(startDate.value),
       endDate: convertToDate(endDate.value),
+      
     };
   }
+  
+
   useGeojson.estadoPl = "enable";
   statePeru.value = "disable";
   stateStartDate.value = "disable";

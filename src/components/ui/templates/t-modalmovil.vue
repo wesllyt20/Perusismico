@@ -446,7 +446,7 @@ const tooltipVisible = ref(true);
 // Variable para almacenar el temporizador
 let hideTimeout
 
-// Configurar el temporizador para cerrar el tooltip automáticamente después de 5 segundos al montar el componente
+// Configurar el temporizador para cerrar el tooltip automáticamente después de 2 segundos al montar el componente
 onMounted(() => {
   hideTimeout = setTimeout(() => {
     tooltipVisible.value = false
@@ -770,6 +770,7 @@ const dataPeru = ref([
     },
   },
 ]);
+
 function getValPeru() {
   if (selPeru.value === "actual" || selPeru.value === "historica") {
     stateStartDate.value = "disable";
@@ -886,6 +887,7 @@ const dataContinente = ref([
   },
 ]);
 
+const continente = () => {
 watch(selContinente, (newValue) => {
   const continenteSeleccionado = dataContinente.value.find(
     (continente) => continente.value === newValue
@@ -895,7 +897,14 @@ watch(selContinente, (newValue) => {
     const boundaries = continenteSeleccionado.boundaries;
     useGeojson.continente = boundaries;
   }
+       // Verifica si la pestaña activa es "global"
+       if (activeTab.value === "global") {
+        document.getElementById("span").style.display = "inline";
+      } 
 });
+};
+// Llama a la función continente
+continente();
 
 //MAGNITUD
 const magnitudeRange = ref([4, 9.5]);
