@@ -27,37 +27,37 @@
       </div>
       <div class="grid grid-cols-12 col-span-12 mt-3">
         <div class="col-span-1 sm:col-span-3 md:col-span-6 flex">
-          <!-- Botón Global -->
-          <button
-            :disabled="ableGlobal"
-            @click="setActiveTab('global')"
-            :class="{
-              'bg-igp-blue text-igp-white font-semibold':
-                activeTab === 'global',
-              'bg-igp-white text-igp-muted-400 hover:text-igp-blue hover:font-medium  hover:border-igp-blue':
-                activeTab !== 'global',
-            }"
-            class="flex items-center justify-center focus:outline-none w-full h-full py-3 border-y-2 border-l-2 rounded-l-3xl text-sm"
-          >
-            <iconworld class="h-5 mr-1"></iconworld>
-            Global
-          </button>
-        </div>
-
-        <div class="col-span-1 sm:col-span-3 md:col-span-6 flex">
           <!-- Botón Perú -->
           <button
             :disabled="ablePeru"
             @click="setActiveTab('peru')"
             :class="{
-              'bg-igp-blue text-igp-white font-semibold': activeTab === 'peru',
+              'bg-igp-blue text-igp-white font-semibold':
+                activeTab === 'peru',
               'bg-igp-white text-igp-muted-400 hover:text-igp-blue hover:font-medium  hover:border-igp-blue':
                 activeTab !== 'peru',
             }"
-            class="flex items-center justify-center focus:outline-none w-full h-full py-3 border-y-2 border-r-2 rounded-r-3xl text-sm"
+            class="flex items-center justify-center focus:outline-none w-full h-full py-3 border-y-2 border-l-2 rounded-l-3xl text-sm"
           >
-            <iconperu class="absolute h-8 mr-14 mt-1"></iconperu>
+          <iconperu class="absolute h-8 mr-14 mt-1"></iconperu>
             Perú
+          </button>
+        </div>
+
+        <div class="col-span-1 sm:col-span-3 md:col-span-6 flex">
+       <!-- Botón Global -->   
+          <button
+            :disabled="ableGlobal"
+            @click="setActiveTab('global')"
+            :class="{
+              'bg-igp-blue text-igp-white font-semibold': activeTab === 'global',
+              'bg-igp-white text-igp-muted-400 hover:text-igp-blue hover:font-medium  hover:border-igp-blue':
+                activeTab !== 'global',
+            }"
+            class="flex items-center justify-center focus:outline-none w-full h-full py-3 border-y-2 border-r-2 rounded-r-3xl text-sm"
+          >            
+            <iconworld class="h-5 mr-1"></iconworld>
+            Global
           </button>
         </div>
       </div>
@@ -519,6 +519,28 @@ const selPeru = ref("");
 const statePeru = ref("disable");
 const errPeru = ref("Peru error");
 const dataPeru = ref([
+{
+    value: "historica1",
+    send: "peru",
+    name: "Sísmica historica 1471 - 1900",
+    boundaries: {
+      minLatitude: -18.85, // Reduje un poco más el valor de la latitud mínima
+      maxLatitude: 0.17, // Aumenté un poco la latitud máxima
+      minLongitude: -81.83, // Aumenté un poco más la longitud mínima
+      maxLongitude: -68.15, // Aumenté más la longitud máxima
+    },
+  },
+  {
+    value: "historica2",
+    send: "peru",
+    name: "Sísmica historica 1901 - 1959",
+    boundaries: {
+      minLatitude: -18.85, // Reduje un poco más el valor de la latitud mínima
+      maxLatitude: 0.17, // Aumenté un poco la latitud máxima
+      minLongitude: -81.83, // Aumenté un poco más la longitud mínima
+      maxLongitude: -68.15, // Aumenté más la longitud máxima
+    },
+  },
   {
     value: "",
     send: "peru",
@@ -805,22 +827,12 @@ const dataPeru = ref([
       maxLongitude: -70.5, // Ampliado más hacia el este
     },
   },
-  {
-    value: "historica",
-    send: "peru",
-    name: "Sísmica historica 1471 - 1959",
-    boundaries: {
-      minLatitude: -18.85, // Reduje un poco más el valor de la latitud mínima
-      maxLatitude: 0.17, // Aumenté un poco la latitud máxima
-      minLongitude: -81.83, // Aumenté un poco más la longitud mínima
-      maxLongitude: -68.15, // Aumenté más la longitud máxima
-    },
-  },
+ 
 ]);
 
 function getValPeru() {
 
-  if (selPeru.value === "actual" || selPeru.value === "historica") {
+  if (selPeru.value === "actual" || selPeru.value === "historica1"|| selPeru.value === "historica2") {
     stateStartDate.value = "disable";
     disStartDate.value = true;
     stateEndDate.value = "disable";
@@ -940,7 +952,6 @@ const dataContinente = ref([
 ]);
 
 const continente = () => {
-  
 watch(selContinente, (newValue) => {
   const continenteSeleccionado = dataContinente.value.find(
     (continente) => continente.value === newValue
@@ -1086,12 +1097,21 @@ const togglePlay = () => {
         startDate: convertToDate({ month: 0, year: 1960 }),
         endDate: convertToDate(act),
       };
-    } else if (selPeru.value === "historica") {
+    } else if (selPeru.value === "historica1") {
       useGeojson.rangoFechas = {
         startDate: convertToDate({ month: 0, year: 1471 }),
-        endDate: convertToDate({ month: 11, year: 1959 }),
+        endDate: convertToDate({ month: 11, year: 1900 }),
       };
-    } else {
+    }else if (selPeru.value === "historica2") {
+      // Agrega una nueva condición para "transicional":
+      
+      useGeojson.rangoFechas = {
+        startDate: convertToDate({ month: 0, year: 1901 }),
+        // Asigna como fecha de inicio enero del año 1901.
+        endDate: convertToDate({ month: 11, year: 1959 }),
+        // Asigna como fecha de fin diciembre del año 1959 (mes 11).
+      };
+     } else {
       useGeojson.rangoFechas = {
         startDate: convertToDate(startDate.value),
         endDate: convertToDate(endDate.value),
