@@ -791,14 +791,14 @@ if (selPeru.value === "actual" || selPeru.value === "historica1"|| selPeru.value
   stateEndDate.value = "disable";
   disEndDate.value = true;
    // Oculta el elemento con el id "span" 
-  document.getElementById("span").style.display = "none";
+  document.getElementById("span").style.display = "none! important";
 } else {
   stateStartDate.value = "enable";
   disStartDate.value = false;
   stateEndDate.value = "enable";
   disEndDate.value = false;
  // Muestra el elemento con el id "span" 
-  document.getElementById("span").style.display = "inline";
+  document.getElementById("span").style.display = "inline !important";
 }
 }
 
@@ -854,10 +854,10 @@ const dataContinente = ref([
     value: "centroamerica",
     name: "América Central",
     boundaries: {
-      minLatitude: 7.0,
-      maxLatitude: 20.0,
-      minLongitude: -92.0,
-      maxLongitude: -77.0,
+      minLatitude: 5.0,
+      maxLatitude: 25.0,
+      minLongitude: -95.0,
+      maxLongitude: -60.0,
     },
   },
   {
@@ -1047,12 +1047,21 @@ const togglePlay = () => {
         startDate: convertToDate({ month: 0, year: 1960 }),
         endDate: convertToDate(act),
       };
-    } else if (selPeru.value === "historica") {
+    } else if (selPeru.value === "historica1") {
       useGeojson.rangoFechas = {
         startDate: convertToDate({ month: 0, year: 1471 }),
-        endDate: convertToDate({ month: 11, year: 1959 }),
+        endDate: convertToDate({ month: 11, year: 1900 }),
       };
-    } else {
+    } else if (selPeru.value === "historica2") {
+      // Agrega una nueva condición para "transicional":
+      
+      useGeojson.rangoFechas = {
+        startDate: convertToDate({ month: 0, year: 1901 }),
+        // Asigna como fecha de inicio enero del año 1901.
+        endDate: convertToDate({ month: 11, year: 1959 }),
+        // Asigna como fecha de fin diciembre del año 1959 (mes 11).
+      };
+     }else {
       useGeojson.rangoFechas = {
         startDate: convertToDate(startDate.value),
         endDate: convertToDate(endDate.value),

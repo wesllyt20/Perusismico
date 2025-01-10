@@ -123,6 +123,7 @@ export default {
         "https://services.arcgisonline.com/arcgis/rest/services/Reference/World_Boundaries_and_Places/MapServer/tile/{z}/{y}/{x}",
         { attribution: attribution }
       );
+       
     const windowWidth = window.innerWidth;
     if (windowWidth <= 600) {
       this.initialZoom = 0.45;
@@ -134,7 +135,7 @@ export default {
       this.initialZoom = 1;
       this.initialLatLeng = [37, 0];
     }
-
+  
     // Define límites (bounds) para evitar la repetición del mapa
     const southWest = L.latLng(-75, -270);
     const northEast = L.latLng(90, 210);
@@ -268,7 +269,7 @@ export default {
       .catch((error) => {
         console.error("Error al cargar los datos:", error);
       });
-  },
+     },
 
   watch: {
     "useGeojson.continente": "handleGeoJSONUpdate",
@@ -616,10 +617,10 @@ export default {
   width: 100%;/* El mapa ocupará el 100% del ancho disponible de su contenedor */
   height: 100vh; /* Por defecto, el mapa ocupa toda la altura */
 }
-
+/*Para el responsive el mapa se posiciona mas arriba*/
 @media (max-width: 600px) {
   #map {
-    height: 60vh; /* En pantallas pequeñas, ocupa solo la mitad de la altura */
+    height: 65vh; /* En pantallas pequeñas, ocupa solo la mitad de la altura */
   }
 }
 .pulse {

@@ -511,7 +511,7 @@ const showTooltip = () => {
   // Configuramos el temporizador para ocultar el tooltip después de 5 segundos
   hideTimeout = setTimeout(() => {
     tooltipVisible.value = false;
-  }, 3000);
+  }, 2000);
 };
 
 // PERU
