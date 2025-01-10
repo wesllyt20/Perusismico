@@ -791,14 +791,14 @@ if (selPeru.value === "actual" || selPeru.value === "historica1"|| selPeru.value
   stateEndDate.value = "disable";
   disEndDate.value = true;
    // Oculta el elemento con el id "span" 
-  document.getElementById("span").style.display = "none! important";
+  document.getElementById("span").style.display = "none";
 } else {
   stateStartDate.value = "enable";
   disStartDate.value = false;
   stateEndDate.value = "enable";
   disEndDate.value = false;
  // Muestra el elemento con el id "span" 
-  document.getElementById("span").style.display = "inline !important";
+  document.getElementById("span").style.display = "inline";
 }
 }
 
