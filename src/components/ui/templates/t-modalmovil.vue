@@ -26,37 +26,38 @@
       
       <div class="grid grid-cols-12 col-span-12 mt-3">
         <div class="col-span-6">
-          <!-- Botón Global -->
-          <button
-            :disabled="ableGlobal"
-            @click="setActiveTab('global')"
+           <!-- Botón Perú -->
+           <button
+            :disabled="ablePeru"
+            @click="setActiveTab('peru')"
             :class="{
               'bg-igp-blue text-igp-white font-semibold':
-                activeTab === 'global',
+                activeTab === 'peru',
               'bg-igp-white text-igp-muted-400 hover:text-igp-blue hover:font-medium  hover:border-igp-blue':
-                activeTab !== 'global',
+                activeTab !== 'peru',
             }"
             class="flex items-center justify-center focus:outline-none w-full h-full py-3 border-y-2 border-l-2 rounded-l-3xl text-sm"
           >
-            <iconworld class="h-5 mr-1"></iconworld>
-            Global
+          <iconperu class="absolute h-8 mr-14 mt-1"></iconperu>
+            Perú
           </button>
         </div>
 
         <div class="col-span-6 flex">
           <!-- Botón Perú -->
+          <!-- Botón Global -->   
           <button
-            :disabled="ablePeru"
-            @click="setActiveTab('peru')"
+            :disabled="ableGlobal"
+            @click="setActiveTab('global')"
             :class="{
-              'bg-igp-blue text-igp-white font-semibold': activeTab === 'peru',
+              'bg-igp-blue text-igp-white font-semibold': activeTab === 'global',
               'bg-igp-white text-igp-muted-400 hover:text-igp-blue hover:font-medium  hover:border-igp-blue':
-                activeTab !== 'peru',
+                activeTab !== 'global',
             }"
             class="flex items-center justify-center focus:outline-none w-full h-full py-3 border-y-2 border-r-2 rounded-r-3xl text-sm"
-          >
-            <iconperu class="absolute h-8 mr-14 mt-1"></iconperu>
-            Perú
+          >            
+            <iconworld class="h-5 mr-1"></iconworld>
+            Global
           </button>
         </div>
       </div>
@@ -472,6 +473,28 @@ const selPeru = ref("");
 const statePeru = ref("disable");
 const errPeru = ref("Peru error");
 const dataPeru = ref([
+{
+    value: "historica1",
+    send: "peru",
+    name: "Sísmica historica 1471 - 1900",
+    boundaries: {
+      minLatitude: -18.85, // Reduje un poco más el valor de la latitud mínima
+      maxLatitude: 0.17, // Aumenté un poco la latitud máxima
+      minLongitude: -81.83, // Aumenté un poco más la longitud mínima
+      maxLongitude: -68.15, // Aumenté más la longitud máxima
+    },
+  },
+  {
+    value: "historica2",
+    send: "peru",
+    name: "Sísmica historica 1901 - 1959",
+    boundaries: {
+      minLatitude: -18.85, // Reduje un poco más el valor de la latitud mínima
+      maxLatitude: 0.17, // Aumenté un poco la latitud máxima
+      minLongitude: -81.83, // Aumenté un poco más la longitud mínima
+      maxLongitude: -68.15, // Aumenté más la longitud máxima
+    },
+  },
   {
     value: "",
     send: "peru",
@@ -758,33 +781,25 @@ const dataPeru = ref([
       maxLongitude: -70.5, // Ampliado más hacia el este
     },
   },
-  {
-    value: "historica",
-    send: "peru",
-    name: "Sísmica historica 1471 - 1959",
-    boundaries: {
-      minLatitude: -18.85, // Reduje un poco más el valor de la latitud mínima
-      maxLatitude: 0.17, // Aumenté un poco la latitud máxima
-      minLongitude: -81.83, // Aumenté un poco más la longitud mínima
-      maxLongitude: -68.15, // Aumenté más la longitud máxima
-    },
-  },
 ]);
 
 function getValPeru() {
-  if (selPeru.value === "actual" || selPeru.value === "historica") {
-    stateStartDate.value = "disable";
-    disStartDate.value = true;
-    stateEndDate.value = "disable";
-    disEndDate.value = true;
-    document.getElementById("span").style.display = "none";
-  } else {
-    stateStartDate.value = "enable";
-    disStartDate.value = false;
-    stateEndDate.value = "enable";
-    disEndDate.value = false;
-    document.getElementById("span").style.display = "inline";
-  }
+
+if (selPeru.value === "actual" || selPeru.value === "historica1"|| selPeru.value === "historica2") {
+  stateStartDate.value = "disable";
+  disStartDate.value = true;
+  stateEndDate.value = "disable";
+  disEndDate.value = true;
+   // Oculta el elemento con el id "span" 
+  document.getElementById("span").style.display = "none";
+} else {
+  stateStartDate.value = "enable";
+  disStartDate.value = false;
+  stateEndDate.value = "enable";
+  disEndDate.value = false;
+ // Muestra el elemento con el id "span" 
+  document.getElementById("span").style.display = "inline";
+}
 }
 
 watch(selPeru, (newValue) => {
