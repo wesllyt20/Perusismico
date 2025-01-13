@@ -420,7 +420,8 @@ const statePlay = ref("disable");
 
 const ablePeru = ref(false);
 const ableGlobal = ref(true);
-const activeTab = ref("global");
+//const activeTab = ref("global");
+const activeTab = ref("peru");
 const muestraModal = ref(true);
 // Función para cerrar el modal
 function cerrarModal() {
@@ -497,7 +498,7 @@ let hideTimeout;
 onMounted(() => {
   hideTimeout = setTimeout(() => {
     tooltipVisible.value = false;
-  }, 2000); // 4000 milisegundos = 5 segundos
+  }, 2000); // 2000 milisegundos = 2 segundos
 });
 
 // Función para mostrar el tooltip al pasar el mouse

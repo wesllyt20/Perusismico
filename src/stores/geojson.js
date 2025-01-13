@@ -9,10 +9,14 @@ export const useGeojsonStore = defineStore('geojson', () => {
     currentDate.setFullYear(currentDate.getFullYear() - 2);
 
     const setlimits = ref({
-        minLatitude: -55.0,
-        maxLatitude: 81.0,
-        minLongitude: -168.0,
-        maxLongitude: 180.0,
+       // minLatitude: -55.0,
+       // maxLatitude: 81.0,
+       // minLongitude: -168.0,
+       // maxLongitude: 180.0,
+       minLatitude: -18.35,
+       maxLatitude: -0.03,
+       minLongitude: -81.33,
+       maxLongitude: -68.65,
     });
 
 

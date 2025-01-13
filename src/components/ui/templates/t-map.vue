@@ -224,7 +224,7 @@ export default {
 
     // Cargar el archivo CSV
     axios
-      .get("/peru-sismico/datas/data.csv")
+      .get("/peru-sismico/datas/datas.csv")
       .then((response1) => {
         axios.get("/peru-sismico/datas/historicos.csv").then((response2) => {
           // Procesar el primer CSV
