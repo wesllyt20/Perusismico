@@ -418,8 +418,10 @@ const useGeojson = useGeojsonStore();
 const stateStop = ref("enable");
 const statePlay = ref("disable");
 
-const ablePeru = ref(false);
-const ableGlobal = ref(true);
+//const ablePeru = ref(false);
+//const ableGlobal = ref(true);
+const ablePeru = ref(true);
+const ableGlobal = ref(false);
 //const activeTab = ref("global");
 const activeTab = ref("peru");
 const muestraModal = ref(true);
