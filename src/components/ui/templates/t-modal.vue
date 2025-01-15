@@ -501,6 +501,7 @@ onMounted(() => {
   hideTimeout = setTimeout(() => {
     tooltipVisible.value = false;
   }, 2000); // 2000 milisegundos = 2 segundos
+
 });
 
 // Función para mostrar el tooltip al pasar el mouse
@@ -1127,8 +1128,6 @@ const togglePlay = () => {
       
     };
   }
-  
-
   useGeojson.estadoPl = "enable";
   statePeru.value = "disable";
   stateStartDate.value = "disable";

@@ -1,5 +1,6 @@
 <template>
   <div>
+    
     <div class="overflow-hidden fixed inset-0 bg-cover" id="map"></div>
     <!-- v-if="makerPopup" -->
     <!-- Insertamos el SVG directamente sobre el mapa -->
@@ -14,8 +15,7 @@
         width: 100%;
         height: 100%;
         pointer-events: none;
-        z-index: 10;
-      "
+        z-index: 10; "
     >
       <!-- Aquí va el código SVG del mapa sombreado -->
       <path
@@ -33,7 +33,6 @@
     </svg>
   </div>
 </template>
-
 <script>
 import axios from "axios";
 import * as L from "leaflet/dist/leaflet-src.js";
@@ -49,7 +48,8 @@ export default {
     return {
       map: null,
       useGeojson: useGeojsonStore(),
-      initialCenter: [10, 0], // Coordenadas iniciales
+      initialCenter: [-9.3, -75.0], // Coordenadas iniciales
+      //initialCenter: [10, 0], // Coordenadas iniciales
       initialZoom: 1, // Zoom inicial*/
       /*initialZoom: null,*/
       initialLatLeng: null,
@@ -122,27 +122,27 @@ export default {
       delimitaciones = L.tileLayer(
         "https://services.arcgisonline.com/arcgis/rest/services/Reference/World_Boundaries_and_Places/MapServer/tile/{z}/{y}/{x}",
         { attribution: attribution }
-      );
-       
+      );       
     const windowWidth = window.innerWidth;
     if (windowWidth <= 600) {
-      this.initialZoom = 0.45;
-      this.initialLatLeng = [10, 0]; // O cualquier otra coordenada que desees para esta condición
+      this.initialZoom = 4;
+      this.initialLatLeng = [-9.5, -76.0]; // O cualquier otra coordenada que desees para esta condición
+      //this.initialLatLeng = [10, 0]; // O cualquier otra coordenada que desees para esta condición
     } else if (windowWidth <= 1920) {
-      this.initialZoom = 2;
-      this.initialLatLeng = [10, 0];
+      this.initialZoom = 6;
+      this.initialLatLeng = [-9.3, -75.0];
+      //this.initialLatLeng = [10, 0];
     } else {
-      this.initialZoom = 1;
-      this.initialLatLeng = [37, 0];
+      this.initialZoom = 6;
+      this.initialLatLeng = [-9.3, -75.0];
     }
-  
-    // Define límites (bounds) para evitar la repetición del mapa
+      // Define límites (bounds) para evitar la repetición del mapa
     const southWest = L.latLng(-75, -270);
     const northEast = L.latLng(90, 210);
     const bounds = L.latLngBounds(southWest, northEast);
     // Inicializa el mapa
     this.map = L.map("map", {
-      minZoom: this.initialZoom,
+      minZoom: 1,
       maxZoom: 18,
       center: this.initialLatLeng,
       zoom: this.initialZoom,
@@ -152,7 +152,6 @@ export default {
       maxBounds: bounds, // Fija los límites del mapa
       maxBoundsViscosity: 1.0,
     });
-
     const that = this;
     this.map.removeControl(this.map.zoomControl);
     L.control
@@ -160,7 +159,6 @@ export default {
         position: "bottomright",
       })
       .addTo(this.map);
-
     L.control
       .layers(
         {
@@ -179,10 +177,9 @@ export default {
         { position: "bottomright" }
       )
       .addTo(this.map);
-
     // Cargar el archivo GeoJSON usando axios
     axios
-      .get("/peru-sismico/placas.json")
+      .get("/placas.json")
 
       .then((response) => {
         // Crear clones del GeoJSON para simular repetición
@@ -193,7 +190,6 @@ export default {
           [360, 0],
           [-360, 0], // Estas son longitudes para replicar el GeoJSON (puedes ajustar más offsets)
         ];
-
         repeatOffsets.forEach((offset) => {
           const geoJSONLayerClone = L.geoJSON(response.data, {
             style: function () {
@@ -221,19 +217,17 @@ export default {
           });
         });
       });
-
     // Cargar el archivo CSV
     axios
-      .get("/peru-sismico/datas/datas.csv")
+      .get("/datas/datas.csv")
       .then((response1) => {
-        axios.get("/peru-sismico/datas/historicos.csv").then((response2) => {
+        axios.get("/datas/historicos.csv").then((response2) => {
           // Procesar el primer CSV
           Papa.parse(response1.data, {
             header: true,
             dynamicTyping: true,
             complete: (result1) => {
               const dataDiciembre = result1.data;
-
               // Procesar el segundo CSV
               Papa.parse(response2.data, {
                 header: true,
@@ -253,10 +247,8 @@ export default {
                   });
                   // Combinar los datos
                   const combinedData = [...dataDiciembre, ...dataEnero];
-
                   // Convertir a GeoJSON
                   const geoJSONData = this.convertCSVToGeoJSON(combinedData);
-
                   // Actualizar datos y mapa
                   this.setData = combinedData;
                   this.addGeoJSONToMap(geoJSONData);
@@ -269,8 +261,8 @@ export default {
       .catch((error) => {
         console.error("Error al cargar los datos:", error);
       });
+      this.fetchDataCapaDepartamentosCenter("peru")
      },
-
   watch: {
     "useGeojson.continente": "handleGeoJSONUpdate",
     "useGeojson.rangoFechas": "handleGeoJSONUpdate",
@@ -292,18 +284,15 @@ export default {
       }
     },
   },
-
   methods: {
     zoomIn() {
       if (this.map) {
         // Guardamos el zoom actual antes de aumentar el zoom
         this.previousZoom = this.map.getZoom();
-
         // Aumentamos el zoom en 2 niveles
         let newZoom = this.previousZoom + 1; // CAMBIAR AQUI LA CANTIDAD DEL ZOOM
         // Asegurarse de no exceder el zoom máximo
         newZoom = Math.min(newZoom, this.map.getMaxZoom());
-
         // Establecemos el nuevo zoom
         this.map.setZoom(newZoom);
       }
@@ -317,10 +306,8 @@ export default {
     async handleGeoJSONUpdate() {
       if (this.isGeoJSONProcessing) return;
       this.isGeoJSONProcessing = true;
-
       const geoJSONData = await this.convertCSVToGeoJSON(this.setData);
       this.addGeoJSONToMap(geoJSONData);
-
       // Reset after processing
       this.isGeoJSONProcessing = false;
     },
@@ -338,7 +325,6 @@ export default {
           row.longitude <= this.useGeojson.continente.maxLongitude
         );
       });
-
       // Filtrar por magnitud
       const filteredByMagnitude = filteredByCoordinates.filter((row) => {
         const mag = row.mag;
@@ -347,7 +333,6 @@ export default {
           mag <= this.useGeojson.rangoMagnitud.minMag
         );
       });
-
       // Filtrar por fecha
       const filteredByDate = filteredByMagnitude.filter((row) => {
         const eventDate = new Date(row.time);
@@ -359,7 +344,6 @@ export default {
       // Filtrar por profunidad
       const filteredByDepth = filteredByDate.filter((row) => {
         const depth = row.depth;
-
         if (this.useGeojson.profundidad.isSuperficial && depth <= 60) {
           return true;
         }
@@ -375,7 +359,6 @@ export default {
         }
         return false; // No cumple con las condiciones de profundidad
       });
-
       return {
         type: "FeatureCollection",
         features: filteredByDepth.map((row) => ({
@@ -394,26 +377,22 @@ export default {
         })),
       };
     },
-
     addGeoJSONToMap(geoJSON) {
       // Eliminar la capa CSV anterior si existe
       if (this.csvLayer) {
         this.map.removeLayer(this.csvLayer); // Elimina la capa anterior
         this.csvLayer = null; // Limpia la referencia
       }
-
       // Detener cualquier intervalo en ejecución
       if (this.intervalId) {
         clearInterval(this.intervalId); // Detener el intervalo anterior
         this.intervalId = null; // Reiniciar la variable
       }
-
       // Crear una nueva capa GeoJSON vacía
       this.csvLayer = L.geoJSON(null, {
         pointToLayer: (feature, latlng) => {
           // Definir el color basado en la profundidad
           let color = "#ff0000"; // Color por defecto RED
-
           if (feature.properties.depth > 300) {
             color = "#002FEF"; // Profundos (> 300 km) BLUE
           } else if (
@@ -424,7 +403,6 @@ export default {
           } else if (feature.properties.depth <= 60) {
             color = "#ff0000"; // Superficiales (< 60 km) RED
           }
-
           // Definir el radio basado en la magnitud
           let radius = 1; // Radio por defecto
           const magnitude = feature.properties.mag;
@@ -440,7 +418,6 @@ export default {
           } else if (magnitude > 8 && magnitude <= 9.5) {
             radius = 23;
           }
-
           return L.circleMarker(latlng, {
             className: "pulse",
             radius: radius + this.sumarProf,
@@ -454,7 +431,6 @@ export default {
             color: color,
           });
         },
-
         onEachFeature: (feature, layer) => {
           // Muestra un popup con la información del sismo
           layer.bindPopup(
@@ -464,11 +440,10 @@ export default {
             <br>
             Profundidad: ${feature.properties.depth} km
             <br>
-            Fecha: ${new Date(feature.properties.time).toLocaleString()}`
+            Fecha: ${new Date(feature.properties.time).toLocaleString()} (GMT)` 
           );
         },
       }).addTo(this.map);
-
       // Ajustar el mapa a los límites definidos
       const bounds = L.latLngBounds([
         [
@@ -485,13 +460,11 @@ export default {
       if (geoJSON.features.length > 0) {
         this.map.fitBounds(bounds);
       }
-
       // Reiniciar `features` con los datos actuales
       const features = geoJSON.features; // Datos filtrados actuales
       const chunkSize = 1; // Tamaño del grupo - 10 en 10
       const segundos = 0.05; //cantidad de segundos - 1 segundo
       let index = 0; // Índice inicial
-
       // Añadir los puntos en intervalos
       const addPointsInChunks = () => {
         if (
@@ -502,25 +475,21 @@ export default {
           this.useGeojson.estadoPl = "disable";
           return;
         }
-
         // Seleccionar el siguiente grupo de puntos
         const chunk = features.slice(index, index + chunkSize);
         chunk.forEach((feature) => {
           this.csvLayer.addData(feature); // Agregar los puntos al mapa
         });
-
         index += chunkSize; // Avanzar el índice
       };
-
       // Iniciar un nuevo intervalo
       this.intervalId = setInterval(addPointsInChunks, segundos * 1000);
     },
-
     fetchDataCapaDepartamentosCenter(val) {
       let getApiGeoJson = null;
       if (val === "peru") {
-       // getApiGeoJson = "/peru-sismico/datas/departamentos.geojson";
-       getApiGeoJson = "/peru-sismico/datas/peru.geojson";
+       // getApiGeoJson = "/datas/departamentos.geojson";
+       getApiGeoJson = "/datas/peru.geojson";
       } else {
         getApiGeoJson = `https://ide.igp.gob.pe/arcgis/rest/services/mapabase/MapaBase/MapServer/10/query?where=DEPARTAMEN+%3D+%27${val}%27&text=&objectIds=&time=&timeRelation=esriTimeRelationOverlaps&geometry=&geometryType=esriGeometryEnvelope&inSR=&spatialRel=esriSpatialRelIntersects&distance=&units=esriSRUnit_Foot&relationParam=&outFields=&returnGeometry=true&returnTrueCurves=false&maxAllowableOffset=&geometryPrecision=&outSR=&havingClause=&returnIdsOnly=false&returnCountOnly=false&orderByFields=&groupByFieldsForStatistics=&outStatistics=&returnZ=false&returnM=false&gdbVersion=&historicMoment=&returnDistinctValues=false&resultOffset=&resultRecordCount=&returnExtentOnly=false&sqlFormat=none&datumTransformation=&parameterValues=&rangeValues=&quantizationParameters=&featureEncoding=esriDefault&f=geojson`;
       }
@@ -592,13 +561,11 @@ export default {
       clearInterval(this.intervalId);
       this.intervalId = null;
     }
-
     // Eliminar capas del mapa si es necesario
     if (this.csvLayer) {
       this.map.removeLayer(this.csvLayer);
       this.csvLayer = null;
     }
-
     // Limpiar el mapa
     if (this.map) {
       this.map.off(); // Desvincula todos los eventos
@@ -610,6 +577,7 @@ export default {
 </script>
 
 <style>
+
 #map {
   position: absolute;/* Posiciona el mapa de forma absoluta respecto a su contenedor más cercano con posición relativa (por defecto, el body) */
   top: 0;/* Coloca el mapa en la parte superior del contenedor o ventana */
@@ -620,14 +588,13 @@ export default {
 /*Para el responsive el mapa se posiciona mas arriba*/
 @media (max-width: 600px) {
   #map {
-    height: 65vh; /* En pantallas pequeñas, ocupa solo la mitad de la altura */
+    height: 70vh; /* En pantallas pequeñas, ocupa solo la mitad de la altura */
   }
 }
 .pulse {
   animation: pulsate 1s ease-out;
   opacity: 1;
   stroke-width: 1px;
-
   /*stroke: white;  CIRCULO COMPLETO*/
 }
 @keyframes pulsate {

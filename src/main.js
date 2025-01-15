@@ -8,9 +8,9 @@ import VueDatePicker from '@vuepic/vue-datepicker';
 import '@vuepic/vue-datepicker/dist/main.css'
 const app = createApp(App)
 const pinia = createPinia();
-/* const script = document.createElement('script');
+const script = document.createElement('script');
 script.async = true;
-script.src = 'https://www.googletagmanager.com/gtag/js?id=G-HX5JKDVM5E';
+script.src = 'https://www.googletagmanager.com/gtag/js?id=G-7X7S78DN4M';
 document.head.appendChild(script);
 script.onload = () => {
     window.dataLayer = window.dataLayer || [];
@@ -18,14 +18,10 @@ script.onload = () => {
       window.dataLayer.push(arguments);
     }
     gtag('js', new Date());
-    gtag('config', 'G-HX5JKDVM5E');
+    gtag('config', 'G-7X7S78DN4M');
   };
   
- */
-
-
-
-app.use(router)
+ app.use(router)
 app.component('VueDatePicker', VueDatePicker);
 app.use(pinia);
 

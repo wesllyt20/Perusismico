@@ -37,7 +37,7 @@ export const useGeojsonStore = defineStore('geojson', () => {
 
     const setZoom = ref(false);
 
-    const departamento = ref("global")
+    const departamento = ref("peru")
 
 
     return {

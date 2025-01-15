@@ -379,8 +379,10 @@ const useGeojson = useGeojsonStore();
 const stateStop = ref("enable");
 const statePlay = ref("disable");
 
-const ablePeru = ref(false);
-const ableGlobal = ref(true);
+//const ablePeru = ref(false);
+//const ableGlobal = ref(true);
+const ablePeru = ref(true);
+const ableGlobal = ref(false);
 const activeTab = ref("peru");
 
 // Estilos para los círculos personalizados
@@ -801,7 +803,6 @@ if (selPeru.value === "actual" || selPeru.value === "historica1"|| selPeru.value
   document.getElementById("span").style.display = "inline";
 }
 }
-
 watch(selPeru, (newValue) => {
   const depSeleccionado = dataPeru.value.find(
     (departamento) => departamento.value === newValue
