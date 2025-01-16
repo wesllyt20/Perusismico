@@ -1,6 +1,15 @@
 <template>
   <div>
-    
+    <div
+ v-if="isLoading"
+      class="fixed inset-0 flex items-center justify-center bg-white bg-opacity-50 z-50"
+    >
+    <div class="text-center flex flex-col items-center justify-center">
+        <p style="color: #3388ff;" class="text-lg font-semibold">Cargando...</p>
+        <div class="loader"></div>
+      </div>
+    </div>
+
     <div class="overflow-hidden fixed inset-0 bg-cover" id="map"></div>
     <!-- v-if="makerPopup" -->
     <!-- Insertamos el SVG directamente sobre el mapa -->
@@ -15,7 +24,8 @@
         width: 100%;
         height: 100%;
         pointer-events: none;
-        z-index: 10; "
+        z-index: 10;
+      "
     >
       <!-- Aquí va el código SVG del mapa sombreado -->
       <path
@@ -46,6 +56,7 @@ import { useGeojsonStore } from "@/stores/geojson.js";
 export default {
   data() {
     return {
+      isLoading: true,
       map: null,
       useGeojson: useGeojsonStore(),
       initialCenter: [-9.3, -75.0], // Coordenadas iniciales
@@ -122,7 +133,7 @@ export default {
       delimitaciones = L.tileLayer(
         "https://services.arcgisonline.com/arcgis/rest/services/Reference/World_Boundaries_and_Places/MapServer/tile/{z}/{y}/{x}",
         { attribution: attribution }
-      );       
+      );
     const windowWidth = window.innerWidth;
     if (windowWidth <= 600) {
       this.initialZoom = 4;
@@ -136,7 +147,7 @@ export default {
       this.initialZoom = 6;
       this.initialLatLeng = [-9.3, -75.0];
     }
-      // Define límites (bounds) para evitar la repetición del mapa
+    // Define límites (bounds) para evitar la repetición del mapa
     const southWest = L.latLng(-75, -270);
     const northEast = L.latLng(90, 210);
     const bounds = L.latLngBounds(southWest, northEast);
@@ -252,6 +263,7 @@ export default {
                   // Actualizar datos y mapa
                   this.setData = combinedData;
                   this.addGeoJSONToMap(geoJSONData);
+                  this.isLoading = false;
                 },
               });
             },
@@ -261,8 +273,8 @@ export default {
       .catch((error) => {
         console.error("Error al cargar los datos:", error);
       });
-      this.fetchDataCapaDepartamentosCenter("peru")
-     },
+    this.fetchDataCapaDepartamentosCenter("peru");
+  },
   watch: {
     "useGeojson.continente": "handleGeoJSONUpdate",
     "useGeojson.rangoFechas": "handleGeoJSONUpdate",
@@ -440,7 +452,7 @@ export default {
             <br>
             Profundidad: ${feature.properties.depth} km
             <br>
-            Fecha: ${new Date(feature.properties.time).toLocaleString()} (GMT)` 
+            Fecha: ${new Date(feature.properties.time).toLocaleString()} (GMT)`
           );
         },
       }).addTo(this.map);
@@ -488,8 +500,8 @@ export default {
     fetchDataCapaDepartamentosCenter(val) {
       let getApiGeoJson = null;
       if (val === "peru") {
-       // getApiGeoJson = "/datas/departamentos.geojson";
-       getApiGeoJson = "/datas/peru.geojson";
+        // getApiGeoJson = "/datas/departamentos.geojson";
+        getApiGeoJson = "/datas/peru.geojson";
       } else {
         getApiGeoJson = `https://ide.igp.gob.pe/arcgis/rest/services/mapabase/MapaBase/MapServer/10/query?where=DEPARTAMEN+%3D+%27${val}%27&text=&objectIds=&time=&timeRelation=esriTimeRelationOverlaps&geometry=&geometryType=esriGeometryEnvelope&inSR=&spatialRel=esriSpatialRelIntersects&distance=&units=esriSRUnit_Foot&relationParam=&outFields=&returnGeometry=true&returnTrueCurves=false&maxAllowableOffset=&geometryPrecision=&outSR=&havingClause=&returnIdsOnly=false&returnCountOnly=false&orderByFields=&groupByFieldsForStatistics=&outStatistics=&returnZ=false&returnM=false&gdbVersion=&historicMoment=&returnDistinctValues=false&resultOffset=&resultRecordCount=&returnExtentOnly=false&sqlFormat=none&datumTransformation=&parameterValues=&rangeValues=&quantizationParameters=&featureEncoding=esriDefault&f=geojson`;
       }
@@ -501,13 +513,13 @@ export default {
           this.geoJSONLayerCapaDepartamento = L.geoJSON(response.data, {
             style: function () {
               return {
-                color: "#0000AF", // Color de los bordes
-                weight: 1, // Grosor de los bordes
+                color: "#3388ff", // Color de los bordes
+                weight: 3, // Grosor de los bordes
                 fillOpacity: 0, // Sin color de fondo (transparente)
               };
             },
           });
-         // this.map.fitBounds(this.geoJSONLayerCapaDepartamento.getBounds());
+          // this.map.fitBounds(this.geoJSONLayerCapaDepartamento.getBounds());
         })
         /*
 
@@ -556,6 +568,14 @@ export default {
     },
   },
   beforeUnmount() {
+    this.useGeojson.departamento = "peru";
+    this.useGeojson.estadoPl = "enable";
+    this.useGeojson.continente = {
+      minLatitude: -18.35,
+      maxLatitude: -0.03,
+      minLongitude: -81.33,
+      maxLongitude: -68.65,
+    };
     // Detener cualquier intervalo en ejecución al desmontar
     if (this.intervalId) {
       clearInterval(this.intervalId);
@@ -577,13 +597,13 @@ export default {
 </script>
 
 <style>
-
 #map {
-  position: absolute;/* Posiciona el mapa de forma absoluta respecto a su contenedor más cercano con posición relativa (por defecto, el body) */
-  top: 0;/* Coloca el mapa en la parte superior del contenedor o ventana */
-  left: 0;/* Coloca el mapa en la parte izquierda del contenedor o ventana */
-  width: 100%;/* El mapa ocupará el 100% del ancho disponible de su contenedor */
+  position: absolute; /* Posiciona el mapa de forma absoluta respecto a su contenedor más cercano con posición relativa (por defecto, el body) */
+  top: 0; /* Coloca el mapa en la parte superior del contenedor o ventana */
+  left: 0; /* Coloca el mapa en la parte izquierda del contenedor o ventana */
+  width: 100%; /* El mapa ocupará el 100% del ancho disponible de su contenedor */
   height: 100vh; /* Por defecto, el mapa ocupa toda la altura */
+  z-index: 1;
 }
 /*Para el responsive el mapa se posiciona mas arriba*/
 @media (max-width: 600px) {
@@ -631,4 +651,35 @@ export default {
     rgb(0, 0, 0) 1.74541px -2.43999px 0px, rgb(0, 0, 0) 2.44769px -1.73459px 0px,
     rgb(0, 0, 0) 2.88051px -0.838247px 0px;
 }
+
+.loader {
+  width: 50px;
+  aspect-ratio: 1;
+  display: grid;
+  border: 4px solid #0000;
+  border-radius: 50%;
+  border-color: #ccc #0000;
+  animation: l16 1s infinite linear;
+}
+.loader::before,
+.loader::after {    
+  content: "";
+  grid-area: 1/1;
+  margin: 2px;
+  border: inherit;
+  border-radius: 50%;
+}
+.loader::before {
+  border-color: #3388ff #0000;
+  animation: inherit; 
+  animation-duration: .5s;
+  animation-direction: reverse;
+}
+.loader::after {
+  margin: 8px;
+}
+@keyframes l16 { 
+  100%{transform: rotate(1turn)}
+}
 </style>
+

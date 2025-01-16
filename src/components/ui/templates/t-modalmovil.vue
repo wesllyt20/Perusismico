@@ -5,12 +5,15 @@
       class="fixed z-50 bottom-5 left-10 bg-igp-blue rounded-full px-1 py-1 h-10 w-10 shadow-[0px_0px_50px_0px_#00000025] animate-bounce"
       @click="toggleMove"
     >
-      <img :src="currentArrow" alt="Arrow Icon" />
+   
+    <img  :src="arrow" alt="Down Arrow Icon"  :class="{ 'rotate-180': isRotated }"
+      class="transition-transform duration-300"
+    />
     </button>
     <!-- Panel de control -->
 
     <div
-    id="contenedorModal"
+      id="contenedorModal"
       class="relative px-4 sm:px-4 md:px-4 lg:px-0 xl:px-0 2xl:px-0 mx-4 sm:mx-4 md:mx-4 lg:mx-0 xl:mx-0 2xl:mx-0 mt-3 mb-10 grid grid-cols-12 bg-[#FCFDFF] rounded-2xl border border-b border-igp-blue shadow-[0px_4px_4px_0px_#00000024]"
       ref="myDiv"
       :style="{
@@ -23,39 +26,38 @@
         class="h-1 rounded-xl bg-igp-muted cursor-pointer col-span-4 flex mt-3 col-start-5"
         @click="toggleMove"
       ></div>
-      
       <div class="grid grid-cols-12 col-span-12 mt-3">
         <div class="col-span-6">
-           <!-- Botón Perú -->
-           <button
+          <!-- Botón Perú -->
+          <button
             :disabled="ablePeru"
             @click="setActiveTab('peru')"
             :class="{
-              'bg-igp-blue text-igp-white font-semibold':
-                activeTab === 'peru',
+              'bg-igp-blue text-igp-white font-semibold': activeTab === 'peru',
               'bg-igp-white text-igp-muted-400 hover:text-igp-blue hover:font-medium  hover:border-igp-blue':
                 activeTab !== 'peru',
             }"
             class="flex items-center justify-center focus:outline-none w-full h-full py-3 border-y-2 border-l-2 rounded-l-3xl text-sm"
           >
-          <iconperu class="absolute h-8 mr-14 mt-1"></iconperu>
+            <iconperu class="absolute h-8 mr-14 mt-1"></iconperu>
             Perú
           </button>
         </div>
 
         <div class="col-span-6 flex">
           <!-- Botón Perú -->
-          <!-- Botón Global -->   
+          <!-- Botón Global -->
           <button
             :disabled="ableGlobal"
             @click="setActiveTab('global')"
             :class="{
-              'bg-igp-blue text-igp-white font-semibold': activeTab === 'global',
+              'bg-igp-blue text-igp-white font-semibold':
+                activeTab === 'global',
               'bg-igp-white text-igp-muted-400 hover:text-igp-blue hover:font-medium  hover:border-igp-blue':
                 activeTab !== 'global',
             }"
             class="flex items-center justify-center focus:outline-none w-full h-full py-3 border-y-2 border-r-2 rounded-r-3xl text-sm"
-          >            
+          >
             <iconworld class="h-5 mr-1"></iconworld>
             Global
           </button>
@@ -102,28 +104,30 @@
           <template v-slot:error> {{ errPeru }} </template>
         </tSelect>
       </div>
-      <div class="grid grid-cols-12 col-span-12 border ml-4 py-1 my-4 rounded-lg" translate="no">
-      <tLabel
-        color="blue"
-        size="md"
-        weight="400"
-        class="col-span-12 flex mt-4 ml-4"
+      <div
+        class="grid grid-cols-12 col-span-12 border ml-4 py-1 my-4 rounded-lg"
+        translate="no"
       >
-        <img
-          :src="calendario"
-          alt="img_calen"
-          height="18"
-          width="18"
-          class="mr-[6px]"
-        />
-        Periodo de años:
+        <tLabel
+          color="blue"
+          size="md"
+          weight="400"
+          class="col-span-12 flex mt-4 ml-4"
+        >
+          <img
+            :src="calendario"
+            alt="img_calen"
+            height="18"
+            width="18"
+            class="mr-[6px]"
+          />
+          Periodo de años:
+        </tLabel>
 
-      </tLabel>
-
-      <tCalendar class="col-span-6 mt-2 pl-4" :state="stateStartDate">
-        <template v-slot:calendar>
-          <VueDatePicker
-          v-model="startDate"
+        <tCalendar class="col-span-6 mt-2 pl-4" :state="stateStartDate">
+          <template v-slot:calendar>
+            <VueDatePicker
+              v-model="startDate"
               :format="capitalizeMonth"
               :format-locale="es"
               :autoApply="true"
@@ -132,16 +136,16 @@
               :min-date="new Date(1960, 0, 1)"
               :year-range="[1960, new Date().getFullYear()]"
               style="color: blue !important"
-          ></VueDatePicker>
-        </template>
-        <template v-slot:name> Fecha de inicio </template>
-        <template v-slot:error> {{ errStartDate }} </template>
-      </tCalendar>
+            ></VueDatePicker>
+          </template>
+          <template v-slot:name> Fecha de inicio </template>
+          <template v-slot:error> {{ errStartDate }} </template>
+        </tCalendar>
 
-      <tCalendar class="col-span-6 mt-2 pl-4" :state="stateEndDate">
-        <template v-slot:calendar>
-          <VueDatePicker
-          v-model="endDate"
+        <tCalendar class="col-span-6 mt-2 pl-4" :state="stateEndDate">
+          <template v-slot:calendar>
+            <VueDatePicker
+              v-model="endDate"
               :format="capitalizeMonth"
               :format-locale="es"
               :autoApply="true"
@@ -149,15 +153,17 @@
               month-picker
               :min-date="new Date(1960, 0, 1)"
               :year-range="[1960, new Date().getFullYear()]"
-          ></VueDatePicker>
-        </template>
-        <template v-slot:name> Fecha de fin </template>
-        <template v-slot:error> {{ errEndDate }} </template>
-      </tCalendar>
-      <span id="span" class=" col-span-8 text-xs text-center ml-1 text-igp-dark-400 mb-2 "
+            ></VueDatePicker>
+          </template>
+          <template v-slot:name> Fecha de fin </template>
+          <template v-slot:error> {{ errEndDate }} </template>
+        </tCalendar>
+        <span
+          id="span"
+          class="col-span-8 text-xs text-center ml-1 text-igp-dark-400 mb-2"
           >(*) desde 1960 hasta la fecha
         </span>
-      </div>       
+      </div>
       <div class="grid grid-cols-12 col-span-12 border ml-4 py-3 rounded-lg">
         <div class="col-span-12 flex items-center">
           <tLabel
@@ -211,7 +217,7 @@
             class="border-2 mr-2 rounded-full px-6 py-2 items-center outline-none"
             :class="
               stateStop === 'enable'
-                ?'hover:bg-igp-white hover:border-[#04B29E] text-igp-white hover:text-[#04B29E] border-[#04B29E] bg-[#04B29E] '
+                ? 'hover:bg-igp-white hover:border-[#04B29E] text-igp-white hover:text-[#04B29E] border-[#04B29E] bg-[#04B29E] '
                 : 'bg-gray-100 text-igp-dark-500 select-none cursor-not-allowed borde-igp-dark-500'
             "
             @click="toggleStop"
@@ -222,54 +228,74 @@
           <button class="ml-3 relative" type="button" @mouseenter="showTooltip">
             <img :src="qst" alt="question_img" height="20" width="18" />
             <div
-            v-if="tooltipVisible"
-                :class="['tooltip', tooltipVisible ? 'opacity-100 visible' : 'opacity-0 invisible']"
-                 class="tooltip absolute left-full top-1/2 transform -translate-y-1/2 ml-2 px-1 py-1 text-[8px] font-medium text-white bg-igp-blue rounded-lg shadow-sm w-50 text-start w-20"
+              v-if="tooltipVisible"
+              :class="[
+                'tooltip',
+                tooltipVisible ? 'opacity-100 visible' : 'opacity-0 invisible',
+              ]"
+              class="tooltip absolute left-full top-1/2 transform -translate-y-1/2 ml-2 px-1 py-1 text-[8px] font-medium text-white bg-igp-blue rounded-lg shadow-sm w-50 text-start w-20"
             >
-            Presiona Play o Stop para controlar la 
-            animación de sismos.
+              Presiona Play o Stop para controlar la animación de sismos.
             </div>
           </button>
         </div>
         <div
           class="grid-cols-11 col-span-12 border rounded-lg py-2 mt-4 mx-4 bg-gray-50"
         >
-
-        <div class="flex px-2 col-span-12 mt-2 p-0 justify-around">
+          <div class="flex px-2 col-span-12 mt-2 p-0 justify-around">
             <div class="flex flex-col items-center justify-center">
               <div class="w-12 h-12 flex items-center justify-center">
-                <div class="w-3 h-3  rounded-full border-2 border-igp-muted bg-transparent"></div>
+                <div
+                  class="w-3 h-3 rounded-full border-2 border-igp-muted bg-transparent"
+                ></div>
               </div>
-              <p class="text-xs text-igp-black-1000 text-center">M4.0 a<br>M5.0</p>
+              <p class="text-xs text-igp-black-1000 text-center">
+                M4.0 a<br />M5.0
+              </p>
             </div>
             <div class="flex flex-col items-center justify-center">
               <div class="w-12 h-12 flex items-center justify-center">
-                <div class="w-5 h-5  rounded-full border-2 border-igp-muted bg-transparent"></div>
+                <div
+                  class="w-5 h-5 rounded-full border-2 border-igp-muted bg-transparent"
+                ></div>
               </div>
-              <p class="text-xs text-igp-black-1000 text-center">M>5 a<br>M6.0</p>
+              <p class="text-xs text-igp-black-1000 text-center">
+                M>5 a<br />M6.0
+              </p>
             </div>
             <div class="flex flex-col items-center justify-center">
               <div class="w-12 h-12 flex items-center justify-center">
-                <div class="w-6 h-6  rounded-full border-2 border-igp-muted bg-transparent"></div>
+                <div
+                  class="w-6 h-6 rounded-full border-2 border-igp-muted bg-transparent"
+                ></div>
               </div>
-              <p class="text-xs text-igp-black-1000 text-center">M>6.0 a<br>M7.0</p>
+              <p class="text-xs text-igp-black-1000 text-center">
+                M>6.0 a<br />M7.0
+              </p>
             </div>
             <div class="flex flex-col items-center justify-center">
               <div class="w-12 h-12 flex items-center justify-center">
-                <div class="w-8 h-8  rounded-full border-2 border-igp-muted bg-transparent"></div>
+                <div
+                  class="w-8 h-8 rounded-full border-2 border-igp-muted bg-transparent"
+                ></div>
               </div>
-              <p class="text-xs text-igp-black-1000 text-center">M>7.0 a<br>M8.0</p>
+              <p class="text-xs text-igp-black-1000 text-center">
+                M>7.0 a<br />M8.0
+              </p>
             </div>
             <div class="flex flex-col items-center justify-center">
               <div class="w-12 h-12 flex items-center justify-center">
-                <div class="w-11 h-11 rounded-full border-2 border-igp-muted bg-transparent"></div>
+                <div
+                  class="w-11 h-11 rounded-full border-2 border-igp-muted bg-transparent"
+                ></div>
               </div>
-              <p class="text-xs text-igp-black-1000 text-center">M>8.0 a<br>M9.5</p>
+              <p class="text-xs text-igp-black-1000 text-center">
+                M>8.0 a<br />M9.5
+              </p>
             </div>
           </div>
         </div>
       </div>
-
 
       <div
         class="grip grid-cols-12 col-span-12 border rounded-lg py-4 my-4 ml-4"
@@ -344,9 +370,9 @@
     </div>
   </div>
 </template>
-  
-  <script setup>
-import { ref, watch, computed,onMounted } from "vue";
+
+<script setup>
+import { ref, watch, computed, onMounted } from "vue";
 import tLabel from "@/components/ui/atoms/t-label.vue";
 import tSelect from "@/components/ui/atoms/t-select.vue";
 import profundidad from "@/assets/icons/profundidad.svg";
@@ -398,7 +424,7 @@ const redCircleStyle = {
 const greenCircleStyle = {
   display: "inline-block",
   width: "12px",
-  height: "12px",  
+  height: "12px",
   borderRadius: "50%",
   marginRight: "5px",
   border: "2px solid #0AB427", // Borde negro delgado
@@ -447,27 +473,27 @@ function setActiveTab(tab) {
 const tooltipVisible = ref(true);
 
 // Variable para almacenar el temporizador
-let hideTimeout
+let hideTimeout;
 
 // Configurar el temporizador para cerrar el tooltip automáticamente después de 2 segundos al montar el componente
 onMounted(() => {
   hideTimeout = setTimeout(() => {
-    tooltipVisible.value = false
-  }, 2000) // 5000 milisegundos = 5 segundos
-})
+    tooltipVisible.value = false;
+  }, 2000); // 5000 milisegundos = 5 segundos
+});
 
 // Función para mostrar el tooltip al pasar el mouse
 const showTooltip = () => {
   // Si ya hay un temporizador activo, lo limpiamos
-  clearTimeout(hideTimeout)
+  clearTimeout(hideTimeout);
 
   // Mostramos el tooltip
-  tooltipVisible.value = true
+  tooltipVisible.value = true;
 
   // Configuramos el temporizador para ocultar el tooltip después de 5 segundos
   hideTimeout = setTimeout(() => {
-    tooltipVisible.value = false
-  }, 3000)
+    tooltipVisible.value = false;
+  }, 3000);
 };
 
 // PERU
@@ -475,7 +501,7 @@ const selPeru = ref("");
 const statePeru = ref("disable");
 const errPeru = ref("Peru error");
 const dataPeru = ref([
-{
+  {
     value: "historica1",
     send: "peru",
     name: "Sísmica historica 1471 - 1900",
@@ -574,7 +600,7 @@ const dataPeru = ref([
       maxLongitude: -77.8, // Mantiene el límite hacia el este
     },
   },
- /*  {
+  /*  {
     value: "callao",
     send: "LIMA",
     name: "Callao",
@@ -786,22 +812,25 @@ const dataPeru = ref([
 ]);
 
 function getValPeru() {
-
-if (selPeru.value === "actual" || selPeru.value === "historica1"|| selPeru.value === "historica2") {
-  stateStartDate.value = "disable";
-  disStartDate.value = true;
-  stateEndDate.value = "disable";
-  disEndDate.value = true;
-   // Oculta el elemento con el id "span" 
-  document.getElementById("span").style.display = "none";
-} else {
-  stateStartDate.value = "enable";
-  disStartDate.value = false;
-  stateEndDate.value = "enable";
-  disEndDate.value = false;
- // Muestra el elemento con el id "span" 
-  document.getElementById("span").style.display = "inline";
-}
+  if (
+    selPeru.value === "actual" ||
+    selPeru.value === "historica1" ||
+    selPeru.value === "historica2"
+  ) {
+    stateStartDate.value = "disable";
+    disStartDate.value = true;
+    stateEndDate.value = "disable";
+    disEndDate.value = true;
+    // Oculta el elemento con el id "span"
+    document.getElementById("span").style.display = "none";
+  } else {
+    stateStartDate.value = "enable";
+    disStartDate.value = false;
+    stateEndDate.value = "enable";
+    disEndDate.value = false;
+    // Muestra el elemento con el id "span"
+    document.getElementById("span").style.display = "inline";
+  }
 }
 watch(selPeru, (newValue) => {
   const depSeleccionado = dataPeru.value.find(
@@ -904,20 +933,20 @@ const dataContinente = ref([
 ]);
 
 const continente = () => {
-watch(selContinente, (newValue) => {
-  const continenteSeleccionado = dataContinente.value.find(
-    (continente) => continente.value === newValue
-  );
+  watch(selContinente, (newValue) => {
+    const continenteSeleccionado = dataContinente.value.find(
+      (continente) => continente.value === newValue
+    );
 
-  if (continenteSeleccionado) {
-    const boundaries = continenteSeleccionado.boundaries;
-    useGeojson.continente = boundaries;
-  }
-       // Verifica si la pestaña activa es "global"
-       if (activeTab.value === "global") {
-        document.getElementById("span").style.display = "inline";
-      } 
-});
+    if (continenteSeleccionado) {
+      const boundaries = continenteSeleccionado.boundaries;
+      useGeojson.continente = boundaries;
+    }
+    // Verifica si la pestaña activa es "global"
+    if (activeTab.value === "global") {
+      document.getElementById("span").style.display = "inline";
+    }
+  });
 };
 // Llama a la función continente
 continente();
@@ -1055,25 +1084,25 @@ const togglePlay = () => {
       };
     } else if (selPeru.value === "historica2") {
       // Agrega una nueva condición para "transicional":
-      
+
       useGeojson.rangoFechas = {
         startDate: convertToDate({ month: 0, year: 1901 }),
         // Asigna como fecha de inicio enero del año 1901.
         endDate: convertToDate({ month: 11, year: 1959 }),
         // Asigna como fecha de fin diciembre del año 1959 (mes 11).
       };
-     }else {
+    } else {
       useGeojson.rangoFechas = {
         startDate: convertToDate(startDate.value),
         endDate: convertToDate(endDate.value),
       };
     }
-  }else{
-  useGeojson.rangoFechas = {
-    startDate: convertToDate(startDate.value),
-    endDate: convertToDate(endDate.value),
-  };
-}
+  } else {
+    useGeojson.rangoFechas = {
+      startDate: convertToDate(startDate.value),
+      endDate: convertToDate(endDate.value),
+    };
+  }
   useGeojson.estadoPl = "enable";
   statePeru.value = "disable";
   stateStartDate.value = "disable";
@@ -1107,21 +1136,23 @@ const toggleStop = () => {
     disEndDate.value = false;
   }
 };
-const isMoved = ref(false);
-const setAltura = ref(null);
+const isMoved = ref(true);
+const setAltura = ref(320);
+//const setAltura = ref(null);
 const isDown = ref(false);
 
-const currentArrow = computed(() => (isDown.value ? arrow : downarrow));
+const isRotated = ref(false)
 
 const toggleMove = () => {
-  setAltura.value = 430;
+  //setAltura.value = 320;
+  isRotated.value = !isRotated.value
+
   isDown.value = !isDown.value;
   isMoved.value = !isMoved.value; // Alternar estado
 };
-
 </script>
-  
-  <style>
+
+<style>
 .ant-slider-mark {
   font-size: 5px;
   /* Cambia este valor para ajustar el tamaño de la fuente */
