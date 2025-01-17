@@ -1,9 +1,7 @@
 <template>
   <div
     class="flex items-center px-4 sm:px-4 md:px-0 lg:px-0 xl:px-0 2xl:px-0 ml-0 sm:ml-0 md:ml-8 lg:ml-10 xl:ml-14 2xl:ml-20 justify-start z-10 scroll-auto select-none absolute mt-16"
-  >
-    <!-- Panel de control -->
-
+  >    <!-- Panel de control -->
     <div
       v-if="muestraModal"
       class="px-4 p-3 grid grid-cols-1 md:grid-cols-12 bg-[#FCFDFF] rounded-2xl w-[490px] border border-b border-igp-blue shadow-[0px_4px_4px_0px_#00000024]"
@@ -43,7 +41,6 @@
             Perú
           </button>
         </div>
-
         <div class="col-span-1 sm:col-span-3 md:col-span-6 flex">
        <!-- Botón Global -->   
           <button
@@ -61,12 +58,10 @@
           </button>
         </div>
       </div>
-
       <span class="text-igp-black-1000 col-span-12 text-sm px-4 mt-3">
         Para visualizar los sismos, primero seleccione la región, el periodo en
         años, el rango de magnitud y la profundidad de los sismos.
       </span>
-
       <div
         v-if="activeTab === 'global'"
         class="grid grid-cols-1 md:grid-cols-12 col-span-12 mt-2"
@@ -84,7 +79,6 @@
           <template v-slot:error> {{ errContinente }} </template>
         </tSelect>
       </div>
-
       <div
         v-if="activeTab === 'peru'"
         class="grid grid-cols-1 md:grid-cols-12 col-span-12 mt-2"
@@ -102,7 +96,6 @@
           <template v-slot:error> {{ errPeru }} </template>
         </tSelect>
       </div>
-
       <div
         class="grid grid-cols-12 col-span-12 border ml-4 py-1 my-4 rounded-lg"
         translate="no"
@@ -122,7 +115,6 @@
           />
           Periodo de años:
         </tLabel>
-
         <tCalendar class="col-span-5 mt-2 pl-5 mb-0" :state="stateStartDate">
           <template v-slot:calendar>
             <VueDatePicker
@@ -140,7 +132,6 @@
           <template v-slot:name> Fecha de inicio </template>
           <template v-slot:error> {{ errStartDate }} </template>
         </tCalendar>
-
         <tCalendar class="col-span-6 mt-2 pl-12" :state="stateEndDate">
           <template v-slot:calendar>
             <VueDatePicker
@@ -162,7 +153,6 @@
           >(*) desde 1960 hasta la fecha
         </span>
       </div>
-
       <div class="grid grid-cols-12 col-span-12 border ml-4 py-3 rounded-lg">
         <div class="col-span-12 flex items-center">
           <tLabel
@@ -206,11 +196,9 @@
                 : 'bg-gray-100 text-igp-dark-500 select-none cursor-not-allowed borde-igp-dark-500'
             "
             @click="togglePlay"
-            :disabled="statePlay === 'disable'"
-          >
+            :disabled="statePlay === 'disable'">
             <iplay class="w-4 h-4"></iplay>
           </button>
-
           <button
             type="button"
             class="border-2 mr-2 rounded-full px-6 py-2 items-center outline-none"
@@ -224,7 +212,6 @@
           >
             <istop class="w-4 h-4"></istop>
           </button>
-
           <button class="ml-3 relative" type="button" @mouseenter="showTooltip">
             <img :src="qst" alt="question_img" height="20" width="18" />
             <div
@@ -296,7 +283,6 @@
           </div>
         </div>
       </div>
-
       <div
         class="grip grid-cols-12 col-span-12 border rounded-lg py-4 my-4 ml-4"
       >
@@ -315,7 +301,6 @@
           />
           Rango de profundidad:
         </tLabel>
-
         <div class="col-span-12 mt-2 p-0">
           <div class="flex flex-col justify-between mb-4">
             <div
@@ -355,7 +340,6 @@
           </div>
         </div>
       </div>
-
       <!--  <div class="col-span-5 pt-4">
         <tButton
           @click="actCompartir"
@@ -385,7 +369,6 @@
     </button>
   </div>
 </template>
-
 <script setup>
 import { ref, onMounted, watch } from "vue";
 import tLabel from "@/components/ui/atoms/t-label.vue";
@@ -407,17 +390,14 @@ import iplay from "@/assets/icons/iplay.vue";
 import istop from "@/assets/icons/istop.vue";
 import qst from "@/assets/icons/question.svg";
 import "flowbite";
-
 function capitalizeMonth(date) {
   if (!date) return "";
   const formattedDate = format(date, "MMM/yyyy", { locale: es });
   return formattedDate.charAt(0).toUpperCase() + formattedDate.slice(1);
 }
-
 const useGeojson = useGeojsonStore();
 const stateStop = ref("enable");
 const statePlay = ref("disable");
-
 //const ablePeru = ref(false);
 //const ableGlobal = ref(true);
 const ablePeru = ref(true);
@@ -439,7 +419,6 @@ const redCircleStyle = {
   marginRight: "5px",
   border: "2px solid #ff0000", // Borde negro delgado
 };
-
 const greenCircleStyle = {
   display: "inline-block",
   width: "12px",
@@ -448,7 +427,6 @@ const greenCircleStyle = {
   marginRight: "5px",
   border: "2px solid #0AB427", // Borde negro delgado
 };
-
 const blueCircleStyle = {
   display: "inline-block",
   width: "12px",
@@ -457,11 +435,9 @@ const blueCircleStyle = {
   marginRight: "5px",
   border: "2px solid #002FEF", // Borde negro delgado
 };
-
 function setActiveTab(tab) {
   activeTab.value = tab; // quitar si en caso no quiere que cuando se cambie a peru, se ponga play solo
   useGeojson.departamento = tab;
-
   togglePlay();
   if (tab === "peru") {
     stateStartDate.value = "disable";
@@ -489,35 +465,27 @@ function setActiveTab(tab) {
     };
   }
 }
-
 // Variable para controlar la visibilidad del tooltip
 const tooltipVisible = ref(true);
-
 // Variable para almacenar el temporizador
 let hideTimeout;
-
 // Configurar el temporizador para cerrar el tooltip automáticamente después de 5 segundos al montar el componente
 onMounted(() => {
   hideTimeout = setTimeout(() => {
     tooltipVisible.value = false;
   }, 2000); // 2000 milisegundos = 2 segundos
-
 });
-
 // Función para mostrar el tooltip al pasar el mouse
 const showTooltip = () => {
   // Si ya hay un temporizador activo, lo limpiamos
   clearTimeout(hideTimeout);
-
   // Mostramos el tooltip
   tooltipVisible.value = true;
-
   // Configuramos el temporizador para ocultar el tooltip después de 5 segundos
   hideTimeout = setTimeout(() => {
     tooltipVisible.value = false;
   }, 2000);
 };
-
 // PERU
 const selPeru = ref("");
 const statePeru = ref("disable");
@@ -830,12 +798,9 @@ const dataPeru = ref([
       minLongitude: -76.0, // Mantiene el límite hacia el oeste
       maxLongitude: -70.5, // Ampliado más hacia el este
     },
-  },
- 
+  }, 
 ]);
-
 function getValPeru() {
-
   if (selPeru.value === "actual" || selPeru.value === "historica1"|| selPeru.value === "historica2") {
     stateStartDate.value = "disable";
     disStartDate.value = true;
@@ -852,22 +817,17 @@ function getValPeru() {
     document.getElementById("span").style.display = "inline";
   }
 }
-
 watch(selPeru, (newValue) => {
   const depSeleccionado = dataPeru.value.find(
     (departamento) => departamento.value === newValue
   );
-
   getValPeru();
-
   useGeojson.departamento = depSeleccionado.send;
-
   if (depSeleccionado) {
     const boundaries = depSeleccionado.boundaries;
     useGeojson.continente = boundaries;
   }
 });
-
 //CONTINENTE
 const selContinente = ref("");
 const stateContinente = ref("disable");
@@ -954,13 +914,11 @@ const dataContinente = ref([
     },
   },
 ]);
-
 const continente = () => {
 watch(selContinente, (newValue) => {
   const continenteSeleccionado = dataContinente.value.find(
     (continente) => continente.value === newValue
   );
-
   if (continenteSeleccionado) {
     const boundaries = continenteSeleccionado.boundaries;
     useGeojson.continente = boundaries;
@@ -974,7 +932,6 @@ watch(selContinente, (newValue) => {
 };
 // Llama a la función continente
 continente();
-
 //MAGNITUD
 const magnitudeRange = ref([4, 9.5]);
 const disabledSlider = ref(true);
@@ -992,11 +949,9 @@ const marks = {
   9: "9",
   9.5: "9.5",
 };
-
 const customTooltipFormatter = (value) => {
   return `M ${value.toFixed(1)}`; // Cambia el formato del tooltip
 };
-
 //FUNCION PARA CONVERTR FECHA
 const convertToDate = (proxyObject) => {
   if (
@@ -1010,7 +965,6 @@ const convertToDate = (proxyObject) => {
   }
   return null;
 };
-
 //StartDate
 const startDate = ref({
   month: new Date().getMonth(),
@@ -1019,7 +973,6 @@ const startDate = ref({
 const errStartDate = ref("Fecha inicio error");
 const disStartDate = ref(true);
 const stateStartDate = ref("disable");
-
 //EndDate
 const endDate = ref({
   month: new Date().getMonth(),
@@ -1028,7 +981,6 @@ const endDate = ref({
 const errEndDate = ref("Fecha fin error");
 const disEndDate = ref(true);
 const stateEndDate = ref("disable");
-
 //CHECK LIST
 const items = ref([
   {
@@ -1049,7 +1001,6 @@ const items = ref([
 ]);
 const checkedItems = ref([true, true, true]);
 const stateCheckList = ref("disable");
-
 const selectionState = ref({
   isSuperficial: true,
   isIntermediate: true,
@@ -1059,7 +1010,6 @@ const handleCheckboxChange = () => {
   const isSuperficial = checkedItems.value[0];
   const isIntermediate = checkedItems.value[1];
   const isDeep = checkedItems.value[2];
-
   // Actualizar el estado de selección
   selectionState.value = {
     isSuperficial,
@@ -1067,7 +1017,6 @@ const handleCheckboxChange = () => {
     isDeep,
   };
 };
-
 const isDisabled = (index) => {
   if (stateCheckList.value === "disable") {
     // Si el estado es 'disable', el checkbox no puede ser modificado
@@ -1075,7 +1024,6 @@ const isDisabled = (index) => {
   }
   return false; // Si está habilitado, el checkbox se comporta normalmente
 };
-
 watch(
   () => useGeojson.estadoPl, // Observar la propiedad estadoPl
   (newValue) => {
@@ -1089,7 +1037,6 @@ watch(
     }
   }
 );
-
 const togglePlay = () => {
   if (activeTab.value === "peru") {
     if (selPeru.value === "actual") {
@@ -1124,8 +1071,7 @@ const togglePlay = () => {
   } else {
     useGeojson.rangoFechas = {
       startDate: convertToDate(startDate.value),
-      endDate: convertToDate(endDate.value),
-      
+      endDate: convertToDate(endDate.value),      
     };
   }
   useGeojson.estadoPl = "enable";
@@ -1137,15 +1083,12 @@ const togglePlay = () => {
   stateContinente.value = "disable";
   stateCheckList.value = "disable";
   disabledSlider.value = true;
-
   useGeojson.rangoMagnitud = {
     maxMag: magnitudeRange.value[0],
     minMag: magnitudeRange.value[1],
   };
-
   useGeojson.profundidad = selectionState.value;
 };
-
 const toggleStop = () => {
   useGeojson.estadoPl = "disable";
   disabledSlider.value = false;
@@ -1170,12 +1113,10 @@ const toggleStop = () => {
   color: #2f0f79;
   /* Cambia el color del texto */
 }
-
 .ant-slider-tooltip {
   font-size: 12px !important;
   /* Tamaño de la fuente */
 }
-
 .slider {
   width: 90%;
   max-width: 1000px;
@@ -1184,7 +1125,6 @@ const toggleStop = () => {
   padding: 6px 0;
   position: relative;
 }
-
 .slider input {
   --start: 10%;
   --stop: 100%;
@@ -1196,7 +1136,6 @@ const toggleStop = () => {
   height: 4px;
   width: 100%;
 }
-
 .slider input:first-of-type {
   background-image: linear-gradient(
     to right,
@@ -1206,18 +1145,15 @@ const toggleStop = () => {
     lightgrey var(--stop)
   );
 }
-
 .slider ::-moz-range-thumb,
 .slider ::-webkit-slider-thumb {
   cursor: pointer;
   pointer-events: auto;
 }
-
 .tooltipmodal {
   position: relative;
   display: inline-block;
 }
-
 .tooltipmodal .tooltiptextmodal {
   visibility: hidden;
   background-color: rgb(160, 160, 160);
@@ -1234,7 +1170,6 @@ const toggleStop = () => {
   opacity: 0;
   transition: opacity 0.3s;
 }
-
 .tooltipmodal:hover .tooltiptextmodal {
   visibility: visible;
   opacity: 1;
@@ -1242,13 +1177,11 @@ const toggleStop = () => {
 .ant-slider-mark-text.ant-slider-mark-text-active {
   font-size: 12px;
 }
-
 .tooltip {
   opacity: 0;
   visibility: hidden;
   transition: opacity 0.3s ease, visibility 0.3s ease;
 }
-
 /* Mostrar el tooltip cuando el botón se encuentre en hover */
 .tooltip.opacity-100.visible {
   opacity: 1;

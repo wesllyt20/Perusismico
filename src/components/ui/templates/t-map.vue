@@ -9,7 +9,6 @@
         <div class="loader"></div>
       </div>
     </div>
-
     <div class="overflow-hidden fixed inset-0 bg-cover" id="map"></div>
     <!-- v-if="makerPopup" -->
     <!-- Insertamos el SVG directamente sobre el mapa -->
@@ -25,8 +24,7 @@
         height: 100%;
         pointer-events: none;
         z-index: 10;
-      "
-    >
+      " >
       <!-- Aquí va el código SVG del mapa sombreado -->
       <path
         class="leaflet-interactive"
@@ -52,7 +50,6 @@ import Papa from "papaparse";
 //import "leaflet.pattern";
 import "leaflet/dist/leaflet.css";
 import { useGeojsonStore } from "@/stores/geojson.js";
-
 export default {
   data() {
     return {
@@ -191,7 +188,6 @@ export default {
     // Cargar el archivo GeoJSON usando axios
     axios
       .get("/placas.json")
-
       .then((response) => {
         // Crear clones del GeoJSON para simular repetición
         const repeatOffsets = [
@@ -230,7 +226,7 @@ export default {
       });
     // Cargar el archivo CSV
     axios
-      .get("/datas/datas.csv")
+      .get("/datas/NEIC_01_12_2024.csv")
       .then((response1) => {
         axios.get("/datas/historicos.csv").then((response2) => {
           // Procesar el primer CSV
@@ -437,7 +433,6 @@ export default {
             /* CIRCULO COMPLETO
             opacity: 0.5,
             fillOpacity: 0.9,*/
-
             /* CIRCULO HUECO  */
             fillOpacity: 0,
             color: color,
@@ -467,7 +462,6 @@ export default {
           this.useGeojson.continente.maxLongitude,
         ],
       ]);
-
       // Verifica si hay datos y ajusta el mapa a los límites
       if (geoJSON.features.length > 0) {
         this.map.fitBounds(bounds);
@@ -508,7 +502,6 @@ export default {
       // https://ide.igp.gob.pe/arcgis/rest/services/mapabase/MapaBase/MapServer/10/query?where=DEPARTAMEN+%3D+%27TUMBES%27+OR++DEPARTAMEN+%3D+%27LIMA%27++OR++DEPARTAMEN+%3D+%27UCAYALI%27+OR++DEPARTAMEN+%3D+%27TACNA%27+OR++DEPARTAMEN+%3D+%27PUNO%27++OR++DEPARTAMEN+%3D+%27PASCO%27++OR++DEPARTAMEN+%3D+%27LORETO%27++OR++DEPARTAMEN+%3D+%27LORETO%27++OR++DEPARTAMEN+%3D+%27LAMBAYEQUE%27++OR++DEPARTAMEN+%3D+%27JUNIN%27++OR++DEPARTAMEN+%3D+%27ICA%27++OR++DEPARTAMEN+%3D+%27HUANCAVELICA%27++OR++DEPARTAMEN+%3D+%27CUSCO%27++OR++DEPARTAMEN+%3D+%27CUSCO%27++OR++DEPARTAMEN+%3D+%27MADRE DE DIOS%27++OR++DEPARTAMEN+%3D+%27CAJAMARCA%27++OR++DEPARTAMEN+%3D+%27AYACUCHO%27++OR++DEPARTAMEN+%3D+%27AREQUIPA%27++OR++DEPARTAMEN+%3D+%27APURIMAC%27++OR++DEPARTAMEN+%3D+%27ANCASH%27++OR++DEPARTAMEN+%3D+%27PIURA%27++OR++DEPARTAMEN+%3D+%27AMAZONAS%27++OR++DEPARTAMEN+%3D+%27LA LIBERTAD%27++OR++DEPARTAMEN+%3D+%27MOQUEGUA%27++OR++DEPARTAMEN+%3D+%27SAN MARTIN%27++OR++DEPARTAMEN+%3D+%27HUANUCO%27&text=&objectIds=&time=&timeRelation=esriTimeRelationOverlaps&geometry=&geometryType=esriGeometryEnvelope&inSR=&spatialRel=esriSpatialRelIntersects&distance=&units=esriSRUnit_Foot&relationParam=&outFields=*&returnGeometry=true&returnTrueCurves=false&maxAllowableOffset=&geometryPrecision=&outSR=&havingClause=&returnIdsOnly=false&returnCountOnly=false&orderByFields=&groupByFieldsForStatistics=&outStatistics=&returnZ=false&returnM=false&gdbVersion=&historicMoment=&returnDistinctValues=false&resultOffset=&resultRecordCount=&returnExtentOnly=false&sqlFormat=none&datumTransformation=&parameterValues=&rangeValues=&quantizationParameters=&featureEncoding=esriDefault&f=geojson
       axios
         .get(getApiGeoJson)
-
         .then((response) => {
           this.geoJSONLayerCapaDepartamento = L.geoJSON(response.data, {
             style: function () {
@@ -522,7 +515,6 @@ export default {
           // this.map.fitBounds(this.geoJSONLayerCapaDepartamento.getBounds());
         })
         /*
-
         .then((response) => {
           this.geoJSONLayerCapaDepartamento = L.geoJSON(response.data, {
             style: function () {
@@ -550,9 +542,7 @@ export default {
               }).addTo(this.map);
             },
           });
-        })
-
-*/
+        })*/
         .then(() => {
           this.geoJSONLayerCapaDepartamento.addTo(this.map);
         })
@@ -595,7 +585,6 @@ export default {
   },
 };
 </script>
-
 <style>
 #map {
   position: absolute; /* Posiciona el mapa de forma absoluta respecto a su contenedor más cercano con posición relativa (por defecto, el body) */
