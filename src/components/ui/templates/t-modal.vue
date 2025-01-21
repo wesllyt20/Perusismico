@@ -1,7 +1,8 @@
 <template>
   <div
     class="flex items-center px-4 sm:px-4 md:px-0 lg:px-0 xl:px-0 2xl:px-0 ml-0 sm:ml-0 md:ml-8 lg:ml-10 xl:ml-14 2xl:ml-20 justify-start z-10 scroll-auto select-none absolute mt-16"
-  >    <!-- Panel de control -->
+  >
+    <!-- Panel de control -->
     <div
       v-if="muestraModal"
       class="px-4 p-3 grid grid-cols-1 md:grid-cols-12 bg-[#FCFDFF] rounded-2xl w-[490px] border border-b border-igp-blue shadow-[0px_4px_4px_0px_#00000024]"
@@ -30,29 +31,29 @@
             :disabled="ablePeru"
             @click="setActiveTab('peru')"
             :class="{
-              'bg-igp-blue text-igp-white font-semibold':
-                activeTab === 'peru',
+              'bg-igp-blue text-igp-white font-semibold': activeTab === 'peru',
               'bg-igp-white text-igp-muted-400 hover:text-igp-blue hover:font-medium  hover:border-igp-blue':
                 activeTab !== 'peru',
             }"
             class="flex items-center justify-center focus:outline-none w-full h-full py-3 border-y-2 border-l-2 rounded-l-3xl text-sm"
           >
-          <iconperu class="absolute h-8 mr-14 mt-1"></iconperu>
+            <iconperu class="absolute h-8 mr-14 mt-1"></iconperu>
             Perú
           </button>
         </div>
         <div class="col-span-1 sm:col-span-3 md:col-span-6 flex">
-       <!-- Botón Global -->   
+          <!-- Botón Global -->
           <button
             :disabled="ableGlobal"
             @click="setActiveTab('global')"
             :class="{
-              'bg-igp-blue text-igp-white font-semibold': activeTab === 'global',
+              'bg-igp-blue text-igp-white font-semibold':
+                activeTab === 'global',
               'bg-igp-white text-igp-muted-400 hover:text-igp-blue hover:font-medium  hover:border-igp-blue':
                 activeTab !== 'global',
             }"
             class="flex items-center justify-center focus:outline-none w-full h-full py-3 border-y-2 border-r-2 rounded-r-3xl text-sm"
-          >            
+          >
             <iconworld class="h-5 mr-1"></iconworld>
             Global
           </button>
@@ -148,8 +149,10 @@
           <template v-slot:name> Fecha de fin </template>
           <template v-slot:error> {{ errEndDate }} </template>
         </tCalendar>
-         <!--Se asigno id -->
-        <span id="span" class="col-span-5 text-xs text-center ml-1 text-igp-dark-400 mb-2"
+        <!--Se asigno id -->
+        <span
+          id="span"
+          class="col-span-5 text-xs text-center ml-1 text-igp-dark-400 mb-2"
           >(*) desde 1960 hasta la fecha
         </span>
       </div>
@@ -196,7 +199,8 @@
                 : 'bg-gray-100 text-igp-dark-500 select-none cursor-not-allowed borde-igp-dark-500'
             "
             @click="togglePlay"
-            :disabled="statePlay === 'disable'">
+            :disabled="statePlay === 'disable'"
+          >
             <iplay class="w-4 h-4"></iplay>
           </button>
           <button
@@ -491,7 +495,7 @@ const selPeru = ref("");
 const statePeru = ref("disable");
 const errPeru = ref("Peru error");
 const dataPeru = ref([
-{
+  {
     value: "historica1",
     send: "peru",
     name: "Sísmica historica 1471 - 1900",
@@ -590,7 +594,7 @@ const dataPeru = ref([
       maxLongitude: -77.8, // Mantiene el límite hacia el este
     },
   },
- /*  {
+  /*  {
     value: "callao",
     send: "LIMA",
     name: "Callao",
@@ -798,22 +802,26 @@ const dataPeru = ref([
       minLongitude: -76.0, // Mantiene el límite hacia el oeste
       maxLongitude: -70.5, // Ampliado más hacia el este
     },
-  }, 
+  },
 ]);
 function getValPeru() {
-  if (selPeru.value === "actual" || selPeru.value === "historica1"|| selPeru.value === "historica2") {
+  if (
+    selPeru.value === "actual" ||
+    selPeru.value === "historica1" ||
+    selPeru.value === "historica2"
+  ) {
     stateStartDate.value = "disable";
     disStartDate.value = true;
     stateEndDate.value = "disable";
     disEndDate.value = true;
-     // Oculta el elemento con el id "span" 
+    // Oculta el elemento con el id "span"
     document.getElementById("span").style.display = "none";
   } else {
     stateStartDate.value = "enable";
     disStartDate.value = false;
     stateEndDate.value = "enable";
     disEndDate.value = false;
-   // Muestra el elemento con el id "span" 
+    // Muestra el elemento con el id "span"
     document.getElementById("span").style.display = "inline";
   }
 }
@@ -915,20 +923,20 @@ const dataContinente = ref([
   },
 ]);
 const continente = () => {
-watch(selContinente, (newValue) => {
-  const continenteSeleccionado = dataContinente.value.find(
-    (continente) => continente.value === newValue
-  );
-  if (continenteSeleccionado) {
-    const boundaries = continenteSeleccionado.boundaries;
-    useGeojson.continente = boundaries;
-   
+  watch(selContinente, (newValue) => {
+    const continenteSeleccionado = dataContinente.value.find(
+      (continente) => continente.value === newValue
+    );
+    if (continenteSeleccionado) {
+      const boundaries = continenteSeleccionado.boundaries;
+      useGeojson.continente = boundaries;
+
       // Verifica si la pestaña activa es "global"
       if (activeTab.value === "global") {
         document.getElementById("span").style.display = "inline";
-      } 
-  }
-});
+      }
+    }
+  });
 };
 // Llama a la función continente
 continente();
@@ -960,6 +968,19 @@ const convertToDate = (proxyObject) => {
     proxyObject.year !== undefined
   ) {
     const date = new Date(proxyObject.year, proxyObject.month + 1);
+   date.setDate(date.getDate() - 1);
+    return date;
+  }
+  return null;
+};
+
+const convertToDateStart = (proxyObject) => {
+  if (
+    proxyObject &&
+    proxyObject.month !== undefined &&
+    proxyObject.year !== undefined
+  ) {
+    const date = new Date(proxyObject.year, proxyObject.month);
     date.setDate(date.getDate() - 1);
     return date;
   }
@@ -1045,32 +1066,32 @@ const togglePlay = () => {
         year: new Date().getFullYear(),
       };
       useGeojson.rangoFechas = {
-        startDate: convertToDate({ month: 0, year: 1960 }),
+        startDate: convertToDateStart({ month: 0, year: 1960 }),
         endDate: convertToDate(act),
       };
     } else if (selPeru.value === "historica1") {
       useGeojson.rangoFechas = {
-        startDate: convertToDate({ month: 0, year: 1471 }),
+        startDate: convertToDateStart({ month: 0, year: 1471 }),
         endDate: convertToDate({ month: 11, year: 1900 }),
       };
-    }else if (selPeru.value === "historica2") {
+    } else if (selPeru.value === "historica2") {
       // Agrega una nueva condición para "transicional":
-            useGeojson.rangoFechas = {
-        startDate: convertToDate({ month: 0, year: 1901 }),
+      useGeojson.rangoFechas = {
+        startDate: convertToDateStart({ month: 0, year: 1901 }),
         // Asigna como fecha de inicio enero del año 1901.
         endDate: convertToDate({ month: 11, year: 1959 }),
         // Asigna como fecha de fin diciembre del año 1959 (mes 11).
       };
-     } else {
+    } else {
       useGeojson.rangoFechas = {
-        startDate: convertToDate(startDate.value),
+        startDate: convertToDateStart(startDate.value),
         endDate: convertToDate(endDate.value),
       };
     }
   } else {
     useGeojson.rangoFechas = {
-      startDate: convertToDate(startDate.value),
-      endDate: convertToDate(endDate.value),      
+      startDate: convertToDateStart(startDate.value),
+      endDate: convertToDate(endDate.value),
     };
   }
   useGeojson.estadoPl = "enable";

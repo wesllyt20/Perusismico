@@ -42,7 +42,6 @@
           </button>
         </div>
         <div class="col-span-6 flex">
-          <!-- Botón Perú -->
           <!-- Botón Global -->
           <button
             :disabled="ableGlobal"
@@ -952,6 +951,18 @@ const convertToDate = (proxyObject) => {
   }
   return null;
 };
+const convertToDateStart = (proxyObject) => {
+  if (
+    proxyObject &&
+    proxyObject.month !== undefined &&
+    proxyObject.year !== undefined
+  ) {
+    const date = new Date(proxyObject.year, proxyObject.month );
+    date.setDate(date.getDate() - 1);
+    return date;
+  }
+  return null;
+};
 //StartDate
 const startDate = ref({
   month: new Date().getMonth(),
@@ -1034,31 +1045,31 @@ const togglePlay = () => {
         year: new Date().getFullYear(),
       };
       useGeojson.rangoFechas = {
-        startDate: convertToDate({ month: 0, year: 1960 }),
+        startDate: convertToDateStart({ month: 0, year: 1960 }),
         endDate: convertToDate(act),
       };
     } else if (selPeru.value === "historica1") {
       useGeojson.rangoFechas = {
-        startDate: convertToDate({ month: 0, year: 1471 }),
+        startDate: convertToDateStart({ month: 0, year: 1471 }),
         endDate: convertToDate({ month: 11, year: 1900 }),
       };
     } else if (selPeru.value === "historica2") {
       // Agrega una nueva condición para "transicional":
       useGeojson.rangoFechas = {
-        startDate: convertToDate({ month: 0, year: 1901 }),
+        startDate: convertToDateStart({ month: 0, year: 1901 }),
         // Asigna como fecha de inicio enero del año 1901.
         endDate: convertToDate({ month: 11, year: 1959 }),
         // Asigna como fecha de fin diciembre del año 1959 (mes 11).
       };
     } else {
       useGeojson.rangoFechas = {
-        startDate: convertToDate(startDate.value),
+        startDate: convertToDateStart(startDate.value),
         endDate: convertToDate(endDate.value),
       };
     }
   } else {
     useGeojson.rangoFechas = {
-      startDate: convertToDate(startDate.value),
+      startDate: convertToDateStart(startDate.value),
       endDate: convertToDate(endDate.value),
     };
   }
