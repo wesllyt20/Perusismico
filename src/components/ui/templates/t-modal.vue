@@ -1055,8 +1055,7 @@ const togglePlay = () => {
       };
     }else if (selPeru.value === "historica2") {
       // Agrega una nueva condición para "transicional":
-      
-      useGeojson.rangoFechas = {
+            useGeojson.rangoFechas = {
         startDate: convertToDate({ month: 0, year: 1901 }),
         // Asigna como fecha de inicio enero del año 1901.
         endDate: convertToDate({ month: 11, year: 1959 }),

@@ -226,7 +226,7 @@ export default {
       });
     // Cargar el archivo CSV
     axios
-      .get("/datas/NEIC_01_12_2024.csv")
+      .get("/datas/datas.csv")
       .then((response1) => {
         axios.get("/datas/historicos.csv").then((response2) => {
           // Procesar el primer CSV
