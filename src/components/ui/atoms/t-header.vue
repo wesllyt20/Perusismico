@@ -46,10 +46,10 @@
       </router-link>
       <button
         @click="showModal"
-        class="text-md sm:text-md md:text-md lg:text-md xl:text-lg 2xl:text-lg hidden h-full items-center justify-center ml-8 outline-none font-light sm:hidden md:hidden lg:flex xl:flex 2xl:flex hover:bg-igp-blue hover:bg-opacity-10 px-3 cursor-pointer text-igp-dark-500 hover:text-igp-blue hover:border-igp-blue"
+        class="text-md sm:text-md md:text-md lg:text-md xl:text-lg 2xl:text-lg hidden h-full items-center justify-center ml-8 outline-none font-light sm:hidden md:hidden lg:flex xl:flex 2xl:flex hover:bg-igp-blue hover:bg-opacity-10 px-3 cursor-pointer text-igp-dark-500 hover:text-igp-blue hover:border-igp-blue italic"
       >
         <iconteam class="h-5 mr-3"></iconteam>
-        Creditos
+        PeruSis
       </button>
       <div class="ml-auto">
         <button
@@ -112,7 +112,7 @@
                 class="text-xs flex items-center outline-none font-light sm:flex md:flex lg:hidden xl:hidden 2xl:hidden hover:bg-igp-blue hover:bg-opacity-10 h-full cursor-pointer text-igp-dark-500 hover:text-igp-blue hover:border-igp-blue"
               >
                 <iconteam class="h-[14px] mr-[7px]"></iconteam>
-                Creditos
+                PeruSis
               </button>
             </li>
           </ul>
@@ -156,14 +156,15 @@ onUnmounted(() => {
 const showModal = () => {
   Swal.fire({
     title:
-      '<span class="text-igp-blue text-2xl font-semibold">Créditos de PerúSis</span>', // Título con color personalizado
+      '<span class="text-igp-blue text-2xl font-semibold">PeruSis</span>', // Título con color personalizado
     html: `
-      <p class="text-start text-sm">Perú Sísmico es una plataforma desarrollada bajo la dirección del <strong>Dr. Hernando Tavera</strong>, investigador científico, 
-      junto con el equipo de Innovación Digital del Instituto Geofísico del Perú (IGP). Este proyecto busca contribuir con información para reducir el riesgo de desastres y fomentar la educación en el país.</p>
+      <p class="text-justify text-sm"><strong>PeruSis</strong> (Perú Sísmico) es una plataforma
+desarrollada por el Instituto Geofísico del Perú (IGP) para fomentar la educación en el país.</p>
 
-      <p class="text-start text-sm pt-2">La plataforma integra datos del Centro Sismológico Nacional (CENSIS), a cargo del IGP, y del National Earthquake Information 
+      <p class="text-justify text-sm pt-2">La plataforma integra datos del Centro Sismológico Nacional (CENSIS) a cargo del IGP y del National Earthquake Information 
       Center (NEIC) de la U.S. Geological Survey (USGS) de los EE.UU.</p>
-      <p class="text-start text-sm pt-2" >Lima, diciembre de 2024.</p>
+      <p class="text-start text-sm pt-2" >Lima, enero de 2025.</p>
+         <p class="text-right text-sm pt-2 mr-5">Hernando Tavera</p>
     `,
     width: "400px",
 

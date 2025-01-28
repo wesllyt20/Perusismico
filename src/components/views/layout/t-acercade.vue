@@ -42,17 +42,20 @@
         >
           <!-- Texto de bienvenida con animación de barras -->
           <p
-            class="col-span-12 text-igp-white text-4xl sm:text-5xl md:text-5xl lg:text-6xl xl:text-7xl 2xl:text-8xl font-bold leading-none fade-bar"
+            class="col-span-12 text-igp-white text-4xl sm:text-5xl md:text-5xl lg:text-6xl xl:text-7xl 2xl:text-8xl font-bold leading-none fade-bar mb-6"
             style="--delay: 0.1s"
           >
-            Perú
-            <span class="italic"> Sísmico </span>
+            PeruSis
+           
+          </p>
+          <p class="col-span-12 text-igp-white text-2xl sm:text-3xl md:text-3xl lg:text-4xl xl:text-5xl 2xl:text-6xl font-normal italic leading-none fade-bar"
+             style="--delay: 0.1s"> Perú Sísmico             
           </p>
           <p
             class="col-span-12 font-semibold pt-4 text-igp-white text-xs sm:text-sm md:text-sm lg:text-base xl:text-lg 2xl:text-lg mt-3 fade-bar"
             style="line-height: 2; --delay: 0.3s"
           >
-            PerúSis es una plataforma digital de observación sísmica
+            PeruSis es una plataforma digital de observación sísmica
             desarrollada por el Instituto Geofísico del Perú (IGP), 
             para ofrecer acceso espacio-tiempo a la actividad sísmica ocurrida
             en el Perú y el mundo de manera visual e interactiva.
@@ -61,11 +64,11 @@
             class="col-span-12 font-semibold pt-4 text-igp-white text-xs sm:text-sm md:text-sm lg:text-base xl:text-lg 2xl:text-lg mt-3 fade-bar"
             style="line-height: 2; --delay: 0.5s"
           >
-            Con una interfaz intuitiva, PerúSis permite filtrar sismos por
-             región, fechas, magnitud y profundidad, lo cual facilita su análisis. Esto
+            Con una interfaz intuitiva, PeruSis permite seleccionar sismos por
+            región, fecha, magnitud y profundidad, lo cual facilita su análisis. Esto
             la convierte en una herramienta clave para identificar regiones
-            potencialmente sísmicas y contribuir con información para reducir el riesgo;
-            además de fortalecer la educación en temas sísmicos.
+            potencialmente sísmicas y contribuir con información para fortalecer la 
+            educación en temas sísmicos.
           </p>
 
           <div
