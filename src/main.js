@@ -20,9 +20,13 @@ script.onload = () => {
     gtag('js', new Date());
     gtag('config', 'G-7X7S78DN4M');
   };
-  
- app.use(router)
+app.use(router)
 app.component('VueDatePicker', VueDatePicker);
 app.use(pinia);
-
 app.mount('#app')
+
+/* // Verifica si la página está cargando sobre HTTP, y si es así, redirige automáticamente a HTTPS.
+if (window.location.protocol === "http:") {
+  window.location.href = "https://" + window.location.hostname + window.location.pathname + window.location.search;
+}
+*/

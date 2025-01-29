@@ -127,9 +127,7 @@ import iconthome from "@/assets/icons/iconhome.vue";
 import iconworld from "@/assets/icons/world.vue";
 import iconteam from "@/assets/icons/team.vue";
 import Swal from "sweetalert2";
-
 const showContent = ref(false);
-
 function toggleContent() {
   showContent.value = !showContent.value;
 }
@@ -142,32 +140,28 @@ function handleClickOutside(event) {
 function handleWheel() {
   showContent.value = false;
 }
-
 onMounted(() => {
   document.addEventListener("click", handleClickOutside);
   document.addEventListener("wheel", handleWheel);
 });
-
 onUnmounted(() => {
   document.removeEventListener("click", handleClickOutside);
   document.removeEventListener("wheel", handleWheel);
 });
-
 const showModal = () => {
   Swal.fire({
     title:
       '<span class="text-igp-blue text-2xl font-semibold">PeruSis</span>', // Título con color personalizado
     html: `
       <p class="text-justify text-sm"><strong>PeruSis</strong> (Perú Sísmico) es una plataforma
-desarrollada por el Instituto Geofísico del Perú (IGP) para fomentar la educación en el país.</p>
+      desarrollada por el Instituto Geofísico del Perú (IGP) para fomentar la educación en el país.</p>
 
       <p class="text-justify text-sm pt-2">La plataforma integra datos del Centro Sismológico Nacional (CENSIS) a cargo del IGP y del National Earthquake Information 
-      Center (NEIC) de la U.S. Geological Survey (USGS) de los EE.UU.</p>
+       Center (NEIC) de la U.S. Geological Survey (USGS) de los EE.UU.</p>
       <p class="text-start text-sm pt-2" >Lima, enero de 2025.</p>
-         <p class="text-right text-sm pt-2 mr-5">Hernando Tavera</p>
+      <p class="text-right text-sm pt-2 mr-5">Hernando Tavera</p>
     `,
     width: "400px",
-
     confirmButtonText: "Aceptar", // Cambiar el texto del botón a "Aceptar"
     confirmButtonColor: "#0032FF",
   });

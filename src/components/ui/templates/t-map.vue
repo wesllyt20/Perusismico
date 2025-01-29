@@ -1,7 +1,7 @@
 <template>
   <div>
     <div
- v-if="isLoading"
+      v-if="isLoading"
       class="fixed inset-0 flex items-center justify-center bg-white bg-opacity-50 z-50"
     >
     <div class="text-center flex flex-col items-center justify-center">
