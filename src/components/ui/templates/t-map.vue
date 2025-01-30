@@ -494,7 +494,7 @@ export default {
         this.useGeojson.continente.maxLongitude === 180.0
       ) {
         // Si los límites son correctos, establecer el centro en [0.0, -120.0]
-        console.log("SI LLEGO A CUMPLIR AQUI EN GLOBAL VERIFICAR AQUI")
+        console.log("SI LLEGO A CUMPLIR AQUI EN GLOBAL VERIFICAR AQUI TEST")
         console.log(this.map.getCenter());
         const defaultCenter = [0.0, -120.0]; // Centro predefinido
         this.map.setView(defaultCenter, this.map.getZoom()); // Mantener el zoom actual
